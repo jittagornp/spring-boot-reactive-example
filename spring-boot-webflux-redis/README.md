@@ -1,5 +1,5 @@
-# spring-boot-webflux-mongodb
-Spring-boot WebFlux Mongodb example 
+# spring-boot-webflux-redis
+Spring-boot WebFlux Redis example 
 
 
 # Build & Run
@@ -11,5 +11,5 @@ $ mvn clean install
 
 $ mvn spring-boot:run \
     -Dserver.port=8080 \
-    -Dspring.data.mongodb.uri=mongodb://<DATABASE_USERNAME>:<DATABASE_PASSWORD>@<DATABASE_HOST>:<DATABASE_PORT>/<DATABASE_NAME>
+    -Dspring.redis.url=redis://<REDIS_PASSWORD>@<REDIS_HOST>:<REDIS_PORT>
 ```
