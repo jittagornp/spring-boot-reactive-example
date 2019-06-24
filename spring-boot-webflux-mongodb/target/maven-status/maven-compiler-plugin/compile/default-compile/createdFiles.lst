@@ -1,0 +1,4 @@
+com\pamarin\learning\webflux\mongodb\AppStarter.class
+com\pamarin\learning\webflux\mongodb\repository\LoginHistoryRepository.class
+com\pamarin\learning\webflux\mongodb\collection\LoginHistory.class
+com\pamarin\learning\webflux\mongodb\controller\LoginHistoryController.class
