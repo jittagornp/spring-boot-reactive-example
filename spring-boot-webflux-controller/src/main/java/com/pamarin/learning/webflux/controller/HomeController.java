@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
@@ -24,7 +25,8 @@ public class HomeController {
 
     @GetMapping({"", "/"})
     public Mono<String> hello(ServerWebExchange exchange) {
-        log.debug("path => {}", exchange.getRequest().getPath().value());
+        ServerHttpRequest request = exchange.getRequest();
+        log.debug("path => {}", request.getPath().value());
         exchange.getSession().subscribe(session -> {
             log.debug("session Id => {}", session.getId());
         });
