@@ -1,7 +1,7 @@
 /*
  * Copyright 2017-2019 Pamarin.com
  */
-package com.pamarin.learning.webflux.postgresql.domain;
+package com.pamarin.learning.webflux.domain;
 
 import java.io.Serializable;
 import javax.persistence.Column;
