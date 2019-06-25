@@ -79,3 +79,7 @@ $ mvn spring-boot:run
 # 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+# เอกสารอ่านเพิ่มเติม
+
+- [https://www.thymeleaf.org/](https://www.thymeleaf.org/)  
