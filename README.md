@@ -16,6 +16,7 @@
 - [spring-boot-webflux-controller](spring-boot-webflux-controller) 
 - [spring-boot-webflux-thymleaf](spring-boot-webflux-thymleaf) 
 - [spring-boot-webflux-filter](spring-boot-webflux-filter)
+- [spring-boot-webflux-error-handler](spring-boot-webflux-error-handler) 
 - [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql)
 - [spring-boot-webflux-mongodb](spring-boot-webflux-mongodb)
 - [spring-boot-webflux-redis](spring-boot-webflux-redis) 
