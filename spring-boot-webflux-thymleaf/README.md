@@ -1,5 +1,5 @@
-# spring-boot-webflux-mongodb
-Spring-boot WebFlux Mongodb example 
+# spring-boot-webflux-thymleaf
+Spring-boot WebFlux Thymleaf example 
 
 
 # Build & Run
@@ -10,6 +10,5 @@ cd to root of project directory
 $ mvn clean install
 
 $ mvn spring-boot:run \
-    -Dserver.port=8080 \
-    -Dspring.data.mongodb.uri=mongodb://<DATABASE_USERNAME>:<DATABASE_PASSWORD>@<DATABASE_HOST>:<DATABASE_PORT>/<DATABASE_NAME>
+    -Dserver.port=8080
 ```
