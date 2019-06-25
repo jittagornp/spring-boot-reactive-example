@@ -1,7 +1,7 @@
 /*
  * Copyright 2017-2019 Pamarin.com
  */
-package com.pamarin.learning.webflux.thymleaf.controller;
+package com.pamarin.learning.webflux.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
