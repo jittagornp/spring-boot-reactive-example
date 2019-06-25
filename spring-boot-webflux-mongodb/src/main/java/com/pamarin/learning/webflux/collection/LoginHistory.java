@@ -1,7 +1,7 @@
 /*
  * Copyright 2017-2019 Pamarin.com
  */
-package com.pamarin.learning.webflux.mongodb.collection;
+package com.pamarin.learning.webflux.collection;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
