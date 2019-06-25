@@ -1,7 +1,7 @@
 /*
  * Copyright 2017-2019 Pamarin.com
  */
-package com.pamarin.learning.webflux.filter.filter;
+package com.pamarin.learning.webflux.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
