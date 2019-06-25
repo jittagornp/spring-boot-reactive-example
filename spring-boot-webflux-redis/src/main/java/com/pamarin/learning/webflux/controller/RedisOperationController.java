@@ -3,11 +3,13 @@
  */
 package com.pamarin.learning.webflux.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  *
@@ -24,9 +26,10 @@ public class RedisOperationController {
     }
 
     @GetMapping({"", "/"})
-    public Flux<Object> findAll() {
-        return redisOperations.keys("oauth2_refresh_token*")
-                .flatMap(redisOperations.opsForValue()::get);
+    public Mono<List<Object>> findAll() {
+        Flux<String> keys = redisOperations.keys("oauth2_refresh_token*");
+        return keys.flatMap(redisOperations.opsForValue()::get)
+                .collectList();
     }
 
 }
