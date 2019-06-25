@@ -1,10 +1,12 @@
 /*
  * Copyright 2017-2019 Pamarin.com
  */
-package com.pamarin.learning.webflux.controller.controller;
+package com.pamarin.learning.webflux.controller;
 
+import com.pamarin.learning.webflux.model.User;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -51,5 +53,17 @@ public class HomeController {
                 "November",
                 "December"
         ));
+    }
+
+    @GetMapping("/me")
+    public Mono<User> getUser() {
+        return Mono.just(
+                User.builder()
+                        .id(UUID.randomUUID().toString())
+                        .username("jittagornp")
+                        .password("test")
+                        .email("jittagornp@gmail.com")
+                        .build()
+        );
     }
 }
