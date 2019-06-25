@@ -1,5 +1,5 @@
-# spring-boot-webflux-filter
-Spring-boot WebFlux Filter example 
+# spring-boot-webflux-error-handler
+Spring-boot WebFlux Error Handler example 
 
 
 # Build & Run
