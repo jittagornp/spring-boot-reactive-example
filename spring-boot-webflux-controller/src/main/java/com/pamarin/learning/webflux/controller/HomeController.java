@@ -7,8 +7,10 @@ import com.pamarin.learning.webflux.model.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -16,11 +18,16 @@ import reactor.core.publisher.Mono;
  *
  * @author jitta
  */
+@Slf4j
 @RestController
 public class HomeController {
 
     @GetMapping({"", "/"})
-    public Mono<String> hello() {
+    public Mono<String> hello(ServerWebExchange exchange) {
+        log.debug("path => {}", exchange.getRequest().getPath().value());
+        exchange.getSession().subscribe(session -> {
+            log.debug("session Id => {}", session.getId());
+        });
         return Mono.just("Hello world.");
     }
 
