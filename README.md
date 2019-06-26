@@ -29,6 +29,7 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-thymleaf](spring-boot-webflux-thymleaf)  - การใช้ Thymleaf ทำ View (Server Site) Rendering (HTML)    
 - [spring-boot-webflux-filter](spring-boot-webflux-filter) - การเขียน Filter  
 - [spring-boot-webflux-error-handler](spring-boot-webflux-error-handler) - การจัดการ Exception หรือ Error
+- [spring-boot-webflux-validation](spring-boot-webflux-validation) - การ Validate ข้อมูล  
 - [spring-boot-webflux-scheduling](spring-boot-webflux-scheduling) - การ Run Task แบบ Scheduling
 - [spring-boot-webflux-unit-test](spring-boot-webflux-unit-test) - การเขียน Unit Test  
 - [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql) - การเชื่อมต่อ Postgresql (Relation Database) 
