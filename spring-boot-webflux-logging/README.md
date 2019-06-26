@@ -17,6 +17,12 @@ pom.xml
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
+    
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
+    </dependency>
 </dependencies>
 
 ...
@@ -38,15 +44,19 @@ public class AppStarter {
 
 # 3. เขียน Controller
 ``` java
+@Slf4j
 @RestController
 public class HomeController {
 
     @GetMapping({"", "/"})
     public Mono<String> hello() {
+        log.debug("call hello method");
         return Mono.just("Hello world.");
     }
 }
 ```
+
+@Slf4j เป็นการใช้ annotation ของ lombox หรือ generate Log4J Code 
 
 # 4. Config Logging
 classpath:application.properties 
