@@ -26,6 +26,7 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-helloworld](spring-boot-webflux-helloworld) - Hello World!
 - [spring-boot-webflux-logging](spring-boot-webflux-logging) - การ Config และใช้งาน Logging  
 - [spring-boot-webflux-controller](spring-boot-webflux-controller)  - การเขียน Controller 
+- [spring-boot-webflux-configuration-properties](spring-boot-webflux-configuration-properties) - การอ่าน Config จาก application.properties 
 - [spring-boot-webflux-thymleaf](spring-boot-webflux-thymleaf)  - การใช้ Thymleaf ทำ View (Server Site) Rendering (HTML)    
 - [spring-boot-webflux-filter](spring-boot-webflux-filter) - การเขียน Filter  
 - [spring-boot-webflux-error-handler](spring-boot-webflux-error-handler) - การจัดการ Exception หรือ Error
