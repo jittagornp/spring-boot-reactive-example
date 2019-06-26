@@ -1,5 +1,5 @@
-# spring-boot-webflux-logging
-ตัวอย่างการเขียน Spring-boot WebFlux Logging 
+# spring-boot-webflux-unit-test
+ตัวอย่างการเขียน Spring-boot WebFlux Unit Test 
 
 # 1. เพิ่ม Dependencies
 
@@ -23,13 +23,27 @@ pom.xml
         <artifactId>lombok</artifactId>
         <scope>provided</scope>
     </dependency>
+    
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+    </dependency>
+        
+    <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>3.12.2</version>
+        <scope>test</scope>
+        <type>jar</type>
+    </dependency>
 </dependencies>
 
 ...
 ```
-
-lombox เป็น dependency ที่ใช้สำหรับ generate code จาก annotation ต่าง ๆ   
-เอกสาร [https://projectlombok.org/](https://projectlombok.org/)  
+- junit เป็น dependency สำหรับเขียน test ภาษา java  
+- assertj เป็น dependency สำหรับทำ assert (support junit ซึ่งจริง ๆ ใช้แค่ junit ก็ได้)
 
 # 2. เขียน Main Class 
 
@@ -45,30 +59,41 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน Controller
+# 3. เขียน Logic 
 ``` java
-@Slf4j
-@RestController
-public class HomeController {
+public class ByteUtils {
 
-    @GetMapping({"", "/"})
-    public Mono<String> hello() {
-        log.debug("call hello method");
-        return Mono.just("Hello world.");
+    private ByteUtils() {
+        
     }
+
+    ...
+
 }
 ```
 
-@Slf4j เป็นการใช้ annotation ของ lombox เพื่อ generate Log4J Code (logging)  
-ทำให้เราไม่ต้องเขียน new instance ของ log4j เอง  
-การทำงานของ lombox เป็นการ inject code at compile time  
-
-# 4. Config Logging
-classpath:application.properties 
-``` properties 
-logging.level.org.springframework=DEBUG
-logging.level.com.pamarin=DEBUG
-logging.file=/log/app.log
+# 4. เขียน Unit Test 
+``` java 
+public class ByteUtils_xorTest {
+    
+    /*
+     * A | B | answer 
+     * --------------
+     * 0 | 0 | 0 
+     * 0 | 1 | 1 
+     * 1 | 0 | 1 
+     * 1 | 1 | 0
+     */
+    @Test
+    public void shouldBe00000000() {
+        byte[] input1 = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
+        byte[] input2 = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
+        byte[] output = ByteUtils.xor(input1, input2);
+        byte[] expected = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
+        assertThat(output).isEqualTo(expected);
+    }
+    
+    ...
 ```
 # 5. Build
 cd ไปที่ root ของ project จากนั้น  
@@ -81,6 +106,4 @@ $ mvn clean install
 $ mvn spring-boot:run
 ```
 
-# 7. เข้าใช้งาน
-
-เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+# 8. ดูผลลัพธ์ที่ Console 
