@@ -84,3 +84,7 @@ $ mvn spring-boot:run
 # 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+
+# เอกสารเพิ่มเติม 
+- [https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html)  
