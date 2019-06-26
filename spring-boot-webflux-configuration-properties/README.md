@@ -1,5 +1,5 @@
-# spring-boot-webflux-controller
-ตัวอย่างการเขียน Spring-boot WebFlux Controller 
+# spring-boot-webflux-configuration-properties
+ตัวอย่างการเขียน Spring-boot WebFlux Configuration Properties
 
 # 1. เพิ่ม Dependencies
 
@@ -28,8 +28,6 @@ pom.xml
 ...
 ```
 
-หมายเหตุ lombox เป็น annotation code generator ตัวนึงครับ  
-
 # 2. เขียน Main Class 
 
 ``` java
@@ -44,38 +42,97 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน Controller
+# 3. กำหนด Config 
+classpath:application.properties 
 ``` java
-@RestController
-public class HomeController {
-    ....
-}
+pamarin.kong.adminUrl=http://localhost:8001
+pamarin.kong.serviceRegistry.name="app"
+pamarin.kong.serviceRegistry.url=http://localhost:8080
+pamarin.kong.serviceRegistry.routePaths[0]=/
+pamarin.kong.serviceRegistry.enabled=false
+```
 
-@Slf4j
-@RestController
-public class LoginController {
+# 4. เขียน Class Properties 
+Reference ไปที่ pamarin.kong.* ในไฟล์ application.properties 
+```java
+@Getter
+@Setter
+@Component
+@ConfigurationProperties(prefix = "pamarin.kong")
+public class KongProperties {
 
-    @PostMapping("/login")
-    public void login(@RequestBody LoginRequest req) {
-        log.debug("username => {}", req.getUsername());
-        log.debug("password => {}", req.getPassword());
+    private String adminUrl;
+
+    private ServiceRegistry serviceRegistry;
+
+    @Getter
+    @Setter
+    public static class ServiceRegistry {
+
+        private String name;
+
+        private String url;
+
+        private List<String> routePaths;
+
+        private boolean enabled;
+
+        public List<String> getRoutePaths() {
+            if (routePaths == null) {
+                routePaths = new ArrayList<>();
+                routePaths.add("/");
+            }
+            return routePaths;
+        }
+
+        public boolean getEnabled() {
+            return enabled;
+        }
+
     }
 
+    public ServiceRegistry getServiceRegistry() {
+        if (serviceRegistry == null) {
+            serviceRegistry = new ServiceRegistry();
+        }
+        return serviceRegistry;
+    }
+
+}
+```
+
+# 5. เขียน Controller ลองเรียกใช้งาน
+```java
+@Slf4j
+@RestController
+public class HomeController {
+
+    private final KongProperties properties;
+
+    @Autowired
+    public HomeController(KongProperties properties) {
+        this.properties = properties;
+    }
+
+    @GetMapping({"", "/"})
+    public Mono<KongProperties> hello() {
+        return Mono.just(properties);
+    }
 }
 
 ```
 
-# 4. Build
+# 6. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Run 
+# 6. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 6. เข้าใช้งาน
+# 8. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
