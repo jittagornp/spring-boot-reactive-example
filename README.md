@@ -21,13 +21,13 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 
 ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
-- [spring-boot-webflux-helloworld](spring-boot-webflux-helloworld)
-- [spring-boot-webflux-logging](spring-boot-webflux-logging)  
-- [spring-boot-webflux-controller](spring-boot-webflux-controller) 
-- [spring-boot-webflux-thymleaf](spring-boot-webflux-thymleaf) 
-- [spring-boot-webflux-filter](spring-boot-webflux-filter)
-- [spring-boot-webflux-error-handler](spring-boot-webflux-error-handler) 
-- [spring-boot-webflux-scheduling](spring-boot-webflux-scheduling)
-- [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql)
-- [spring-boot-webflux-mongodb](spring-boot-webflux-mongodb)
-- [spring-boot-webflux-redis](spring-boot-webflux-redis) 
+- [spring-boot-webflux-helloworld](spring-boot-webflux-helloworld) - Hello World!
+- [spring-boot-webflux-logging](spring-boot-webflux-logging) - การ Config และใช้งาน Logging  
+- [spring-boot-webflux-controller](spring-boot-webflux-controller)  - การเขียน Controller 
+- [spring-boot-webflux-thymleaf](spring-boot-webflux-thymleaf)  - การใช้ Thmleaf ทำ View Rendering  
+- [spring-boot-webflux-filter](spring-boot-webflux-filter) - การเขียน Filter  
+- [spring-boot-webflux-error-handler](spring-boot-webflux-error-handler) - การจัดการ Exception หรือ Error  
+- [spring-boot-webflux-scheduling](spring-boot-webflux-scheduling) - การ Run Task แบบ Scheduling  
+- [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql) - การเชื่อมต่อ Postgresql (Relation Database) 
+- [spring-boot-webflux-mongodb](spring-boot-webflux-mongodb) - การเชื่อมต่อ Mongodb (NoSQL Document Database)  
+- [spring-boot-webflux-redis](spring-boot-webflux-redis) - การเชื่อมต่อ Redis (Key/Value NoSQL) 
