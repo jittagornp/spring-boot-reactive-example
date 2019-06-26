@@ -227,3 +227,22 @@ $ mvn spring-boot:run
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
 # 11. ลองยิง request ทดสอบผ่าน postman
+ได้ผลลัพธ์
+```json
+{
+    "error": "bad_request",
+    "errorStatus": 400,
+    "errorDescription": "Validate fail",
+    "errorTimestamp": 1561557757852,
+    "errorUri": "https://developer.pamarin.com/document/error/",
+    "errorCode": "2e13dee7-8e84-452f-8f96-3da05850c096",
+    "state": null,
+    "errorFields": [
+        {
+            "name": "password",
+            "code": "Length",
+            "description": "password must between 8 to 50 characters"
+        }
+    ]
+}
+```
