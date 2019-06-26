@@ -83,6 +83,8 @@ public class ErrorResponse {
 
 }
 ```
+- design ตามนี้้ [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/) 
+
 # 5. เขียน Controller Advice 
 เป็น Global Exception handler
 ```java
