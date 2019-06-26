@@ -170,6 +170,8 @@ public class ErrorResponse {
 }
 ```
 
+อ้างอิง error : [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/)  
+
 # 7. เขียน Controller Advice
 เพื่อแปลง Error ไปเป็น format ตามที่เราต้องการ  
 ```java
