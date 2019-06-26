@@ -44,7 +44,7 @@ public class AppStarter {
 
 # 3. กำหนด Config 
 classpath:application.properties 
-``` java
+``` properties
 pamarin.kong.adminUrl=http://localhost:8001
 pamarin.kong.serviceRegistry.name="app"
 pamarin.kong.serviceRegistry.url=http://localhost:8080
