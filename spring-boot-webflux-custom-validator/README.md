@@ -85,6 +85,7 @@ public @interface Email {
 }
 
 ```
+- Validator ที่เราทำการ Custom เองจะอยู่ในรูปของ annotation และมี logic หรือ class validator ผูกกับ annotation นั้น ๆ เพื่อทำการ validate ข้อมูลตามที่เราต้องการ  
 
 
 # 4. เขียน Model & ใส่ Validator annotation
