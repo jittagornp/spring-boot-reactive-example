@@ -28,6 +28,9 @@ pom.xml
 ...
 ```
 
+lombox เป็น dependency ที่ใช้สำหรับ generate code จาก annotation ต่าง ๆ   
+เอกสาร [https://projectlombok.org/](https://projectlombok.org/)  
+
 # 2. เขียน Main Class 
 
 ``` java
@@ -56,7 +59,7 @@ public class HomeController {
 }
 ```
 
-@Slf4j เป็นการใช้ annotation ของ lombox หรือ generate Log4J Code 
+@Slf4j เป็นการใช้ annotation ของ lombox เพื่อ generate Log4J Code 
 
 # 4. Config Logging
 classpath:application.properties 
