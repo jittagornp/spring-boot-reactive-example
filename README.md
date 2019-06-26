@@ -16,9 +16,10 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 
 
 # เริ่ม 
-ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
 > Code บางตัวอาจจะไม่สามารถเอาไป Run ได้เลย เนื่องจากต้องเตรียม environment ต่าง ๆ ให้พร้อมก่อน เช่น Postgresql, Mongodb, Redis เป็นต้น ต้องมี database หรือ data source ปลายทางก่อน  
+
+ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
 - [spring-boot-webflux-helloworld](spring-boot-webflux-helloworld)
 - [spring-boot-webflux-controller](spring-boot-webflux-controller) 
