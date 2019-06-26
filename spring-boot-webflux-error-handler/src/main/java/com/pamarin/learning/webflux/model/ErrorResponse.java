@@ -3,6 +3,8 @@
  */
 package com.pamarin.learning.webflux.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,4 +36,27 @@ public class ErrorResponse {
 
     private String state;
 
+    private List<Field> errorFields;
+
+    public List<Field> getErrorFields() {
+        if (errorFields == null) {
+            errorFields = new ArrayList<>();
+        }
+        return errorFields;
+    }
+
+    @Setter
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Field {
+
+        private String name;
+
+        private String code;
+
+        private String description;
+
+    }
 }
