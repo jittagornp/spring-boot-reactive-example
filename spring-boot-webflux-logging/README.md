@@ -1,5 +1,5 @@
-# spring-boot-webflux-helloworld
-ตัวอย่างการเขียน Spring-boot WebFlux Hello World
+# spring-boot-webflux-logging
+ตัวอย่างการเขียน Spring-boot WebFlux Logging 
 
 # 1. เพิ่ม Dependencies
 
@@ -48,17 +48,24 @@ public class HomeController {
 }
 ```
 
-# 4. Build
+# 4. Config Logging
+classpath:application.properties 
+``` properties 
+logging.level.org.springframework=DEBUG
+logging.level.com.pamarin=DEBUG
+logging.file=/log/app.log
+```
+# 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Run 
+# 6. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 6. เข้าใช้งาน
+# 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
