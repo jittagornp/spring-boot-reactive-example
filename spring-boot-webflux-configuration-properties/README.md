@@ -135,4 +135,19 @@ $ mvn spring-boot:run
 
 # 8. เข้าใช้งาน
 
-เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)  
+  
+ผลลัพธ์
+```json
+{
+    "adminUrl": "http://localhost:8001",
+    "serviceRegistry": {
+        "name": "\"app\"",
+        "url": "http://localhost:8080",
+        "routePaths": [
+            "/"
+        ],
+        "enabled": false
+    }
+}
+```
