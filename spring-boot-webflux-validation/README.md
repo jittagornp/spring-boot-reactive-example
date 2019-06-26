@@ -209,17 +209,19 @@ public class ErrorControllerAdvice {
 }    
 ```
 
-# 6. Build
+# 8. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Run 
+# 9. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 6. เข้าใช้งาน
+# 10. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+# 11. ลองยิง request ทดสอบผ่าน postman
