@@ -3,10 +3,8 @@
  */
 package com.pamarin.learning.webflux.controller;
 
-import com.pamarin.learning.webflux.model.User;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,15 +62,4 @@ public class HomeController {
         ));
     }
 
-    @GetMapping("/me")
-    public Mono<User> getUser() {
-        return Mono.just(
-                User.builder()
-                        .id(UUID.randomUUID().toString())
-                        .username("jittagornp")
-                        .password("test")
-                        .email("jittagornp@gmail.com")
-                        .build()
-        );
-    }
 }
