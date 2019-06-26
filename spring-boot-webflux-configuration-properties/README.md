@@ -52,7 +52,7 @@ pamarin.kong.serviceRegistry.routePaths[0]=/
 pamarin.kong.serviceRegistry.enabled=false
 ```
 
-# 4. เขียน Class Properties 
+# 4. เขียน Properties Class  
 Reference ไปที่ pamarin.kong.* ในไฟล์ application.properties 
 ```java
 @Getter
