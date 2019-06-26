@@ -1,6 +1,6 @@
 # spring-boot-webflux-example
 
-ตัวอย่างการเขียน Java Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O  
+ตัวอย่างการเขียน Java Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O หรือ Asynchronous 
 
 ![Reactive Spring](reactive_spring.png)
 
