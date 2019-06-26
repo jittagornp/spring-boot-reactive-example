@@ -59,7 +59,9 @@ public class HomeController {
 }
 ```
 
-@Slf4j เป็นการใช้ annotation ของ lombox เพื่อ generate Log4J Code 
+@Slf4j เป็นการใช้ annotation ของ lombox เพื่อ generate Log4J Code (logging)  
+ทำให้เราไม่ต้องเขียน new instance ของ log4j เอง  
+การทำงานของ lombox เป็นการ inject code at compile time  
 
 # 4. Config Logging
 classpath:application.properties 
