@@ -55,7 +55,8 @@ public class HomeController {
 
 }
 ```
-- ลอง Throw RuntimeException ดู 
+- ลอง throw RuntimeException ดู 
+- เราสามารถ throw Exception ประเภทอื่น ๆ ตามที่เราต้องการได้ 
 
 # 4. เขียน Error Model 
 ``` java 
@@ -107,6 +108,7 @@ public class ErrorControllerAdvice {
 
 }
 ```
+- เราสามารถ เพิ่ม method เพื่อ catch exception อื่น ๆ ได้ 
 
 # 6. Build
 cd ไปที่ root ของ project จากนั้น  
