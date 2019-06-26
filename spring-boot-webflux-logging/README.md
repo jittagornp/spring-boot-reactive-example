@@ -1,5 +1,5 @@
-# spring-boot-webflux-helloworld
-ตัวอย่างการเขียน Spring-boot WebFlux Hello World
+# spring-boot-webflux-logging
+ตัวอย่างการเขียน Spring-boot WebFlux Logging 
 
 # 1. เพิ่ม Dependencies
 
@@ -17,10 +17,19 @@ pom.xml
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
+    
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
+    </dependency>
 </dependencies>
 
 ...
 ```
+
+lombox เป็น dependency ที่ใช้สำหรับ generate code จาก annotation ต่าง ๆ   
+เอกสาร [https://projectlombok.org/](https://projectlombok.org/)  
 
 # 2. เขียน Main Class 
 
@@ -38,27 +47,40 @@ public class AppStarter {
 
 # 3. เขียน Controller
 ``` java
+@Slf4j
 @RestController
 public class HomeController {
 
     @GetMapping({"", "/"})
     public Mono<String> hello() {
+        log.debug("call hello method");
         return Mono.just("Hello world.");
     }
 }
 ```
 
-# 4. Build
+@Slf4j เป็นการใช้ annotation ของ lombox เพื่อ generate Log4J Code (logging)  
+ทำให้เราไม่ต้องเขียน new instance ของ log4j เอง  
+การทำงานของ lombox เป็นการ inject code at compile time  
+
+# 4. Config Logging
+classpath:application.properties 
+``` properties 
+logging.level.org.springframework=DEBUG
+logging.level.com.pamarin=DEBUG
+logging.file=/log/app.log
+```
+# 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Run 
+# 6. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 6. เข้าใช้งาน
+# 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
