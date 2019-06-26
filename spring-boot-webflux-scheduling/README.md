@@ -1,5 +1,5 @@
-# spring-boot-webflux-filter
-Spring-boot WebFlux Filter example 
+# spring-boot-webflux-scheduling
+Spring-boot WebFlux Scheduling example 
 
 
 # Build & Run
