@@ -101,9 +101,4 @@ cd ไปที่ root ของ project จากนั้น
 $ mvn clean install
 ```
 
-# 6. Run 
-``` shell 
-$ mvn spring-boot:run
-```
-
-# 8. ดูผลลัพธ์ที่ Console 
+# 6. ดูผลลัพธ์ที่ Console 
