@@ -244,6 +244,7 @@ $ mvn spring-boot:run
 
 # 11. ลองยิง request ทดสอบผ่าน postman
 > POST : http://localhost:8080/register  
+  
 ได้ผลลัพธ์
 ```json
 {
