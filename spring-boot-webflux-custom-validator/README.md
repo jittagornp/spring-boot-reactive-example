@@ -142,18 +142,24 @@ public class ErrorResponse {
 
     private String error;
 
+    @JsonProperty("error_status")
     private int errorStatus;
 
+    @JsonProperty("error_description")
     private String errorDescription;
 
+    @JsonProperty("error_timestamp")
     private long errorTimestamp;
 
+    @JsonProperty("error_uri")
     private String errorUri;
 
+    @JsonProperty("error_code")
     private String errorCode;
 
     private String state;
 
+    @JsonProperty("error_field")
     private List<Field> errorFields;
 
     public List<Field> getErrorFields() {
@@ -237,17 +243,19 @@ $ mvn spring-boot:run
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
 # 11. ลองยิง request ทดสอบผ่าน postman
+> POST : http://localhost:8080/register  
+  
 ได้ผลลัพธ์
 ```json
 {
     "error": "bad_request",
-    "errorStatus": 400,
-    "errorDescription": "Validate fail",
-    "errorTimestamp": 1561563410755,
-    "errorUri": "https://developer.pamarin.com/document/error/",
-    "errorCode": "678ac1e7-83bc-4325-9830-9757f78562c3",
     "state": null,
-    "errorFields": [
+    "error_status": 400,
+    "error_description": "Validate fail",
+    "error_timestamp": 1561611940363,
+    "error_uri": "https://developer.pamarin.com/document/error/",
+    "error_code": "876ba285-c0f8-4fd5-b37e-c109afb5c711",
+    "error_field": [
         {
             "name": "password",
             "code": "Length",
@@ -259,14 +267,14 @@ $ mvn spring-boot:run
             "description": "at least one lower case letter, one upper case letter, one special character and one numeric digit"
         },
         {
-            "name": "confirmPassword",
-            "code": "PasswordEqualsConfirmPassword",
-            "description": "password not equals confirm password"
-        },
-        {
             "name": "email",
             "code": "NotBlank",
             "description": "require email"
+        },
+        {
+            "name": "confirmPassword",
+            "code": "PasswordEqualsConfirmPassword",
+            "description": "password not equals confirm password"
         }
     ]
 }
