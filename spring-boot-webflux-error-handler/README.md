@@ -69,18 +69,47 @@ public class ErrorResponse {
 
     private String error;
 
+    @JsonProperty("error_status")
     private int errorStatus;
 
+    @JsonProperty("error_description")
     private String errorDescription;
 
+    @JsonProperty("error_timestamp")
     private long errorTimestamp;
 
+    @JsonProperty("error_uri")
     private String errorUri;
 
+    @JsonProperty("error_code")
     private String errorCode;
 
     private String state;
 
+    @JsonProperty("error_field")
+    private List<Field> errorFields;
+
+    public List<Field> getErrorFields() {
+        if (errorFields == null) {
+            errorFields = new ArrayList<>();
+        }
+        return errorFields;
+    }
+
+    @Setter
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Field {
+
+        private String name;
+
+        private String code;
+
+        private String description;
+
+    }
 }
 ```
 - design ตามนี้้ [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/) 
@@ -126,3 +155,17 @@ $ mvn spring-boot:run
 # 8. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+# ผลลัพธ์ที่ได้
+```json
+{
+    "error": "server_error",
+    "state": null,
+    "error_status": 500,
+    "error_description": "Internal Server Error",
+    "error_timestamp": 1561611398635,
+    "error_uri": "https://developer.pamarin.com/document/error/",
+    "error_code": "637438dc-6e67-4706-9431-cfcd4a889011",
+    "error_field": []
+}
+```

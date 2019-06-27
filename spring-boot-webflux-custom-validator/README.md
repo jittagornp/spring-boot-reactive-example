@@ -1,5 +1,5 @@
-# spring-boot-webflux-validation
-ตัวอย่างการเขียน Spring-boot WebFlux Validation 
+# spring-boot-webflux-custom-validator
+ตัวอย่างการเขียน Spring-boot WebFlux Custom Validator 
 
 # 1. เพิ่ม Dependencies
 
@@ -41,85 +41,95 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน Model & ใส่ Validator annotation
+# 3. Custom Validator  
+
+```java 
+@Target({ElementType.FIELD})
+@Retention(RUNTIME)
+@Constraint(validatedBy = Validator.class)
+public @interface Email {
+
+    String message() default "invalid email";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+
+    @Component
+    public class Validator implements ConstraintValidator<Email, String> {
+
+        private static final String REGX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
+        @Override
+        public void initialize(Email annotation) {
+
+        }
+
+        @Override
+        public boolean isValid(String email, ConstraintValidatorContext context) {
+            if (!hasText(email)) {
+                return true;
+            }
+
+            return Pattern.compile(REGX).matcher(email).matches();
+        }
+
+        public boolean isValid(String email) {
+            return isValid(email, null);
+        }
+
+        public static String getEmailRegExp() {
+            return REGX;
+        }
+    }
+}
+
+```
+- Validator ที่เราทำการ Custom เองจะอยู่ในรูปของ annotation และมี logic หรือ class validator ผูกกับ annotation นั้น ๆ เพื่อทำการ validate ข้อมูลตามที่เราต้องการ  
+
+
+# 4. เขียน Model & ใส่ Validator annotation
 ```java
-@Setter
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
+@PasswordEqualsConfirmPassword
+@PasswordNotEqualsEmail
+public class RegisterForm implements PasswordEqualsConfirmPassword.Model, PasswordNotEqualsEmail.Model {
 
-    @NotBlank(message = "require username")
-    @Length(max = 50, message = "username more than {max} characters")
-    private String username;
+    @NotBlank(message = "require email")
+    @Email(message = "invalid format")
+    private String email;
 
-    @NotBlank(message = "require password")
-    @Length(min = 8, max = 50, message = "password must between {min} to {max} characters")
+    @AtLeastPassword
+    @Length(min = 8, max = 50, message = "at least {min} characters")
     private String password;
 
-}
-```
-- @NotBlank คือ ห้ามเป็น null หรือ ค่าว่าง 
-- @Length คือ ต้องมีขนาดตามที่ระบุ  
+    @Length(min = 8, max = 50, message = "at least {min} characters")
+    private String confirmPassword;
 
-# 4. เขียน Controller
+}
+
+```
+
+# 5. เขียน Controller
 ``` java
 @Slf4j
 @RestController
-public class LoginController {
+public class RegisterController {
 
-    @PostMapping("/login")
-    public void login(@RequestBody @Validated LoginRequest req) {
-        log.debug("username => {}", req.getUsername());
+    @PostMapping("/register")
+    public void register(@RequestBody @Validated RegisterForm req) {
+        log.debug("email => {}", req.getEmail());
         log.debug("password => {}", req.getPassword());
     }
 
 }
+
 ```
 - สังเกตว่าตรง input method ใน controller มี @Validated เพื่อบอกว่าให้ validate input ที่เป็น request body (json) ด้วย   
-
-# 5. เขียน error handler
-เพราะถ้าไม่แปลง error เอง spring จะพ่น json error ออกเป็นหน้าตาประมาณนี้   
-```json
-{
-    "timestamp": "2019-06-26T13:54:15.687+0000",
-    "path": "/login",
-    "status": 400,
-    "error": "Bad Request",
-    "message": "Validation failed for argument at index 0 in method: public void com.pamarin.learning.webflux.controller.LoginController.login(com.pamarin.learning.webflux.model.LoginRequest), with 1 error(s): [Field error in object 'loginRequest' on field 'password': rejected value [pass]; codes [Length.loginRequest.password,Length.password,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequest.password,password]; arguments []; default message [password],50,8]; default message [password must between 8 to 50 characters]] ",
-    "errors": [
-        {
-            "codes": [
-                "Length.loginRequest.password",
-                "Length.password",
-                "Length.java.lang.String",
-                "Length"
-            ],
-            "arguments": [
-                {
-                    "codes": [
-                        "loginRequest.password",
-                        "password"
-                    ],
-                    "arguments": null,
-                    "defaultMessage": "password",
-                    "code": "password"
-                },
-                50,
-                8
-            ],
-            "defaultMessage": "password must between 8 to 50 characters",
-            "objectName": "loginRequest",
-            "field": "password",
-            "rejectedValue": "pass",
-            "bindingFailure": false,
-            "code": "Length"
-        }
-    ]
-}
-```
-ซึ่งผมมองว่ามันไม่สวย แล้วข้อมูล information ต่าง ๆ ของ framework หรือ system หลุดออกมาด้วย เลยเขียน error เอง
 
 # 6. เขียน error model
 ```java 
@@ -233,16 +243,32 @@ $ mvn spring-boot:run
     "error": "bad_request",
     "errorStatus": 400,
     "errorDescription": "Validate fail",
-    "errorTimestamp": 1561557757852,
+    "errorTimestamp": 1561563410755,
     "errorUri": "https://developer.pamarin.com/document/error/",
-    "errorCode": "2e13dee7-8e84-452f-8f96-3da05850c096",
+    "errorCode": "678ac1e7-83bc-4325-9830-9757f78562c3",
     "state": null,
     "errorFields": [
         {
             "name": "password",
             "code": "Length",
-            "description": "password must between 8 to 50 characters"
+            "description": "at least 8 characters"
+        },
+        {
+            "name": "password",
+            "code": "AtLeastPassword",
+            "description": "at least one lower case letter, one upper case letter, one special character and one numeric digit"
+        },
+        {
+            "name": "confirmPassword",
+            "code": "PasswordEqualsConfirmPassword",
+            "description": "password not equals confirm password"
+        },
+        {
+            "name": "email",
+            "code": "NotBlank",
+            "description": "require email"
         }
     ]
 }
 ```
+ 

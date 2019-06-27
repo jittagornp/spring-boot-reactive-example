@@ -1,6 +1,6 @@
 # spring-boot-webflux-example
 
-ตัวอย่างการเขียน Java Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O  
+ตัวอย่างการเขียน Java Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O หรือ Asynchronous 
 
 ![Reactive Spring](reactive_spring.png)
 
@@ -31,8 +31,11 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-filter](spring-boot-webflux-filter) - การเขียน Filter  
 - [spring-boot-webflux-error-handler](spring-boot-webflux-error-handler) - การจัดการ Exception หรือ Error
 - [spring-boot-webflux-validation](spring-boot-webflux-validation) - การ Validate ข้อมูล  
+- [spring-boot-webflux-custom-validator](spring-boot-webflux-custom-validator) - การ custom validator  
 - [spring-boot-webflux-scheduling](spring-boot-webflux-scheduling) - การ Run Task แบบ Scheduling
 - [spring-boot-webflux-unit-test](spring-boot-webflux-unit-test) - การเขียน Unit Test  
 - [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql) - การเชื่อมต่อ Postgresql (Relation Database) 
 - [spring-boot-webflux-mongodb](spring-boot-webflux-mongodb) - การเชื่อมต่อ Mongodb (NoSQL Document Database)  
 - [spring-boot-webflux-redis](spring-boot-webflux-redis) - การเชื่อมต่อ Redis (Key/Value NoSQL) 
+
+> ผมจะค่อย ๆ add module ต่าง ๆ เข้าไปเรื่อย ๆ น่ะครับ  อาจจะได้วันละ 2-3 modules แล้วแต่เวลาว่าง + ความยากง่ายของ module นั้น ๆ ครับ
