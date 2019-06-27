@@ -132,18 +132,24 @@ public class ErrorResponse {
 
     private String error;
 
+    @JsonProperty("error_status")
     private int errorStatus;
 
+    @JsonProperty("error_description")
     private String errorDescription;
 
+    @JsonProperty("error_timestamp")
     private long errorTimestamp;
 
+    @JsonProperty("error_uri")
     private String errorUri;
 
+    @JsonProperty("error_code")
     private String errorCode;
 
     private String state;
 
+    @JsonProperty("error_field")
     private List<Field> errorFields;
 
     public List<Field> getErrorFields() {
@@ -227,17 +233,18 @@ $ mvn spring-boot:run
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
 # 11. ลองยิง request ทดสอบผ่าน postman
+> POST : http://localhost:8080/login  
 ได้ผลลัพธ์
 ```json
 {
     "error": "bad_request",
-    "errorStatus": 400,
-    "errorDescription": "Validate fail",
-    "errorTimestamp": 1561557757852,
-    "errorUri": "https://developer.pamarin.com/document/error/",
-    "errorCode": "2e13dee7-8e84-452f-8f96-3da05850c096",
     "state": null,
-    "errorFields": [
+    "error_status": 400,
+    "error_description": "Validate fail",
+    "error_timestamp": 1561611745664,
+    "error_uri": "https://developer.pamarin.com/document/error/",
+    "error_code": "1e71a8a1-48eb-41d1-b8c0-101a067dd176",
+    "error_field": [
         {
             "name": "password",
             "code": "Length",
