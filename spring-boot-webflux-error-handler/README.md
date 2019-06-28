@@ -96,7 +96,7 @@ public class ErrorResponse {
 - design ตามนี้้ [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/) 
 
 # 5. เขียน WebExceptionHandler 
-เป็น Global Exception handler
+เป็นตัวจัดการ Global Exception ทุกประเภท ซึ่ง WebFlux จะโยน Exception เข้ามาที่นี่ 
 ```java
 @Component
 @Order(-2)
