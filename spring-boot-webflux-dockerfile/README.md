@@ -109,3 +109,14 @@ $ docker run -d -p 8080:8080 --name hello-world hello-world
 # 8. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+# คำสั่งอื่น ๆ ของ Docker  
+
+- `docker ps -a` ไว้ดู container ทั้งหมด
+- `docker stop <DOCKER_NAME or DOCKER_ID>` ไว้ stop container 
+- `docker start <DOCKER_NAME or DOCKER_ID>` ไว้ start container 
+- `docker rm <DOCKER_NAME or DOCKER_ID>` ไว้ลบ container 
+- `docker logs <DOCKER_NAME or DOCKER_ID>` ไว้ดู log ของ container  
+  
+- `docker image ls` ไว้ดู image ทั้งหมด 
+- `docker image rm <IMAGE_NAME>` ไว้ลบ image
