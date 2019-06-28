@@ -41,7 +41,7 @@ public class AppStarter {
 }
 ```
 
-# 3. Custom Validator  
+# 3. เขียน Custom Validator  
 
 ```java 
 @Target({ElementType.FIELD})
