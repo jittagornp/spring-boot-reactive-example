@@ -135,7 +135,7 @@ public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> 
 ```
 ### implementation Error แต่ละประเภท
 
-ตัวจากการ Exception  
+ตัวจัดการ Exception  
 ```java
 @Component
 public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHandlerAdapter<Exception> {
@@ -151,7 +151,7 @@ public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHan
     }
 }
 ```
-ตัวจากการ ResponseStatusException 
+ตัวจัดการ ResponseStatusException 
 ```java
 @Component
 public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseExceptionHandlerAdapter<ResponseStatusException> {
