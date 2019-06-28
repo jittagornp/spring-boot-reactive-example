@@ -51,23 +51,43 @@ public class HomeController {
     }
 }
 ```
+# 4. เขียน Dockerfile 
+```dockerfile 
+# Use official base image of Java Runtim
+FROM openjdk:8-jdk-alpine
 
-# 4. Build
+# Set volume point to /tmp
+VOLUME /tmp
+
+# Make port 8080 available to the world outside container
+EXPOSE 8080
+
+# Set application's JAR file
+ARG JAR_FILE=target/*.jar
+
+# Add the application's JAR file to the container
+ADD ${JAR_FILE} app.jar
+
+# Run the JAR file
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "/app.jar"]
+```
+
+# 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Build Image จาก Dockerfile  
+# 6. Build Image จาก Dockerfile  
 ``` shell 
 $ docker build -t hello-world -f ./Dockerfile .
 ```
 
-# 6. Run Container 
+# 7. Run Container 
 ``` shell
 $ docker run -d -p 8080:8080 --name hello-world hello-world 
 ```
 
-# 6. เข้าใช้งาน
+# 8. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
