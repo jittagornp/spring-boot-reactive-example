@@ -1,5 +1,5 @@
-# spring-boot-webflux-error-handler 
-ตัวอย่างการเขียน Spring-boot WebFlux Error Handler 
+# spring-boot-webflux-custom-error-handler 
+ตัวอย่างการเขียน Spring-boot WebFlux Custom Error Handler 
 
 # 1. เพิ่ม Dependencies
 
@@ -110,36 +110,99 @@ public class ErrorResponse {
         private String description;
 
     }
+    
+    ...
 }
 ```
 - design ตามนี้้ [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/) 
 
-# 5. เขียน Controller Advice 
-เป็น Global Exception handler
-```java
-@ControllerAdvice
-public class ErrorControllerAdvice {
+# 5. เขียน ExceptionHandler 
+ตัวจัดการ Error แต่ละประเภท   
 
-    @ExceptionHandler(Exception.class)
-    public Mono<ResponseEntity<ErrorResponse>> handle(Exception ex, ServerWebExchange exchange) {
-        return Mono.just(
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(
-                                ErrorResponse.builder()
-                                        .error("server_error")
-                                        .errorDescription("Internal Server Error")
-                                        .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                                        .errorTimestamp(System.currentTimeMillis())
-                                        .errorUri("https://developer.pamarin.com/document/error/")
-                                        .errorCode(UUID.randomUUID().toString())
-                                        .build()
-                        )
-        );
+### ประกาศ interface 
+```java
+public interface ErrorResponseExceptionHandler<E extends Throwable> {
+
+    Class<E> getTypeClass();
+
+    ErrorResponse handle(ServerWebExchange exchange, E e);
+
+}
+```
+### เขียน Adapter 
+```java
+public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> implements ErrorResponseExceptionHandler<E> {
+
+    protected abstract ErrorResponse buildError(ServerWebExchange exchange, E e);
+
+    private String getErrorCode(ServerWebExchange exchange) {
+        return UUID.randomUUID().toString();
+    }
+
+    private ErrorResponse additional(ErrorResponse err, ServerWebExchange exchange, E e) {
+        ServerHttpRequest httpReq = exchange.getRequest();
+        err.setState(httpReq.getQueryParams().getFirst("state"));
+        err.setErrorTimestamp(System.currentTimeMillis());
+        err.setErrorCode(getErrorCode(exchange));
+        return err;
+    }
+
+    @Override
+    public ErrorResponse handle(ServerWebExchange exchange, E e) {
+        ErrorResponse err = buildError(exchange, e);
+        return additional(err, exchange, e);
     }
 
 }
 ```
-- เราสามารถ เพิ่ม method เพื่อ catch exception อื่น ๆ ได้ 
+### เขียน implementation Error แต่ละประเภท
+```java
+@Component
+public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHandlerAdapter<Exception> {
+
+    @Override
+    public Class<Exception> getTypeClass() {
+        return Exception.class;
+    }
+
+    @Override
+    protected ErrorResponse buildError(ServerWebExchange exchange, Exception ex) {
+        return ErrorResponse.serverError();
+    }
+}
+```
+
+```java
+@Component
+public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseExceptionHandlerAdapter<ResponseStatusException> {
+
+    @Override
+    public Class<ResponseStatusException> getTypeClass() {
+        return ResponseStatusException.class;
+    }
+
+    @Override
+    protected ErrorResponse buildError(ServerWebExchange exchange, ResponseStatusException ex) {
+        //400
+        if (ex.getStatus() == HttpStatus.BAD_REQUEST) {
+            return ErrorResponse.invalidRequest(ex.getMessage());
+        }
+        //401
+        if (ex.getStatus() == HttpStatus.UNAUTHORIZED) {
+            return ErrorResponse.unauthorized(ex.getMessage());
+        }
+        //403
+        if (ex.getStatus() == HttpStatus.FORBIDDEN) {
+            return ErrorResponse.accessDenied(ex.getMessage());
+        }
+        //404
+        if (ex.getStatus() == HttpStatus.NOT_FOUND) {
+            return ErrorResponse.notFound(ex.getMessage());
+        }
+        return ErrorResponse.serverError();
+    }
+}
+```
 
 # 6. Build
 cd ไปที่ root ของ project จากนั้น  
