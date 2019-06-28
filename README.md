@@ -40,3 +40,8 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-redis](spring-boot-webflux-redis) - การเชื่อมต่อ Redis (Key/Value NoSQL) 
 
 > ผมจะค่อย ๆ add module ต่าง ๆ เข้าไปเรื่อย ๆ น่ะครับ  อาจจะได้วันละ 2-3 modules แล้วแต่เวลาว่าง + ความยากง่ายของ module นั้น ๆ ครับ
+
+# บทความอื่น ๆ เกี่ยวกับ WebFlux
+- [สร้าง Reactive RESTful Web Service ด้วย Spring WebFlux](https://medium.com/@phayao/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-reactive-restful-web-service-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-spring-webflux-c42094a3424e)
+
+ขอบคุณสำหรับเจ้าของบทความครับ 
