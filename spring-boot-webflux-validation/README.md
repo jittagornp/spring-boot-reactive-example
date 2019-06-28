@@ -86,7 +86,7 @@ public class LoginController {
 ตัวจัดการ Error ให้เขียนรูู้จากหัวข้อ [spring-boot-webflux-custom-error-handler](../spring-boot-webflux-custom-error-handler)
 
 # 6. เพิ่มตัวจัดการ Error สำหรับ WebExchangeBindException
-```
+```java 
 @Component
 public class ErrorResponseWebExchangeBindExceptionHandler extends ErrorResponseExceptionHandlerAdapter<WebExchangeBindException> {
 
