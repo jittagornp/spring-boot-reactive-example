@@ -72,6 +72,14 @@ ADD ${JAR_FILE} app.jar
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "/app.jar"]
 ```
 
+### คำอธิบาย
+- `FROM openjdk:8-jdk-alpine` คือ ใช้ base image เป็น openjdk 8 alpine  
+- `VOLUME` เป็นการ mount พื้นที่เก็บข้อมูล (volume) ใน container ว่าให้ชี้ไปที่ /tmp (temp)
+- `EXPOSE` เป็นการเปิด port 8080 เพื่อให้ข้างนอกสามารถ access ได้ 
+- `ARG JAR_FILE=target/*.jar` เป็นการกำหนด arguments ที่ใช้สำหรับ build image 
+- `ADD ${JAR_FILE} app.jar` เพิ่ม หรือ copy ข้อมูลตาม arguments ที่กำหนด เข้าไปใน container โดยใช้ชื่อเป็น app.jar  
+- `ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "/app.jar"]` เป็นการ run command ภายใน container ในที่นี้คือสั่ง run java application (.jar)  
+
 # 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
