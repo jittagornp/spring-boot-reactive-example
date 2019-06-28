@@ -120,3 +120,10 @@ $ docker run -d -p 8080:8080 --name hello-world hello-world
   
 - `docker image ls` ไว้ดู image ทั้งหมด 
 - `docker image rm <IMAGE_NAME>` ไว้ลบ image
+
+# เอกสารอ่านเพิ่มเติม
+- [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)  
+- [สร้าง Docker ของ Spring Boot กันเถอะ](https://medium.com/@phayao/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-docker-%E0%B8%82%E0%B8%AD%E0%B8%87-spring-boot-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B9%80%E0%B8%96%E0%B8%AD%E0%B8%B0-2a36adc7a0ba)
+- [จัดการ Spring boot application ด้วย Docker](http://www.somkiat.cc/docker-with-spring-boot/)  
+
+ขอบคุณสำหรับเอกสารและบทความครับ  
