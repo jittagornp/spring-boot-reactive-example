@@ -156,6 +156,8 @@ public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> 
 }
 ```
 ### implementation Error แต่ละประเภท
+
+ตัวจากการ Exception  
 ```java
 @Component
 public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHandlerAdapter<Exception> {
@@ -171,7 +173,7 @@ public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHan
     }
 }
 ```
-
+ตัวจากการ ResponseStatusException 
 ```java
 @Component
 public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseExceptionHandlerAdapter<ResponseStatusException> {
@@ -206,7 +208,9 @@ public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseEx
 - สารมาณเพิ่ม class ใหม่ได้เรื่อย ๆ 
 
 # 6. เขียน Resolver 
-สำหรับ resolve error แต่ละประเภท 
+สำหรับ resolve error แต่ละประเภท   
+  
+ประกาศ interface
 ```java 
 public interface ErrorResponseExceptionHandlerResolver {
 
@@ -215,7 +219,8 @@ public interface ErrorResponseExceptionHandlerResolver {
 }
 ```
 
-```
+implement interface  
+```java 
 @Component
 public class DefaultErrorResponseExceptionHandlerResolver implements ErrorResponseExceptionHandlerResolver {
 
