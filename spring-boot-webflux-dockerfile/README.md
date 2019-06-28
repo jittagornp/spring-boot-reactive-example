@@ -1,5 +1,9 @@
-# spring-boot-webflux-helloworld
-ตัวอย่างการเขียน Spring-boot WebFlux Hello World
+# spring-boot-webflux-dockerfile 
+ตัวอย่างการเขียน Spring-boot WebFlux Dockerfile 
+
+# Requires 
+
+- ในเครื่องมีการติดตั้ง Docker แล้ว  
 
 # 1. เพิ่ม Dependencies
 
@@ -54,9 +58,14 @@ cd ไปที่ root ของ project จากนั้น
 $ mvn clean install
 ```
 
-# 5. Run 
+# 5. Build Image จาก Dockerfile  
 ``` shell 
-$ mvn spring-boot:run
+$ docker build -t hello-world -f ./Dockerfile .
+```
+
+# 6. Run Container 
+``` shell
+$ docker run -d -p 8080:8080 --name hello-world hello-world 
 ```
 
 # 6. เข้าใช้งาน
