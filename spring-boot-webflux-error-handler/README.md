@@ -114,32 +114,53 @@ public class ErrorResponse {
 ```
 - design ตามนี้้ [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/) 
 
-# 5. เขียน Controller Advice 
+# 5. เขียน WebExceptionHandler 
 เป็น Global Exception handler
 ```java
-@ControllerAdvice
-public class ErrorControllerAdvice {
+@Component
+@Order(-2)
+public class GlobalWebExceptionHandler implements WebExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public Mono<ResponseEntity<ErrorResponse>> handle(Exception ex, ServerWebExchange exchange) {
-        return Mono.just(
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(
-                                ErrorResponse.builder()
-                                        .error("server_error")
-                                        .errorDescription("Internal Server Error")
-                                        .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                                        .errorTimestamp(System.currentTimeMillis())
-                                        .errorUri("https://developer.pamarin.com/document/error/")
-                                        .errorCode(UUID.randomUUID().toString())
-                                        .build()
-                        )
-        );
+    private final ObjectMapper objectMapper;
+
+    @Autowired
+    public GlobalWebExceptionHandler(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
+    @Override
+    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+        ResponseEntity<ErrorResponse> entity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(
+                        ErrorResponse.builder()
+                                .error("server_error")
+                                .errorDescription("Internal Server Error")
+                                .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                                .errorTimestamp(System.currentTimeMillis())
+                                .errorUri("https://developer.pamarin.com/document/error/")
+                                .errorCode(UUID.randomUUID().toString())
+                                .build()
+                );
+        return setHttpResponse(entity, exchange);
+    }
+
+    public Mono<Void> setHttpResponse(
+            final ResponseEntity<ErrorResponse> entity,
+            final ServerWebExchange exchange
+    ) {
+        final ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(entity.getStatusCode());
+        response.getHeaders().addAll(entity.getHeaders());
+        try {
+            final DataBuffer buffer = response.bufferFactory().wrap(objectMapper.writeValueAsBytes(entity.getBody()));
+            return response.writeWith(Mono.just(buffer)).doOnError(error -> DataBufferUtils.release(buffer));
+        } catch (final JsonProcessingException ex) {
+            return Mono.error(ex);
+        }
+    }
 }
 ```
-- เราสามารถ เพิ่ม method เพื่อ catch exception อื่น ๆ ได้ 
 
 # 6. Build
 cd ไปที่ root ของ project จากนั้น  
