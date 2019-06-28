@@ -63,6 +63,8 @@ public class LoginRequest {
 - @NotBlank คือ ห้ามเป็น null หรือ ค่าว่าง 
 - @Length คือ ต้องมีขนาดตามที่ระบุ  
 
+อ่านเพิ่มเติม : [https://beanvalidation.org/](https://beanvalidation.org/)  
+
 # 4. เขียน Controller
 ``` java
 @Slf4j
