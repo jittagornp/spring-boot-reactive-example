@@ -52,6 +52,7 @@ public class HomeController {
 }
 ```
 # 4. เขียน Dockerfile 
+ไว้ที่ root ของ project /Dockerfile 
 ```dockerfile 
 # Use official base image of Java Runtim
 FROM openjdk:8-jdk-alpine
@@ -75,7 +76,7 @@ ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=80
 ### คำอธิบาย
 - `FROM openjdk:8-jdk-alpine` คือ ใช้ base image เป็น openjdk 8 alpine  
 - `VOLUME` เป็นการ mount พื้นที่เก็บข้อมูล (volume) ใน container ว่าให้ชี้ไปที่ /tmp (temp)
-- `EXPOSE` เป็นการเปิด port 8080 เพื่อให้ข้างนอกสามารถ access ได้ 
+- `EXPOSE` เป็นการเปิด port 8080 เพื่อให้ข้างนอกสามารถ access container ได้ 
 - `ARG JAR_FILE=target/*.jar` เป็นการกำหนด arguments ที่ใช้สำหรับ build image 
 - `ADD ${JAR_FILE} app.jar` เพิ่ม หรือ copy ข้อมูลตาม arguments ที่กำหนด เข้าไปใน container โดยใช้ชื่อเป็น app.jar  
 - `ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dserver.port=8080", "-jar", "/app.jar"]` เป็นการ run command ภายใน container ในที่นี้คือสั่ง run java application (.jar)  
@@ -90,11 +91,20 @@ $ mvn clean install
 ``` shell 
 $ docker build -t hello-world -f ./Dockerfile .
 ```
+- `docker build` เป็นการใช้คำสั่งเพื่อ build image 
+- `-t hello-world` เป็นการกำหนด ชื่อ + tag สำหรับ image
+- `-f ./Dockerfile` เป็นการระบุว่าให้อ้างอิงไปที่ Dockerfile ไหน  (ถ้าไม่ระบุ default จะเป็นจาก path ปัจจุบัน)  
+- `.` คือ สัมพันธ์ หรือให้ Dockerfile อิงกับ path ปัจจบัน  
 
 # 7. Run Container 
 ``` shell
 $ docker run -d -p 8080:8080 --name hello-world hello-world 
 ```
+- `docker run` เป็นการใช้คำสั่งเพื่อ run container  
+- `-d` คือ ให้ทำงานแบบ background process 
+- `-p 8080:8080` เป็นการ map port จากข้างนอก 8080 ไปยัง container port 8080 
+- `--name hello-world` เป็นการตั้งชื่อ container ว่า hello-world 
+- `hello-world` ตัวสุดท้าย เป็นการบอกว่า run โดยใช้ image ชื่อ container  
 
 # 8. เข้าใช้งาน
 
