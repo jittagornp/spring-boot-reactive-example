@@ -155,7 +155,7 @@ public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> 
 
 }
 ```
-### เขียน implementation Error แต่ละประเภท
+### implementation Error แต่ละประเภท
 ```java
 @Component
 public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHandlerAdapter<Exception> {
@@ -201,6 +201,45 @@ public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseEx
         }
         return ErrorResponse.serverError();
     }
+}
+```
+- สารมาณเพิ่ม class ใหม่ได้เรื่อย ๆ 
+
+# 6. เขียน Resolver 
+สำหรับ resolve error แต่ละประเภท 
+```java 
+public interface ErrorResponseExceptionHandlerResolver {
+
+    ErrorResponseExceptionHandler resolve(Throwable e);
+
+}
+```
+
+```
+@Component
+public class DefaultErrorResponseExceptionHandlerResolver implements ErrorResponseExceptionHandlerResolver {
+
+    private final Map<Class, ErrorResponseExceptionHandler> registry;
+
+    private final ErrorResponseRootExceptionHandler rootExceptionHandler;
+
+    @Autowired
+    public DefaultErrorResponseExceptionHandlerResolver(List<ErrorResponseExceptionHandler> handlers, ErrorResponseRootExceptionHandler rootExceptionHandler) {
+        this.registry = handlers.stream()
+                .filter(handler -> handler.getTypeClass() != Exception.class)
+                .collect(toMap(ErrorResponseExceptionHandler::getTypeClass, handler -> handler));
+        this.rootExceptionHandler = rootExceptionHandler;
+    }
+
+    @Override
+    public ErrorResponseExceptionHandler resolve(Throwable e) {
+        ErrorResponseExceptionHandler handler = registry.get(e.getClass());
+        if (handler == null) {
+            return rootExceptionHandler;
+        }
+        return handler;
+    }
+
 }
 ```
 
