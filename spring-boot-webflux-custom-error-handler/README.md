@@ -89,28 +89,6 @@ public class ErrorResponse {
     @JsonProperty("error_field")
     private List<Field> errorFields;
 
-    public List<Field> getErrorFields() {
-        if (errorFields == null) {
-            errorFields = new ArrayList<>();
-        }
-        return errorFields;
-    }
-
-    @Setter
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Field {
-
-        private String name;
-
-        private String code;
-
-        private String description;
-
-    }
-    
     ...
 }
 ```
