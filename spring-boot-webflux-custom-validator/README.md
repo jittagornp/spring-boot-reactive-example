@@ -131,118 +131,26 @@ public class RegisterController {
 ```
 - สังเกตว่าตรง input method ใน controller มี @Validated เพื่อบอกว่าให้ validate input ที่เป็น request body (json) ด้วย   
 
-# 6. เขียน error model
-```java 
-@Setter
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ErrorResponse {
+ # 6. เขียน exception handler 
 
-    private String error;
-
-    @JsonProperty("error_status")
-    private int errorStatus;
-
-    @JsonProperty("error_description")
-    private String errorDescription;
-
-    @JsonProperty("error_timestamp")
-    private long errorTimestamp;
-
-    @JsonProperty("error_uri")
-    private String errorUri;
-
-    @JsonProperty("error_code")
-    private String errorCode;
-
-    private String state;
-
-    @JsonProperty("error_field")
-    private List<Field> errorFields;
-
-    public List<Field> getErrorFields() {
-        if (errorFields == null) {
-            errorFields = new ArrayList<>();
-        }
-        return errorFields;
-    }
-
-    @Setter
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Field {
-
-        private String name;
-
-        private String code;
-
-        private String description;
-
-    }
-}
-```
-
-อ้างอิง error : [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/)  
-
-# 7. เขียน Controller Advice
-เพื่อแปลง Error ไปเป็น format ตามที่เราต้องการ  
-```java
-@ControllerAdvice
-public class ErrorControllerAdvice {
-
-    @ExceptionHandler(WebExchangeBindException.class)
-    public Mono<ResponseEntity<ErrorResponse>> validationError(WebExchangeBindException ex, ServerWebExchange exchange) {
-        return Mono.just(
-                ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(
-                                ErrorResponse.builder()
-                                        .error("bad_request")
-                                        .errorDescription("Validate fail")
-                                        .errorStatus(HttpStatus.BAD_REQUEST.value())
-                                        .errorTimestamp(System.currentTimeMillis())
-                                        .errorUri("https://developer.pamarin.com/document/error/")
-                                        .errorCode(UUID.randomUUID().toString())
-                                        .errorFields(
-                                                ex.getFieldErrors()
-                                                        .stream()
-                                                        .map(f -> {
-                                                            return ErrorResponse.Field.builder()
-                                                                    .name(f.getField())
-                                                                    .code(f.getCode())
-                                                                    .description(f.getDefaultMessage())
-                                                                    .build();
-                                                        })
-                                                        .collect(toList())
-                                        )
-                                        .build()
-                        )
-        );
-    }
-    
-    ...
-}    
-```
-
-# 8. Build
+เหมือนหัว [spring-boot-webflux-validation](../spring-boot-webflux-validation)
+ 
+# 7. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 9. Run 
+# 8. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 10. เข้าใช้งาน
+# 9. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
-# 11. ลองยิง request ทดสอบผ่าน postman
+# 10. ลองยิง request ทดสอบผ่าน postman
 > POST : http://localhost:8080/register  
   
 ได้ผลลัพธ์

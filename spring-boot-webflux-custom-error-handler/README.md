@@ -1,5 +1,5 @@
-# spring-boot-webflux-error-handler 
-ตัวอย่างการเขียน Spring-boot WebFlux Error Handler 
+# spring-boot-webflux-custom-error-handler 
+ตัวอย่างการเขียน Spring-boot WebFlux Custom Error Handler 
 
 # 1. เพิ่ม Dependencies
 
@@ -89,70 +89,204 @@ public class ErrorResponse {
     @JsonProperty("error_field")
     private List<Field> errorFields;
 
-    public List<Field> getErrorFields() {
-        if (errorFields == null) {
-            errorFields = new ArrayList<>();
-        }
-        return errorFields;
-    }
-
-    @Setter
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Field {
-
-        private String name;
-
-        private String code;
-
-        private String description;
-
-    }
+    ...
 }
 ```
 - design ตามนี้้ [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/) 
 
-# 5. เขียน Controller Advice 
-เป็น Global Exception handler
-```java
-@ControllerAdvice
-public class ErrorControllerAdvice {
+# 5. เขียน ExceptionHandler 
+ตัวจัดการ Error แต่ละประเภท   
 
-    @ExceptionHandler(Exception.class)
-    public Mono<ResponseEntity<ErrorResponse>> handle(Exception ex, ServerWebExchange exchange) {
-        return Mono.just(
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(
-                                ErrorResponse.builder()
-                                        .error("server_error")
-                                        .errorDescription("Internal Server Error")
-                                        .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                                        .errorTimestamp(System.currentTimeMillis())
-                                        .errorUri("https://developer.pamarin.com/document/error/")
-                                        .errorCode(UUID.randomUUID().toString())
-                                        .build()
-                        )
-        );
+### ประกาศ interface 
+```java
+public interface ErrorResponseExceptionHandler<E extends Throwable> {
+
+    Class<E> getTypeClass();
+
+    ErrorResponse handle(ServerWebExchange exchange, E e);
+
+}
+```
+### เขียน Adapter 
+```java
+public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> implements ErrorResponseExceptionHandler<E> {
+
+    protected abstract ErrorResponse buildError(ServerWebExchange exchange, E e);
+
+    private String getErrorCode(ServerWebExchange exchange) {
+        return UUID.randomUUID().toString();
+    }
+
+    private ErrorResponse additional(ErrorResponse err, ServerWebExchange exchange, E e) {
+        ServerHttpRequest httpReq = exchange.getRequest();
+        err.setState(httpReq.getQueryParams().getFirst("state"));
+        err.setErrorTimestamp(System.currentTimeMillis());
+        err.setErrorCode(getErrorCode(exchange));
+        return err;
+    }
+
+    @Override
+    public ErrorResponse handle(ServerWebExchange exchange, E e) {
+        ErrorResponse err = buildError(exchange, e);
+        return additional(err, exchange, e);
     }
 
 }
 ```
-- เราสามารถ เพิ่ม method เพื่อ catch exception อื่น ๆ ได้ 
+### implementation Error แต่ละประเภท
 
-# 6. Build
+ตัวจัดการ Exception  
+```java
+@Component
+public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHandlerAdapter<Exception> {
+
+    @Override
+    public Class<Exception> getTypeClass() {
+        return Exception.class;
+    }
+
+    @Override
+    protected ErrorResponse buildError(ServerWebExchange exchange, Exception ex) {
+        return ErrorResponse.serverError();
+    }
+}
+```
+ตัวจัดการ ResponseStatusException 
+```java
+@Component
+public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseExceptionHandlerAdapter<ResponseStatusException> {
+
+    @Override
+    public Class<ResponseStatusException> getTypeClass() {
+        return ResponseStatusException.class;
+    }
+
+    @Override
+    protected ErrorResponse buildError(ServerWebExchange exchange, ResponseStatusException ex) {
+        //400
+        if (ex.getStatus() == HttpStatus.BAD_REQUEST) {
+            return ErrorResponse.invalidRequest(ex.getMessage());
+        }
+        //401
+        if (ex.getStatus() == HttpStatus.UNAUTHORIZED) {
+            return ErrorResponse.unauthorized(ex.getMessage());
+        }
+        //403
+        if (ex.getStatus() == HttpStatus.FORBIDDEN) {
+            return ErrorResponse.accessDenied(ex.getMessage());
+        }
+        //404
+        if (ex.getStatus() == HttpStatus.NOT_FOUND) {
+            return ErrorResponse.notFound(ex.getMessage());
+        }
+        return ErrorResponse.serverError();
+    }
+}
+```
+- สามารถเพิ่ม class ตัวจัดการ Exception ใหม่ได้เรื่อย ๆ 
+
+# 6. เขียน Resolver 
+สำหรับ resolve error แต่ละประเภท   
+  
+ประกาศ interface
+```java 
+public interface ErrorResponseExceptionHandlerResolver {
+
+    ErrorResponseExceptionHandler resolve(Throwable e);
+
+}
+```
+
+implement interface  
+```java 
+@Component
+public class DefaultErrorResponseExceptionHandlerResolver implements ErrorResponseExceptionHandlerResolver {
+
+    private final Map<Class, ErrorResponseExceptionHandler> registry;
+
+    private final ErrorResponseRootExceptionHandler rootExceptionHandler;
+
+    @Autowired
+    public DefaultErrorResponseExceptionHandlerResolver(List<ErrorResponseExceptionHandler> handlers, ErrorResponseRootExceptionHandler rootExceptionHandler) {
+        this.registry = handlers.stream()
+                .filter(handler -> handler.getTypeClass() != Exception.class)
+                .collect(toMap(ErrorResponseExceptionHandler::getTypeClass, handler -> handler));
+        this.rootExceptionHandler = rootExceptionHandler;
+    }
+
+    @Override
+    public ErrorResponseExceptionHandler resolve(Throwable e) {
+        ErrorResponseExceptionHandler handler = registry.get(e.getClass());
+        if (handler == null) {
+            return rootExceptionHandler;
+        }
+        return handler;
+    }
+
+}
+```
+
+# 7. เขียน WebExceptionHandler  
+เป็นตัวจัดการ Global Exception ทุกประเภท ซึ่ง WebFlux จะโยน Exception เข้ามาที่นี่ 
+```java
+@Slf4j
+@Component
+@Order(-2)
+public class GlobalWebExceptionHandler implements WebExceptionHandler {
+
+    private final ObjectMapper objectMapper;
+    
+    private final ErrorResponseExceptionHandlerResolver resolver;
+
+    @Autowired
+    public GlobalWebExceptionHandler(ObjectMapper objectMapper, ErrorResponseExceptionHandlerResolver resolver) {
+        this.resolver = resolver;
+        this.objectMapper = objectMapper;
+    }
+
+    @Override
+    public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
+        log.debug("Throwable class => {}", e.getClass().getName());
+        ErrorResponse error = resolver.resolve(e).handle(exchange, e);
+        error.setErrorUri("https://developer.pamarin.com/document/error/");
+        return jsonResponse(
+                ResponseEntity.status(HttpStatus.valueOf(error.getErrorStatus()))
+                        .body(error),
+                exchange
+        );
+    }
+
+    public Mono<Void> jsonResponse(
+            final ResponseEntity<ErrorResponse> entity,
+            final ServerWebExchange exchange
+    ) {
+        final ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(entity.getStatusCode());
+        response.getHeaders().addAll(entity.getHeaders());
+        response.getHeaders().put(HttpHeaders.CONTENT_TYPE, Arrays.asList(MediaType.APPLICATION_JSON_UTF8_VALUE));
+        try {
+            final DataBuffer buffer = response.bufferFactory().wrap(objectMapper.writeValueAsBytes(entity.getBody()));
+            return response.writeWith(Mono.just(buffer)).doOnError(error -> DataBufferUtils.release(buffer));
+        } catch (final JsonProcessingException ex) {
+            return Mono.error(ex);
+        }
+    }
+}
+
+```
+
+# 8. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 7. Run 
+# 9. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 8. เข้าใช้งาน
+# 10. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 

@@ -63,6 +63,8 @@ public class LoginRequest {
 - @NotBlank คือ ห้ามเป็น null หรือ ค่าว่าง 
 - @Length คือ ต้องมีขนาดตามที่ระบุ  
 
+อ่านเพิ่มเติม : [https://beanvalidation.org/](https://beanvalidation.org/)  
+
 # 4. เขียน Controller
 ``` java
 @Slf4j
@@ -80,159 +82,58 @@ public class LoginController {
 - สังเกตว่าตรง input method ใน controller มี @Validated เพื่อบอกว่าให้ validate input ที่เป็น request body (json) ด้วย   
 
 # 5. เขียน error handler
-เพราะถ้าไม่แปลง error เอง spring จะพ่น json error ออกเป็นหน้าตาประมาณนี้   
-```json
-{
-    "timestamp": "2019-06-26T13:54:15.687+0000",
-    "path": "/login",
-    "status": 400,
-    "error": "Bad Request",
-    "message": "Validation failed for argument at index 0 in method: public void com.pamarin.learning.webflux.controller.LoginController.login(com.pamarin.learning.webflux.model.LoginRequest), with 1 error(s): [Field error in object 'loginRequest' on field 'password': rejected value [pass]; codes [Length.loginRequest.password,Length.password,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequest.password,password]; arguments []; default message [password],50,8]; default message [password must between 8 to 50 characters]] ",
-    "errors": [
-        {
-            "codes": [
-                "Length.loginRequest.password",
-                "Length.password",
-                "Length.java.lang.String",
-                "Length"
-            ],
-            "arguments": [
-                {
-                    "codes": [
-                        "loginRequest.password",
-                        "password"
-                    ],
-                    "arguments": null,
-                    "defaultMessage": "password",
-                    "code": "password"
-                },
-                50,
-                8
-            ],
-            "defaultMessage": "password must between 8 to 50 characters",
-            "objectName": "loginRequest",
-            "field": "password",
-            "rejectedValue": "pass",
-            "bindingFailure": false,
-            "code": "Length"
-        }
-    ]
-}
-```
-ซึ่งผมมองว่ามันไม่สวย แล้วข้อมูล information ต่าง ๆ ของ framework หรือ system หลุดออกมาด้วย เลยเขียน error เอง
 
-# 6. เขียน error model
+ตัวจัดการ Error ให้เรียนรู้จากหัวข้อ [spring-boot-webflux-custom-error-handler](../spring-boot-webflux-custom-error-handler)
+
+# 6. เพิ่มตัวจัดการ Error สำหรับ WebExchangeBindException
 ```java 
-@Setter
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ErrorResponse {
+@Component
+public class ErrorResponseWebExchangeBindExceptionHandler extends ErrorResponseExceptionHandlerAdapter<WebExchangeBindException> {
 
-    private String error;
-
-    @JsonProperty("error_status")
-    private int errorStatus;
-
-    @JsonProperty("error_description")
-    private String errorDescription;
-
-    @JsonProperty("error_timestamp")
-    private long errorTimestamp;
-
-    @JsonProperty("error_uri")
-    private String errorUri;
-
-    @JsonProperty("error_code")
-    private String errorCode;
-
-    private String state;
-
-    @JsonProperty("error_field")
-    private List<Field> errorFields;
-
-    public List<Field> getErrorFields() {
-        if (errorFields == null) {
-            errorFields = new ArrayList<>();
-        }
-        return errorFields;
+    @Override
+    public Class<WebExchangeBindException> getTypeClass() {
+        return WebExchangeBindException.class;
     }
 
-    @Setter
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Field {
-
-        private String name;
-
-        private String code;
-
-        private String description;
-
+    @Override
+    protected ErrorResponse buildError(ServerWebExchange exchange, WebExchangeBindException ex) {
+        return ErrorResponse.builder()
+                .error("bad_request")
+                .errorDescription("Validate fail")
+                .errorStatus(HttpStatus.BAD_REQUEST.value())
+                .errorFields(
+                        ex.getFieldErrors()
+                                .stream()
+                                .map(f -> {
+                                    return ErrorResponse.Field.builder()
+                                            .name(f.getField())
+                                            .code(f.getCode())
+                                            .description(f.getDefaultMessage())
+                                            .build();
+                                })
+                                .collect(toList())
+                )
+                .build();
     }
 }
 ```
 
-อ้างอิง error : [https://developer.pamarin.com/document/error/](https://developer.pamarin.com/document/error/)  
-
-# 7. เขียน Controller Advice
-เพื่อแปลง Error ไปเป็น format ตามที่เราต้องการ  
-```java
-@ControllerAdvice
-public class ErrorControllerAdvice {
-
-    @ExceptionHandler(WebExchangeBindException.class)
-    public Mono<ResponseEntity<ErrorResponse>> validationError(WebExchangeBindException ex, ServerWebExchange exchange) {
-        return Mono.just(
-                ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(
-                                ErrorResponse.builder()
-                                        .error("bad_request")
-                                        .errorDescription("Validate fail")
-                                        .errorStatus(HttpStatus.BAD_REQUEST.value())
-                                        .errorTimestamp(System.currentTimeMillis())
-                                        .errorUri("https://developer.pamarin.com/document/error/")
-                                        .errorCode(UUID.randomUUID().toString())
-                                        .errorFields(
-                                                ex.getFieldErrors()
-                                                        .stream()
-                                                        .map(f -> {
-                                                            return ErrorResponse.Field.builder()
-                                                                    .name(f.getField())
-                                                                    .code(f.getCode())
-                                                                    .description(f.getDefaultMessage())
-                                                                    .build();
-                                                        })
-                                                        .collect(toList())
-                                        )
-                                        .build()
-                        )
-        );
-    }
-    
-    ...
-}    
-```
-
-# 8. Build
+# 7. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 9. Run 
+# 8. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 10. เข้าใช้งาน
+# 9. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
-# 11. ลองยิง request ทดสอบผ่าน postman
+# 10. ลองยิง request ทดสอบผ่าน postman
 > POST : http://localhost:8080/login  
   
 ได้ผลลัพธ์
