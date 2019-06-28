@@ -133,7 +133,7 @@ public class RegisterController {
 
  # 6. เขียน exception handler 
 
-เหมือนหัว [spring-boot-webflux-validation](../spring-boot-webflux-validation)
+เหมือนหัวข้อ [spring-boot-webflux-validation](../spring-boot-webflux-validation)
  
 # 7. Build
 cd ไปที่ root ของ project จากนั้น  
