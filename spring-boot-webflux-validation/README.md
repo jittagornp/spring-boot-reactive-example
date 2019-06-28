@@ -83,22 +83,55 @@ public class LoginController {
 
 ตัวจัดการ Error ให้เขียนรูู้จากหัวข้อ [spring-boot-webflux-custom-error-handler](../spring-boot-webflux-custom-error-handler)
 
-# 8. Build
+# 6. เพิ่มตัวจัดการ Error สำหรับ WebExchangeBindException
+```
+@Component
+public class ErrorResponseWebExchangeBindExceptionHandler extends ErrorResponseExceptionHandlerAdapter<WebExchangeBindException> {
+
+    @Override
+    public Class<WebExchangeBindException> getTypeClass() {
+        return WebExchangeBindException.class;
+    }
+
+    @Override
+    protected ErrorResponse buildError(ServerWebExchange exchange, WebExchangeBindException ex) {
+        return ErrorResponse.builder()
+                .error("bad_request")
+                .errorDescription("Validate fail")
+                .errorStatus(HttpStatus.BAD_REQUEST.value())
+                .errorFields(
+                        ex.getFieldErrors()
+                                .stream()
+                                .map(f -> {
+                                    return ErrorResponse.Field.builder()
+                                            .name(f.getField())
+                                            .code(f.getCode())
+                                            .description(f.getDefaultMessage())
+                                            .build();
+                                })
+                                .collect(toList())
+                )
+                .build();
+    }
+}
+```
+
+# 7. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 9. Run 
+# 8. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 10. เข้าใช้งาน
+# 9. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
-# 11. ลองยิง request ทดสอบผ่าน postman
+# 10. ลองยิง request ทดสอบผ่าน postman
 > POST : http://localhost:8080/login  
   
 ได้ผลลัพธ์
