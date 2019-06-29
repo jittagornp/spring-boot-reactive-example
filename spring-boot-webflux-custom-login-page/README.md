@@ -97,6 +97,7 @@ public class SecurityConfig {
 
 - จะเหมือนหัวข้อ [spring-boot-webflux-security](../spring-boot-webflux-security) เพียงแต่มีการเพิ่ม configuration `securityWebFilterChain()` เข้ามา 
 - สังเกตว่ามีการกำหนด login entry point หรือ login page เอง 
+- ทุก ๆ entry point `anyExchange().authenticated()` จะ require login ยกเว้น `pathMatchers("/login").permitAll()` ที่อนุญาตให้ทุกคนเข้าถึงได้  
 
 # 4. เขียน Controller
 ``` java
