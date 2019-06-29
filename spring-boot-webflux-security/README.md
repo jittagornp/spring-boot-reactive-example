@@ -47,19 +47,7 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน Controller
-``` java
-@RestController
-public class HomeController {
-
-    @GetMapping({"", "/"})
-    public Mono<String> hello() {
-        return Mono.just("Hello world.");
-    }
-}
-```
-
-# 4. Config Spring-Security 
+# 3. Config Spring-Security 
 
 ```java
 @Slf4j
@@ -84,6 +72,18 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+}
+```
+
+# 4. เขียน Controller
+``` java
+@RestController
+public class HomeController {
+
+    @GetMapping({"", "/"})
+    public Mono<String> hello(Authentication authentication) {
+        return Mono.just("Hello => " + authentication.getName());
+    }
 }
 ```
 
