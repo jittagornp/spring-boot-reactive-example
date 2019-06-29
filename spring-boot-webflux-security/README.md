@@ -77,7 +77,7 @@ public class SecurityConfig {
 
 - `@EnableWebFluxSecurity` เป็นการ enable Spring Security 
 - method passwordEncoder() เป็นการประกาศใช้ password encoder เป็น `BCryptPasswordEncoder`  
-- method reactiveUserDetailsService() เป็นการประกาศ login service ว่าถ้ามีการ login เข้ามาให้ find user จาก username ที่ส่งในใน service นี้ ซ่งปกติจะ find จาก database ถ้าไม่เจออาจจะ throw error `org.springframework.security.authentication.BadCredentialsException` ออกไป  
+- method reactiveUserDetailsService() เป็นการประกาศ login service ว่าถ้ามีการ login เข้ามาให้ find user จาก username ที่ส่งมาใน service นี้ ซึ่งปกติจะ find จาก database ถ้าไม่เจอ อาจจะ throw error `org.springframework.security.authentication.BadCredentialsException` ออกไป  
 
 # 4. เขียน Controller
 ``` java
