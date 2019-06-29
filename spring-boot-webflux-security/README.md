@@ -102,5 +102,6 @@ $ mvn spring-boot:run
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
-# Username/Password
-- test/password 
+# Username/Password สำหรับเข้าใช้งาน
+- username = test
+- password = password  
