@@ -161,7 +161,9 @@ $ mvn spring-boot:run
 # 9. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
-
+  
+หลังจากนั้นมันจะเด้งเข้าหน้า login (default จาก Spring Security)  
+  
 # Username/Password สำหรับเข้าใช้งาน
 - username = test
 - password = password  
