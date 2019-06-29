@@ -75,6 +75,11 @@ public class SecurityConfig {
 }
 ```
 
+- `@EnableWebFluxSecurity` เป็นการ enable Spring Security 
+- method passwordEncoder() เป็นการประกาศใช้ password encoder เป็น `BCryptPasswordEncoder`  
+- method reactiveUserDetailsService() เป็นการประกาศ login service ว่าถ้ามีการ login เข้ามาให้ find user จาก username ที่ส่งมาใน service นี้ ซึ่งปกติจะ find จาก database ถ้าไม่เจอ อาจจะ throw error `org.springframework.security.authentication.BadCredentialsException` ออกไป  
+- เบื้องต้น สิทธิ์ หรือ authorities กำหนดเป็น empty ไปก่อน `authorities(Collections.emptyList())`
+
 # 4. เขียน Controller
 ``` java
 @RestController
@@ -101,7 +106,9 @@ $ mvn spring-boot:run
 # 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
-
+  
+หลังจากนั้นมันจะเด้งเข้าหน้า login (default จาก Spring Security)  
+  
 # Username/Password สำหรับเข้าใช้งาน
 - username = test
 - password = password  
