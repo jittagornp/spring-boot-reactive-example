@@ -4,6 +4,10 @@
 
 ![Reactive Spring](reactive_spring.png)
 
+# ปัญหา / ข้อเสนอแนะ 
+หากพบปัญหา หรือ ต้องการให้ทำอะไรเพิ่ม รบกวนช่วยเปิด issue ให้ด้วยน่ะครับ  
+ขอบคุณครับ :)  
+
 # เอกสาร Spring 
 
 - [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
