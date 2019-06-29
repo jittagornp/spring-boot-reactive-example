@@ -1,4 +1,4 @@
-# spring-boot-webflux-helloworld
+# spring-boot-webflux-security 
 ตัวอย่างการเขียน Spring-boot WebFlux Hello World
 
 # 1. เพิ่ม Dependencies
@@ -16,6 +16,17 @@ pom.xml
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 </dependencies>
 
@@ -48,17 +59,48 @@ public class HomeController {
 }
 ```
 
-# 4. Build
+# 4. Config Spring-Security 
+
+```java
+@Slf4j
+@EnableWebFluxSecurity
+public class SecurityConfig {
+
+    @Bean
+    public ReactiveUserDetailsService reactiveUserDetailsService(PasswordEncoder passwordEncoder) {
+        return username -> {
+            log.debug("login with username => {}", username);
+            return Mono.just(
+                    User.withUsername(username)
+                            .password(passwordEncoder.encode("password"))
+                            .authorities(Collections.emptyList())
+                            .build()
+            );
+        };
+    }
+    
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+}
+```
+
+# 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Run 
+# 6. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 6. เข้าใช้งาน
+# 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+# Username/Password
+- test/password 
