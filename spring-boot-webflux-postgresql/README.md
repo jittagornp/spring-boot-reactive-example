@@ -1,4 +1,4 @@
-# spring-boot-webflux-helloworld
+# spring-boot-webflux-postgresql
 ตัวอย่างการเขียน Spring-boot WebFlux Postgresql  
 
 # 1. เพิ่ม Dependencies
@@ -65,25 +65,61 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน Controller
-``` java
-@RestController
-public class HomeController {
+# 3. เขียน entity 
+```java
+@Data
+@Entity
+@Table(name = User.TABLE_NAME)
+public class User implements Serializable {
 
-    @GetMapping({"", "/"})
-    public Mono<String> hello() {
-        return Mono.just("Hello world.");
-    }
+    public static final String TABLE_NAME = "user";
+
+    @Id
+    private String id;
+
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
 }
 ```
 
-# 4. Build
+# 4. เขียน Repository 
+```java
+public interface UserRepository extends JpaRepository<User, String>{
+    
+}
+```
+
+# 5. เรียกใช้งาน Repository ผ่าน Controller
+``` java
+@RestController
+public class UserController {
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping("/users")
+    public Flux<User> findAll() {
+        return Flux.fromIterable(userRepository.findAll());
+    }
+
+}
+```
+
+# 6. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Run 
+# 7. Run 
 ``` shell 
 $ mvn spring-boot:run \
     -Dserver.port=8080 \
@@ -93,6 +129,6 @@ $ mvn spring-boot:run \
     -Dspring.jpa.properties.hibernate.default_schema=<DATABASE_SCHEMA>
 ```
 
-# 6. เข้าใช้งาน
+# 8. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
