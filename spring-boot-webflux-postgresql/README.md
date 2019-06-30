@@ -56,7 +56,7 @@ pom.xml
 - `hibernate-core`  สำหรับทำ ORM (Object Relational Mapping) ไว้เขียนพวก entity class  
 - `postgresql` เป็น postgresql database driver  
 - `HikariCP` เป็นตัวจัดการ database connection pool  
-- `lombok` เป็น annotation code generator สามารถ generate code at compile time ได้ ทำให้เราไม่ต้องเขียน code บางส่วนเอง เช่น getter setter method 
+- `lombok` เป็น annotation code generator สามารถ generate code at compile time ได้ ทำให้เราไม่ต้องเขียน code บางส่วนเอง เช่น getter setter method ตัว lombox จะทำให้   
 
 # 2. เขียน Main Class 
 
