@@ -92,6 +92,11 @@ public class User implements Serializable {
 
 }
 ```
+- `@Data` เป็น annotation ของ lombox เอาไว้ generate code เช่น getter/setter method, hashcode + equals ให้ 
+- `@Entity` เป็น annotation ที่เอาไว้ระบุว่า class นี้เป็น entity class 
+- `@Table` เป็น annotation ที่เอาไว้ระบุว่าให้ class นี้ map ไปที่ database table ใด
+- `@Id` เป็น annotation ที่เอาไว้ระบุว่าจะให้ attribute ใดเป็น primary key 
+- `@Column` เป็นการใช้ระบุข้อมูล column
 
 # 4. เขียน Repository 
 ```java
