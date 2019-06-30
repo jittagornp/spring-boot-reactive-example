@@ -53,7 +53,7 @@ pom.xml
 ### dependencies
 - `spring-boot-starter-webflux` ใช้สำหรับเขียน webflux   
 - `spring-boot-starter-data-jpa` ไว้สำหรับเขียนคำสั่ง query, method query   
-- `hibernate-core`  สำหรับทำ ORM (Object Relational Mapping) ไว้เขียนพวก entity class ไว้สำหรับ mapping java class ไปยัง database table และการ mapping พวก relation ต่าง ๆ 
+- `hibernate-core`  สำหรับทำ ORM (Object Relational Mapping) ไว้เขียนพวก entity class สำหรับ mapping java class ไปยัง database table รวมถึงการ mapping พวก relation ต่าง ๆ ของ table เช่น One to One, One to Many, Many to Many 
 - `postgresql` เป็น postgresql database driver  
 - `HikariCP` เป็นตัวจัดการ database connection pool  
 - `lombok` เป็น annotation code generator สามารถ generate code at compile time ได้ ทำให้เราไม่ต้องเขียน code บางส่วนเอง เช่น getter setter method ตัว lombox จะทำให้   
