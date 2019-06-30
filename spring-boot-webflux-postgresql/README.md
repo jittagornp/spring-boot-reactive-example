@@ -50,6 +50,13 @@ pom.xml
 
 ...
 ```
+### dependencies
+- `spring-boot-starter-webflux` ใช้สำหรับเขียน webflux   
+- `spring-boot-starter-data-jpa` ไว้สำหรับเขียนคำสั่ง query, method query   
+- `hibernate-core`  สำหรับทำ ORM (Object Relational Mapping) ไว้เขียนพวก entity class  
+- `postgresql` เป็น postgresql database driver  
+- `HikariCP` เป็นตัวจัดการ database connection pool  
+- `lombok` เป็น annotation code generator สามารถ generate code at compile time ได้ ทำให้เราไม่ต้องเขียน code บางส่วนเอง เช่น getter setter method 
 
 # 2. เขียน Main Class 
 
