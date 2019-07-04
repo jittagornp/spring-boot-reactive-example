@@ -1,5 +1,5 @@
-# spring-boot-webflux-mongodb
-ตัวอย่างการเขียน Spring-boot WebFlux Mongodb  
+# spring-boot-webflux-mongo-operations
+ตัวอย่างการเขียน Spring-boot WebFlux Mongo Operations   
 
 # 1. เพิ่ม Dependencies
 
