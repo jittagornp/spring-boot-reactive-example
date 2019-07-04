@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public Mono<User> findAll(@PathVariable("id") String id) {
-        return Mono.just(userRepository.findOne(id));
+    public Mono<User> findById(@PathVariable("id") String id) {
+        return Mono.just(userRepository.findById(id));
     }
 }

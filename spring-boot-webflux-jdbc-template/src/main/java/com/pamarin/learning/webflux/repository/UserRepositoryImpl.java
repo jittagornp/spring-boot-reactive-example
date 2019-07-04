@@ -60,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findOne(String id) {
+    public User findById(String id) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM " + tableName(User.TABLE_NAME) + " WHERE id = ?",

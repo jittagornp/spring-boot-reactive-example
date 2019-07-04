@@ -14,6 +14,6 @@ public interface UserRepository {
  
     List<User> findAll();
     
-    User findOne(String id);
+    User findById(String id);
     
 }
