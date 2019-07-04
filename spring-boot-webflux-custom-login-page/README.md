@@ -1,5 +1,5 @@
-# spring-boot-webflux-security 
-ตัวอย่างการเขียน Spring-boot WebFlux Security 
+# spring-boot-webflux-custom-login-page
+ตัวอย่างการเขียน Spring-boot WebFlux Custom Login Page  
 
 # 1. เพิ่ม Dependencies
 
@@ -17,7 +17,7 @@ pom.xml
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
-    
+
     <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
@@ -28,10 +28,16 @@ pom.xml
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
 </dependencies>
 
 ...
 ```
+- ในที่นี้เราจะใช้ Thymleaf ทำ View (Server Side) Rendering น่ะครับ  
 
 # 2. เขียน Main Class 
 
@@ -55,6 +61,20 @@ public class AppStarter {
 public class SecurityConfig {
 
     @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        return http
+                .csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/login").permitAll()
+                .anyExchange().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .and()
+                .build();
+    }
+
+    @Bean
     public ReactiveUserDetailsService reactiveUserDetailsService(PasswordEncoder passwordEncoder) {
         return username -> {
             log.debug("login with username => {}", username);
@@ -66,14 +86,19 @@ public class SecurityConfig {
             );
         };
     }
-    
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 }
 ```
+
+- จะเหมือนหัวข้อ [spring-boot-webflux-security](../spring-boot-webflux-security) เพียงแต่มีการเพิ่ม configuration `securityWebFilterChain()` เข้ามา 
+- สังเกตว่ามีการกำหนด login entry point หรือ login page เอง 
+- ทุก ๆ entry point `.anyExchange().authenticated()` จะ require login ยกเว้น `.pathMatchers("/login").permitAll()` ที่อนุญาตให้ทุกคนเข้าถึงได้  
+- `.csrf().disable()` มีการ disabled csrf token 
 
 # 4. เขียน Controller
 ``` java
@@ -87,21 +112,58 @@ public class HomeController {
 }
 ```
 
-# 5. Build
+# 5. เขียน Login Controller
+```java
+@Controller
+public class LoginController {
+    
+    @GetMapping("/login")
+    public Mono<String> login(){
+        return Mono.just("custom-login");
+    }
+    
+}
+```
+
+# 6. เขียน custom-login.html
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Custom Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Custom Login Page</h1>
+        <form method="post">
+            <input name="username" type="text" />
+            <br/>
+            <input name="password" type="password" />
+            <br/>
+            <button type="submit">Login</button>
+        </form>
+    </body>
+</html>
+```
+
+# 7. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 6. Run 
+# 8. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 7. เข้าใช้งาน
+# 9. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
-
+  
+หลังจากนั้นมันจะเด้งเข้าหน้า login (default จาก Spring Security)  
+  
 # Username/Password สำหรับเข้าใช้งาน
 - username = test
 - password = password  
