@@ -5,6 +5,7 @@ package com.pamarin.learning.webflux.repository;
 
 import com.pamarin.learning.webflux.domain.User;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -14,6 +15,6 @@ public interface UserRepository {
  
     List<User> findAll();
     
-    User findById(String id);
+    Optional<User> findById(String id);
     
 }

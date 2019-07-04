@@ -28,13 +28,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public Mono<List<User>> findAll() {
-        return Flux.fromIterable(userRepository.findAll())
-                .collectList();
+    public Flux<User> findAll() {
+        return Flux.fromIterable(userRepository.findAll());
     }
 
     @GetMapping("/users/{id}")
     public Mono<User> findById(@PathVariable("id") String id) {
-        return Mono.just(userRepository.findById(id));
+        return Mono.just(userRepository.findById(id)
+                .orElse(null));
     }
+
 }

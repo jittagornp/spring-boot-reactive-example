@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,15 +61,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(String id) {
+    public Optional<User> findById(String id) {
         try {
-            return jdbcTemplate.queryForObject(
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
                     "SELECT * FROM " + tableName(User.TABLE_NAME) + " WHERE id = ?",
                     new Object[]{id},
                     (ResultSet rs, int i) -> convertToEntity(rs)
-            );
+            ));
         } catch (EmptyResultDataAccessException ex) {
-            return null;
+            return Optional.empty();
         }
     }
 
