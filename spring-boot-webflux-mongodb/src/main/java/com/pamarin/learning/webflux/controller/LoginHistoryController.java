@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import com.pamarin.learning.webflux.repository.LoginHistoryRepository;
+import org.springframework.web.bind.annotation.PathVariable;
+import reactor.core.publisher.Mono;
 
 /**
  *
@@ -24,9 +26,19 @@ public class LoginHistoryController {
         this.repository = repository;
     }
 
-    @GetMapping({ "", "/" })
+    @GetMapping({"", "/"})
+    public Flux<LoginHistory> home() {
+        return findAll();
+    }
+
+    @GetMapping("/histories")
     public Flux<LoginHistory> findAll() {
         return repository.findAll();
+    }
+
+    @GetMapping("/histories/{id}")
+    public Mono<LoginHistory> findById(@PathVariable("id") String id) {
+        return repository.findById(id);
     }
 
 }
