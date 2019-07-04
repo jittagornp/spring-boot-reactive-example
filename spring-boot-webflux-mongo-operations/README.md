@@ -73,9 +73,66 @@ public class LoginHistory implements Serializable {
 }
 ```
 # 4. เขียน Repository 
+
+ประกาศ interface
 ```java
-public interface LoginHistoryRepository extends ReactiveMongoRepository<LoginHistory, String>{
-    
+public interface LoginHistoryRepository {
+
+    Mono<LoginHistory> save(LoginHistory history);
+
+    Flux<LoginHistory> findAll();
+
+    Mono<LoginHistory> findById(String id);
+
+    Mono<Void> deleteById(String id);
+
+    Mono<Void> deleteAll();
+
+}
+```
+
+implement interface
+```java
+@Repository
+public class LoginHistoryRepositoryImpl implements LoginHistoryRepository {
+
+    private final MongoOperations mongoOperations;
+
+    @Autowired
+    public LoginHistoryRepositoryImpl(MongoOperations mongoOperations) {
+        this.mongoOperations = mongoOperations;
+    }
+
+    @Override
+    public Flux<LoginHistory> findAll() {
+        return Flux.fromIterable(mongoOperations.findAll(LoginHistory.class));
+    }
+
+    @Override
+    public Mono<LoginHistory> findById(String id) {
+        Query query = Query.query(Criteria.where("id").is(id));
+        return Mono.justOrEmpty(mongoOperations.findOne(query, LoginHistory.class))
+                .switchIfEmpty(Mono.error(new NotFoundException("Not found user of id " + id)));
+    }
+
+    @Override
+    public Mono<LoginHistory> save(LoginHistory history) {
+        return Mono.just(mongoOperations.save(history));
+    }
+
+    @Override
+    public Mono<Void> deleteById(String id) {
+        Query query = Query.query(Criteria.where("id").is(id));
+        return Mono.just(mongoOperations.remove(query, LoginHistory.class))
+                .then();
+    }
+
+    @Override
+    public Mono<Void> deleteAll() {
+        mongoOperations.dropCollection(LoginHistory.class);
+        return Mono.empty();
+    }
+
 }
 ```
 
@@ -91,11 +148,35 @@ public class LoginHistoryController {
         this.repository = repository;
     }
 
-    @GetMapping({ "", "/" })
+    @GetMapping({"", "/"})
+    public Flux<LoginHistory> home() {
+        return findAll();
+    }
+
+    @GetMapping("/histories")
     public Flux<LoginHistory> findAll() {
         return repository.findAll();
     }
 
+    @GetMapping("/histories/{id}")
+    public Mono<LoginHistory> findById(@PathVariable("id") String id) {
+        return repository.findById(id);
+    }
+
+    @PostMapping("/histories")
+    public Mono<LoginHistory> save(@RequestBody LoginHistory history) {
+        return repository.save(history);
+    }
+
+    @DeleteMapping("/histories")
+    public Mono<Void> deleteAll() {
+        return repository.deleteAll();
+    }
+
+    @DeleteMapping("/histories/{id}")
+    public Mono<Void> deleteAll(@PathVariable("id") String id) {
+        return repository.deleteById(id);
+    }
 }
 ```
 
