@@ -140,6 +140,14 @@ $ mvn spring-boot:run \
     -Dspring.datasource.password=<DATABASE_PASSWORD> \
     -Dspring.jpa.properties.hibernate.default_schema=<DATABASE_SCHEMA>
 ```
+ให้เปลี่ยน ค่า `<>` เป็นของตัวเองน่ะครับ
+- HOST คือ ip หรือ domain name ของ database server 
+- PORT คือ port ที่ใช้ 
+- DATABASE_NAME คือ ชื่อ database 
+- DATABASE_USERNAME คือ ชื่อ username ที่ login เข้าใช้งาน database 
+- DATABASE_PASSWORD คือ รหัสผ่านที่คู่กับ username ที่ใช้ 
+- DATABASE_SCHEMA คือ database schema ที่่ใช้ 
+
 
 # 8. เข้าใช้งาน
 
