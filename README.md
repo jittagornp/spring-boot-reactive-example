@@ -43,6 +43,7 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-security](spring-boot-webflux-security) - พื้นฐานการ Config Spring Security สำหรับทำการ Login
 - [spring-boot-webflux-custom-login-page](spring-boot-webflux-custom-login-page) - การ custom หน้า login 
 - [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql) - การเชื่อมต่อ Postgresql (Relational Database) 
+- [spring-boot-webflux-jdbc-template](spring-boot-webflux-jdbc-template) - การเขียน Native Query จาก JDBC Template  
 - [spring-boot-webflux-mongodb](spring-boot-webflux-mongodb) - การเชื่อมต่อ Mongodb (NoSQL Document Database)  
 - [spring-boot-webflux-redis](spring-boot-webflux-redis) - การเชื่อมต่อ Redis (Key/Value NoSQL) 
 
