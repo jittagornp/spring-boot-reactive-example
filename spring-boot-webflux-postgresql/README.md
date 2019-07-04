@@ -122,6 +122,12 @@ public class UserController {
         return Flux.fromIterable(userRepository.findAll());
     }
 
+    @GetMapping("/users/{id}")
+    public Mono<User> findById(@PathVariable("id") String id) {
+        return Mono.just(userRepository.findById(id)
+                .orElse(null));
+    }
+
 }
 ```
 
