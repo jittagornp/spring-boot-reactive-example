@@ -122,16 +122,49 @@ public class UserController {
         return Flux.fromIterable(userRepository.findAll());
     }
 
+    @GetMapping("/users/{id}")
+    public Mono<User> findById(@PathVariable("id") String id) {
+        return Mono.just(userRepository.findById(id)
+                .orElse(null));
+    }
+
 }
 ```
 
-# 6. Build
+# 6. Config application.properties
+``` properties
+#------------------------------------ JPA --------------------------------------
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.properties.hibernate.cache.use_second_level_cache=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.use-new-id-generator-mappings=true
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.proc.param_null_passing=true
+spring.jpa.properties.hibernate.default_schema=*****
+
+#------------------------------------ Hikari -----------------------------------
+spring.datasource.hikari.minimumIdle=1
+spring.datasource.hikari.maximumPoolSize=10
+spring.datasource.hikari.idleTimeout=30000
+spring.datasource.hikari.connectionTestQuery=SELECT 1 FROM DUAL
+spring.datasource.hikari.validationTimeout=3000
+
+#------------------------------------ Postgresql -------------------------------
+spring.datasource.url=jdbc:postgresql:*****
+spring.datasource.username=*****
+spring.datasource.password=*****
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.platform=postgres
+spring.datasource.type=org.postgresql.ds.PGSimpleDataSource
+```
+
+# 7. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 7. Run 
+# 8. Run 
 ``` shell 
 $ mvn spring-boot:run \
     -Dserver.port=8080 \
