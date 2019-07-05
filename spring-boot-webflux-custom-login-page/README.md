@@ -71,6 +71,10 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .and()
+                .logout()
+                .logoutUrl("/logout")
+                .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/logout"))
+                .and()
                 .build();
     }
 
