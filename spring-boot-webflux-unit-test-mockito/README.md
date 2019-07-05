@@ -1,5 +1,5 @@
-# spring-boot-webflux-unit-test
-ตัวอย่างการเขียน Spring-boot WebFlux Unit Test 
+# spring-boot-webflux-unit-test-mockito
+ตัวอย่างการเขียน Spring-boot WebFlux Unit Test + Mockito  
 
 # 1. เพิ่ม Dependencies
 
@@ -17,24 +17,38 @@ pom.xml
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
-    
+
     <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.12</version>
         <scope>test</scope>
     </dependency>
-        
+
     <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
         <version>3.12.2</version>
+        <scope>test</scope>
+        <type>jar</type>
+    </dependency>
+
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.10.19</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
         <scope>test</scope>
         <type>jar</type>
     </dependency>
@@ -61,39 +75,138 @@ public class AppStarter {
 
 # 3. เขียน Logic 
 ``` java
-public class ByteUtils {
+public interface HttpClientIPAddressResolver {
 
-    private ByteUtils() {
-        
-    }
-
-    ...
+    String resolve(ServerWebExchange exchange);
 
 }
 ```
 
-# 4. เขียน Unit Test 
+```java
+@Slf4j
+@Component
+public class DefaultHttpClientIPAddressResolver implements HttpClientIPAddressResolver {
+
+    private static final String CACHED_KEY = HttpClientIPAddressResolver.class.getName() + ".IP_ADDRESS";
+
+    private static final String[] IP_ADDRESS_HEADERS = {
+        "X-Forwarded-For",
+        "Proxy-Client-IP",
+        "WL-Proxy-Client-IP",
+        "HTTP_X_FORWARDED_FOR",
+        "HTTP_X_FORWARDED",
+        "HTTP_X_CLUSTER_CLIENT_IP",
+        "HTTP_CLIENT_IP",
+        "HTTP_FORWARDED_FOR",
+        "HTTP_FORWARDED",
+        "HTTP_VIA",
+        "REMOTE_ADDR"
+    };
+
+    private static boolean has(String ip) {
+        if (!hasText(ip)) {
+            return false;
+        }
+
+        return !"UNKNOWN".equalsIgnoreCase(ip);
+    }
+
+    @Override
+    public String resolve(ServerWebExchange exchange) {
+        Assert.notNull(exchange, "require exchange.");
+        String cached = (String) exchange.getAttribute(CACHED_KEY);
+        if (has(cached)) {
+            return cached;
+        }
+
+        ServerHttpRequest httpReq = exchange.getRequest();
+        HttpHeaders headers = httpReq.getHeaders();
+        for (String header : IP_ADDRESS_HEADERS) {
+            String ip = headers.getFirst(header);
+            if (has(ip)) {
+                return cached(ip, exchange);
+            }
+        }
+
+        return cached(getRemoteAddress(httpReq), exchange);
+    }
+
+    private String getRemoteAddress(ServerHttpRequest httpReq) {
+        InetSocketAddress removeAddress = httpReq.getRemoteAddress();
+        if (removeAddress == null) {
+            return null;
+        }
+        return removeAddress.toString();
+    }
+
+    private String cached(String ip, ServerWebExchange exchange) {
+        Map<String, Object> attributes = exchange.getAttributes();
+        if (hasText(ip)) {
+            attributes.put(CACHED_KEY, ip);
+        } else {
+            attributes.remove(CACHED_KEY, ip);
+        }
+        return ip;
+    }
+}
+```
+
+# 4. เขียน Unit Test + Mockito 
 ``` java 
-public class ByteUtils_xorTest {
-    
-    /*
-     * A | B | answer 
-     * --------------
-     * 0 | 0 | 0 
-     * 0 | 1 | 1 
-     * 1 | 0 | 1 
-     * 1 | 1 | 0
-     */
+public class HttpClientIPAddressResolverTest {
+
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
+    private HttpClientIPAddressResolver resolver;
+
+    @Before
+    public void before() {
+        resolver = new DefaultHttpClientIPAddressResolver();
+    }
+
     @Test
-    public void shouldBe00000000() {
-        byte[] input1 = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
-        byte[] input2 = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
-        byte[] output = ByteUtils.xor(input1, input2);
-        byte[] expected = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
+    public void shouldBeThrowIllegalArgumentException_whenInputIsNull() {
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("require exchange.");
+
+        resolver.resolve(null);
+    }
+
+    @Test
+    public void shouldBeNull_whenAnyHeadersIsNull() {
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/"));
+        String output = resolver.resolve(exchange);
+        String expected = null;
         assertThat(output).isEqualTo(expected);
     }
-    
-    ...
+
+    @Test
+    public void shouldBeNull_whenXForwardedForHeaderIsUnknown() {
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").header("X-Forwarded-For", "UNKNOWN"));
+        String output = resolver.resolve(exchange);
+        String expected = null;
+        assertThat(output).isEqualTo(expected);
+    }
+
+    @Test
+    public void shouldBe127_0_0_1_whenXForwardedForHeaderIs127_0_0_1() {
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").header("X-Forwarded-For", "127.0.0.1"));
+        String output = resolver.resolve(exchange);
+        String expected = "127.0.0.1";
+        assertThat(output).isEqualTo(expected);
+    }
+
+    @Test
+    public void shouldBe127_0_0_1_whenRemoteAddrIs127_0_0_1() {
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").remoteAddress(InetSocketAddress.createUnresolved("127.0.0.1", 80)));
+        String output = resolver.resolve(exchange);
+        String expected = "127.0.0.1:80";
+
+        assertThat(output).isEqualTo(expected);
+    }
+
+}
 ```
 # 5. Build
 cd ไปที่ root ของ project จากนั้น  
