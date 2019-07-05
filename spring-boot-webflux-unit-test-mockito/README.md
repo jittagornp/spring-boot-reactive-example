@@ -59,7 +59,7 @@ pom.xml
 - junit เป็น dependency สำหรับเขียน test ภาษา java  
 - assertj เป็น dependency สำหรับทำ assert (support junit ซึ่งจริง ๆ ใช้แค่ junit ก็ได้)
 - mockito เป็น dependency สำหรับทำ mock (จำลองพฤติกรรม) test 
-- spring-boot-starter-test เป็น dependency สำหรับ test อะไรต่างๆ ที่ผูกกับ spring-boot เช่น reactor api, controller, service ฯลฯ    
+- spring-boot-starter-test เป็น dependency สำหรับ test อะไรต่างๆ ที่ผูกกับ spring-boot เช่น reactive api, controller, service ฯลฯ    
 
 # 2. เขียน Main Class 
 
