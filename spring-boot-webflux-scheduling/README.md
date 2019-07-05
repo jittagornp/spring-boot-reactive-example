@@ -95,6 +95,8 @@ public class CleanTokenExpiredTaskRunner implements TaskRunner {
 - `fixedDelay = 1000` คือ ให้ทำทุก 1000 millisecond หรือ 1 วินาที 
 - `cron = "*/5 * * * * *"` เป็นการเขียน cron expression ให้ทำงานตามที่กำหนด เช่น ทุก 5 วินาที  
 
+cron expressions สามารถอ่านเพิ่มเติมได้ที่ [A Guide To Cron Expressions](https://www.baeldung.com/cron-expressions)  
+
 ### ข้อควรระวัง
 fixedDelay vs fixedRate
 - fixedDelay ทำงานตามเวลาที่ตั้งไว้ เช่น ทุก 1 วินาที ทุก 5 วินาที หรือ ทุก 10 วินาที ถ้างานที่สั่งให้ทำ มันยังทำไม่เสร็จ  มันจะรอให้งานั้น ๆ เสร็จก่อน แล้วจึงค่อยทำงานถัดไป
