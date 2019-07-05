@@ -58,6 +58,8 @@ pom.xml
 ```
 - junit เป็น dependency สำหรับเขียน test ภาษา java  
 - assertj เป็น dependency สำหรับทำ assert (support junit ซึ่งจริง ๆ ใช้แค่ junit ก็ได้)
+- mockito เป็น dependency สำหรับทำ mock (จำลองพฤติกรรม) test 
+- spring-boot-starter-test เป็น dependency สำหรับ test อะไรต่างๆ ที่ผูกกับ spring-boot   
 
 # 2. เขียน Main Class 
 
@@ -220,4 +222,5 @@ $ mvn clean install
 
 - [https://junit.org](https://junit.org)  
 - [https://joel-costigliola.github.io/assertj/](https://joel-costigliola.github.io/assertj/)  
+- [https://site.mockito.org/](https://site.mockito.org/)   
 - [รูปแบบการเขียน Java Unit Test ของผม](https://medium.com/@jittagornp/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%82%E0%B8%B5%E0%B8%A2%E0%B8%99-java-unit-test-%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%A1-8408b6b27a7b)
