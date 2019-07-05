@@ -117,6 +117,11 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping({"", "/"})
+    public Flux<User> home() {
+        return findAll();
+    }
+
     @GetMapping("/users")
     public Flux<User> findAll() {
         return Flux.fromIterable(userRepository.findAll());
@@ -124,10 +129,26 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public Mono<User> findById(@PathVariable("id") String id) {
-        return Mono.just(userRepository.findById(id)
-                .orElse(null));
+        return Mono.justOrEmpty(userRepository.findById(id))
+                .switchIfEmpty(Mono.error(new NotFoundException("Not found user of id " + id)));
     }
 
+    @PostMapping("/users")
+    public Mono<User> save(@RequestBody User user) {
+        return Mono.just(userRepository.save(user));
+    }
+
+    @DeleteMapping("/users")
+    public Mono<Void> deleteAll() {
+        userRepository.deleteAll();
+        return Mono.empty();
+    }
+
+    @DeleteMapping("/users/{id}")
+    public Mono<Void> deleteById(@PathVariable("id") String id) {
+        userRepository.deleteById(id);
+        return Mono.empty();
+    }
 }
 ```
 

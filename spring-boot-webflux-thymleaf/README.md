@@ -43,11 +43,14 @@ public class AppStarter {
 
 # 3. เขียน Controller
 ``` java
-@RestController
+@Controller
 public class HomeController {
 
-    ...
-    
+    @GetMapping({"", "/"})
+    public Mono<String> hello(Model model) {
+        model.addAttribute("name", "Jittagorn");
+        return Mono.just("index");
+    }
 }
 ```
 
