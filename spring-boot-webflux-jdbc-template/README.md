@@ -106,11 +106,16 @@ public class User implements Serializable {
 ประกาศ interface
 ```java
 public interface UserRepository {
- 
+
     List<User> findAll();
-    
+
     Optional<User> findById(String id);
-    
+
+    User save(User user);
+
+    void deleteAll();
+
+    void deleteById(String id);
 }
 ```
 implement interface
@@ -132,15 +137,19 @@ public class UserRepositoryImpl implements UserRepository {
         this.schema = schema;
     }
 
-    private String tableName(String table) {
+    private String schema(String table) {
         return schema + "." + table;
+    }
+
+    private String sql(String sql) {
+        return String.format(sql, schema(User.TABLE_NAME));
     }
 
     @Override
     public List<User> findAll() {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM " + tableName(User.TABLE_NAME),
+                    sql("SELECT * FROM %s"),
                     (ResultSet rs, int i) -> {
                         List<User> list = new ArrayList<>();
                         do {
@@ -157,7 +166,7 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findById(String id) {
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(
-                    "SELECT * FROM " + tableName(User.TABLE_NAME) + " WHERE id = ?",
+                    sql("SELECT * FROM %s WHERE id = ?"),
                     new Object[]{id},
                     (ResultSet rs, int i) -> convertToEntity(rs)
             ));
@@ -172,6 +181,71 @@ public class UserRepositoryImpl implements UserRepository {
                 .username(rs.getString("username"))
                 .password(rs.getString("password"))
                 .build();
+    }
+
+    private boolean existsById(String id) {
+        try {
+            return jdbcTemplate.queryForObject(
+                    sql("SELECT COUNT(id) FROM %s WHERE id = ?"),
+                    new String[]{id},
+                    String.class
+            ) != null;
+        } catch (EmptyResultDataAccessException ex) {
+            return false;
+        }
+    }
+
+    private void insert(User user) {
+        jdbcTemplate.update(
+                sql("INSERT INTO %s (id, username, password) VALUES (?, ?, ?)"),
+                new Object[]{
+                    user.getId(),
+                    user.getUsername(),
+                    user.getPassword()
+                }
+        );
+    }
+
+    private void update(User user) {
+        jdbcTemplate.update(
+                sql("UPDATE %s SET username = ?, password = ? WHERE id = ?"),
+                new Object[]{
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getId()
+                }
+        );
+    }
+
+    private String randomId() {
+        return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public User save(User user) {
+        Assert.notNull(user, "require user.");
+        if (hasText(user.getId())) {
+            if (existsById(user.getId())) {
+                update(user);
+            } else {
+                insert(user);
+            }
+        } else {
+            user.setId(randomId());
+            insert(user);
+        }
+
+        return findById(user.getId()).get();
+    }
+
+    @Override
+    public void deleteAll() {
+        jdbcTemplate.update(sql("DELETE FROM %s"));
+    }
+
+    @Override
+    public void deleteById(String id) {
+        jdbcTemplate.update(sql("DELETE FROM %s WHERE id = ?"), id);
     }
 }
 ```
@@ -188,6 +262,11 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping({"", "/"})
+    public Flux<User> home() {
+        return findAll();
+    }
+
     @GetMapping("/users")
     public Flux<User> findAll() {
         return Flux.fromIterable(userRepository.findAll());
@@ -195,10 +274,26 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public Mono<User> findById(@PathVariable("id") String id) {
-        return Mono.just(userRepository.findById(id)
-                .orElse(null));
+        return Mono.justOrEmpty(userRepository.findById(id))
+                .switchIfEmpty(Mono.error(new NotFoundException("Not found user of id " + id)));
     }
 
+    @PostMapping("/users")
+    public Mono<User> save(@RequestBody User user) {
+        return Mono.just(userRepository.save(user));
+    }
+
+    @DeleteMapping("/users")
+    public Mono<Void> deleteAll() {
+        userRepository.deleteAll();
+        return Mono.empty();
+    }
+
+    @DeleteMapping("/users/{id}")
+    public Mono<Void> deleteById(@PathVariable("id") String id) {
+        userRepository.deleteById(id);
+        return Mono.empty();
+    }
 }
 ```
 
