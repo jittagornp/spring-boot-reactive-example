@@ -173,6 +173,8 @@ public class HomeController {
 }
 ```
 
+- ทดสอบ login ด้วย username ต่าง ๆ แล้วลองเข้าใช้งาน service ต่าง ๆ ดู หากเข้าไม่ได้ spring จะ return `Access Denied` ซึ่งตรงนี้เราสามารถ customer error เองได้ ให้ดูตัวอย่างจาก [spring-boot-webflux-custom-error-handler](../spring-boot-webflux-custom-error-handler)
+
 # 5. เขียน Login Controller
 ```java
 @Controller
