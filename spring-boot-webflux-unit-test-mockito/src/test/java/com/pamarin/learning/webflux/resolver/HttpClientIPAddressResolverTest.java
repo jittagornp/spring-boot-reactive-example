@@ -24,14 +24,9 @@ public class HttpClientIPAddressResolverTest {
 
     private HttpClientIPAddressResolver resolver;
 
-    //private ServerWebExchange exchange;
-    private ServerWebExchange exchange;
-
     @Before
     public void before() {
         resolver = new DefaultHttpClientIPAddressResolver();
-        //exchange = mock(ServerWebExchange.class);
-        exchange = MockServerWebExchange.from(MockServerHttpRequest.get("http://localhost:8080"));
     }
 
     @Test
@@ -44,6 +39,7 @@ public class HttpClientIPAddressResolverTest {
 
     @Test
     public void shouldBeNull_whenAnyHeadersIsNull() {
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/"));
         String output = resolver.resolve(exchange);
         String expected = null;
         assertThat(output).isEqualTo(expected);
@@ -51,7 +47,7 @@ public class HttpClientIPAddressResolverTest {
 
     @Test
     public void shouldBeNull_whenXForwardedForHeaderIsUnknown() {
-        exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").header("X-Forwarded-For", "UNKNOWN"));
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").header("X-Forwarded-For", "UNKNOWN"));
         String output = resolver.resolve(exchange);
         String expected = null;
         assertThat(output).isEqualTo(expected);
@@ -59,7 +55,7 @@ public class HttpClientIPAddressResolverTest {
 
     @Test
     public void shouldBe127_0_0_1_whenXForwardedForHeaderIs127_0_0_1() {
-        exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").header("X-Forwarded-For", "127.0.0.1"));
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").header("X-Forwarded-For", "127.0.0.1"));
         String output = resolver.resolve(exchange);
         String expected = "127.0.0.1";
         assertThat(output).isEqualTo(expected);
@@ -67,10 +63,10 @@ public class HttpClientIPAddressResolverTest {
 
     @Test
     public void shouldBe127_0_0_1_whenRemoteAddrIs127_0_0_1() {
-
-        exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").remoteAddress(InetSocketAddress.createUnresolved("127.0.0.1", 80)));
+        ServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/").remoteAddress(InetSocketAddress.createUnresolved("127.0.0.1", 80)));
         String output = resolver.resolve(exchange);
         String expected = "127.0.0.1:80";
+
         assertThat(output).isEqualTo(expected);
     }
 
