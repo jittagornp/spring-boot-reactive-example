@@ -147,18 +147,33 @@ public class LoginController {
 </html>
 ```
 
-# 7. Build
+# 7. Config Thymleaf
+classpath:application.properties
+```properties
+#--------------------------------- Thymleaf ------------------------------------
+spring.thymeleaf.cache=false
+spring.thymeleaf.check-template=true
+spring.thymeleaf.check-template-location=true
+spring.thymeleaf.content-type=text/html
+spring.thymeleaf.enabled=true
+spring.thymeleaf.encoding=UTF-8
+spring.thymeleaf.mode=LEGACYHTML5
+spring.thymeleaf.prefix=classpath:/static/
+spring.thymeleaf.suffix=.html
+```
+
+# 8. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 8. Run 
+# 9. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 9. เข้าใช้งาน
+# 10. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
   
