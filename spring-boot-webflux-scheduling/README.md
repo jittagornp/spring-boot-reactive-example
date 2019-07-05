@@ -74,9 +74,28 @@ public class CleanSessionExpiredTaskRunner implements TaskRunner {
 
 }
 ```
+หรือ 
+```java
+@Slf4j
+@Component
+public class CleanTokenExpiredTaskRunner implements TaskRunner {
 
-- @Scheduled เป็น annotation ที่บอกว่าให้ทำ scheduling ที่ method นี้ 
-- fixedDelay 1000 คือ ให้ทำทุก 1000 millisecond หรือ 1 วินาที 
+    //cron format 
+    //second, minute, hour, day of month, month, day(s) of week
+    @Override
+    @Scheduled(cron = "*/5 * * * * *") //every 5 seconds
+    public void run() {
+        log.debug("clean token() running...." + System.currentTimeMillis());
+    }
+
+}
+```
+
+- `@Scheduled` เป็น annotation ที่บอกว่าให้ทำ scheduling ที่ method นี้ 
+- `fixedDelay = 1000` คือ ให้ทำทุก 1000 millisecond หรือ 1 วินาที 
+- `cron = "*/5 * * * * *"` เป็นการเขียน cron expression ให้ทำงานตามที่กำหนด เช่น ทุก 5 วินาที  
+
+cron expressions สามารถอ่านเพิ่มเติมได้ที่ [A Guide To Cron Expressions](https://www.baeldung.com/cron-expressions)  
 
 ### ข้อควรระวัง
 fixedDelay vs fixedRate
