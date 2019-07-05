@@ -58,6 +58,9 @@ pom.xml
 ```
 - junit เป็น dependency สำหรับเขียน test ภาษา java  
 - assertj เป็น dependency สำหรับทำ assert (support junit ซึ่งจริง ๆ ใช้แค่ junit ก็ได้)
+- mockito เป็น dependency สำหรับทำ mock (จำลองพฤติกรรม) test 
+
+Mockito อ่านเพิ่มเติมจากนี่ได้ครับ [https://site.mockito.org/](https://site.mockito.org/)  
 
 # 2. เขียน Main Class 
 
