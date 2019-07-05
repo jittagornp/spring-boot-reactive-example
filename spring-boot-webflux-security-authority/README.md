@@ -210,11 +210,27 @@ $ mvn spring-boot:run
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
   
-login path 
-> /login
-
-
+login url 
+> [http://localhost:8080/login](http://localhost:8080/login)
+  
+logout url 
+> [http://localhost:8080/logout](http://localhost:8080/logout)
+  
 
 # Username/Password สำหรับเข้าใช้งาน
-- username = test
+
+### Admin  
+มีสิทธิ์ทำได้ทุกอย่าง 
+- username = admin  
 - password = password  
+
+### Supervisor 
+มีสิทธิ์แค่ reset user password
+- username = supervisor  
+- password = password  
+
+### Other user
+สิทธิ์ว่าง  
+- username = test   
+- password = password  
+
