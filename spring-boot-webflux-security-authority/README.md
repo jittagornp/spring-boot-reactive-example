@@ -132,7 +132,8 @@ public class SecurityConfig {
 }
 ```
 
-- จะเหมือนหัวข้อ [spring-boot-webflux-custom-login-page](../spring-boot-webflux-custom-login-page) เพียงแต่มีการเพิ่ม configuration เกี่ยวกับการกำหนดสิทธิ์การเข้าถึง เข้ามา 
+- จะเหมือนหัวข้อ [spring-boot-webflux-custom-login-page](../spring-boot-webflux-custom-login-page) เพียงแต่มีการเพิ่ม configuration เกี่ยวกับการกำหนดสิทธิ์การเข้าถึง เข้ามา
+- ตรง method `reactiveUserDetailsService()` มีการจำลอง user ขึ้นมาเช่น ถ้า login ด้วย username `admin` ให้มีสิทธิ์ `CREATE_USER`, `UPDATE_USER`, `DELETE_USER` และ `RESET_USER_PASSWORD`  
 
 
 # 4. เขียน Controller
