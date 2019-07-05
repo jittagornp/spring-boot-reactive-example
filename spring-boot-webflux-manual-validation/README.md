@@ -1,5 +1,5 @@
-# spring-boot-webflux-validation
-ตัวอย่างการเขียน Spring-boot WebFlux Validation 
+# spring-boot-webflux-manual-validation
+ตัวอย่างการเขียน Spring-boot WebFlux Manual Validation 
 
 # 1. เพิ่ม Dependencies
 
@@ -65,27 +65,90 @@ public class LoginRequest {
 
 อ่านเพิ่มเติม : [https://beanvalidation.org/](https://beanvalidation.org/)  
 
-# 4. เขียน Controller
+# 4. เขียน Manual Validator 
+```java
+public class ManualValidation {
+
+    private final Object object;
+    private final String objectName;
+    private Class<?> groupClass;
+
+    private ManualValidation(Object object, String objectName) {
+        this.object = object;
+        this.objectName = objectName;
+    }
+
+    /**
+     * @param object
+     * @param objectName
+     * @return ManualValidator instance
+     */
+    public static ManualValidation of(Object object, String objectName) {
+        return new ManualValidation(object, objectName);
+    }
+
+    /**
+     * @param object
+     * @return ManualValidator instance
+     */
+    public static ManualValidation of(Object object) {
+        return of(object, "");
+    }
+
+    /**
+     * @param groupClass
+     * @return ManualValidator instance
+     */
+    public ManualValidation group(Class<?> groupClass) {
+        this.groupClass = groupClass;
+        return this;
+    }
+
+    /**
+     * @param validator
+     * @throws BindException
+     */
+    public void validate(Validator validator) throws BindException {
+        BindingResult bindingResult = new BindException(object, objectName);
+        WebExchangeBindException ex = new WebExchangeBindException(null, bindingResult);
+        ValidationUtils.invokeValidator(validator, object, ex, groupClass, Default.class);
+        if (ex.hasErrors()) {
+            throw ex;
+        }
+    }
+}
+```
+
+# 5. เขียน Controller
 ``` java
 @Slf4j
 @RestController
 public class LoginController {
 
+    private final Validator validator;
+
+    @Autowired
+    public LoginController(Validator validator) {
+        this.validator = validator;
+    }
+
     @PostMapping("/login")
-    public void login(@RequestBody @Validated LoginRequest req) {
+    public void login(@RequestBody LoginRequest req) throws BindException, NoSuchMethodException {
+
+        ManualValidation.of(req).validate(validator);
+
         log.debug("username => {}", req.getUsername());
         log.debug("password => {}", req.getPassword());
     }
 
 }
 ```
-- สังเกตว่าตรง input method ใน controller มี @Validated เพื่อบอกว่าให้ validate input ที่เป็น request body (json) ด้วย   
 
-# 5. เขียน error handler
+# 6. เขียน error handler
 
 ตัวจัดการ Error ให้เรียนรู้จากหัวข้อ [spring-boot-webflux-custom-error-handler](../spring-boot-webflux-custom-error-handler)
 
-# 6. เพิ่มตัวจัดการ Error สำหรับ WebExchangeBindException
+# 7. เพิ่มตัวจัดการ Error สำหรับ WebExchangeBindException
 ```java 
 @Component
 public class ErrorResponseWebExchangeBindExceptionHandler extends ErrorResponseExceptionHandlerAdapter<WebExchangeBindException> {
@@ -118,22 +181,22 @@ public class ErrorResponseWebExchangeBindExceptionHandler extends ErrorResponseE
 }
 ```
 
-# 7. Build
+# 8. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 8. Run 
+# 9. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 9. เข้าใช้งาน
+# 10. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
-# 10. ลองยิง request ทดสอบผ่าน postman
+# 11. ลองยิง request ทดสอบผ่าน postman
 > POST : http://localhost:8080/login  
   
 ได้ผลลัพธ์
