@@ -12,9 +12,14 @@ import java.util.Optional;
  * @author jitta
  */
 public interface UserRepository {
- 
+
     List<User> findAll();
-    
+
     Optional<User> findById(String id);
-    
+
+    User save(User user);
+
+    void deleteAll();
+
+    void deleteById(String id);
 }
