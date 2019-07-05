@@ -86,12 +86,41 @@ public class SecurityConfig {
     public ReactiveUserDetailsService reactiveUserDetailsService(PasswordEncoder passwordEncoder) {
         return username -> {
             log.debug("login with username => {}", username);
-            return Mono.just(
-                    User.withUsername(username)
+
+            UserDetails user;
+            switch (username) {
+                case "admin": {
+                    user = User.withUsername(username)
+                            .password(passwordEncoder.encode("password"))
+                            .authorities(
+                                    () -> "CREATE_USER",
+                                    () -> "UPDATE_USER",
+                                    () -> "DELETE_USER",
+                                    () -> "RESET_USER_PASSWORD"
+                            )
+                            .build();
+                    break;
+                }
+
+                case "supervisor": {
+                    user = User.withUsername(username)
+                            .password(passwordEncoder.encode("password"))
+                            .authorities(
+                                    () -> "RESET_USER_PASSWORD"
+                            )
+                            .build();
+                    break;
+                }
+
+                default: {
+                    user = User.withUsername(username)
                             .password(passwordEncoder.encode("password"))
                             .authorities(Collections.emptyList())
-                            .build()
-            );
+                            .build();
+                }
+            }
+
+            return Mono.just(user);
         };
     }
 
