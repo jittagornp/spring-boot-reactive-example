@@ -1,5 +1,5 @@
-# spring-boot-webflux-security 
-ตัวอย่างการเขียน Spring-boot WebFlux Security 
+# spring-boot-webflux-security-authority
+ตัวอย่างการเขียน Spring-boot WebFlux Security Authority 
 
 # 1. เพิ่ม Dependencies
 
@@ -17,7 +17,7 @@ pom.xml
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
-    
+
     <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
@@ -28,10 +28,16 @@ pom.xml
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
 </dependencies>
 
 ...
 ```
+- ในที่นี้เราจะใช้ Thymleaf ทำ View (Server Side) Rendering น่ะครับ  
 
 # 2. เขียน Main Class 
 
@@ -55,6 +61,28 @@ public class AppStarter {
 public class SecurityConfig {
 
     @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        return http
+                .csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/", "/login", "/logout").permitAll()
+                .pathMatchers(HttpMethod.POST, "/users").hasAuthority("CREATE_USER")
+                .pathMatchers(HttpMethod.PUT, "/users/{id}").hasAuthority("UPDATE_USER")
+                .pathMatchers(HttpMethod.DELETE, "/users", "/users/{id}").hasAuthority("DELETE_USER")
+                .pathMatchers(HttpMethod.POST, "/users/{id}/reset-password").hasAuthority("RESET_USER_PASSWORD")
+                .anyExchange().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/logout"))
+                .and()
+                .build();
+    }
+
+    @Bean
     public ReactiveUserDetailsService reactiveUserDetailsService(PasswordEncoder passwordEncoder) {
         return username -> {
             log.debug("login with username => {}", username);
@@ -66,19 +94,19 @@ public class SecurityConfig {
             );
         };
     }
-    
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 }
 ```
 
-- `@EnableWebFluxSecurity` เป็นการ enable Spring Security 
-- method passwordEncoder() เป็นการประกาศใช้ password encoder เป็น `BCryptPasswordEncoder`  
-- method reactiveUserDetailsService() เป็นการประกาศ login service ว่าถ้ามีการ login เข้ามาให้ find user จาก username ที่ส่งมาใน service นี้ ซึ่งปกติจะ find จาก database ถ้าไม่เจอ อาจจะ throw error `org.springframework.security.authentication.BadCredentialsException` ออกไป  
-- เบื้องต้น สิทธิ์ หรือ authorities กำหนดเป็น empty ไปก่อน `authorities(Collections.emptyList())`
+- จะเหมือนหัวข้อ [spring-boot-webflux-security](../spring-boot-webflux-security) เพียงแต่มีการเพิ่ม configuration `securityWebFilterChain()` เข้ามา 
+- สังเกตว่ามีการกำหนด login entry point หรือ login page เอง 
+- ทุก ๆ entry point `.anyExchange().authenticated()` จะ require login ยกเว้น `.pathMatchers("/login").permitAll()` ที่อนุญาตให้ทุกคนเข้าถึงได้  
+- `.csrf().disable()` มีการ disabled csrf token 
 
 # 4. เขียน Controller
 ``` java
@@ -87,28 +115,106 @@ public class HomeController {
 
     @GetMapping({"", "/"})
     public Mono<String> hello(Authentication authentication) {
-        return Mono.just("Hello => " + authentication.getName());
+        return Mono.just("Hello => " + (authentication == null ? "anonymous user" : authentication.getName()));
+    }
+
+    @PostMapping("/users")
+    public Mono<String> createUser() {
+        return Mono.just("Can create user.");
+    }
+
+    @PutMapping("/users/{id}")
+    public Mono<String> udpateUser() {
+        return Mono.just("Can update user.");
+    }
+
+    @DeleteMapping("/users/{id}")
+    public Mono<String> deleteUser() {
+        return Mono.just("Can delete user.");
+    }
+
+    @DeleteMapping("/users")
+    public Mono<String> deleteAllUsers() {
+        return Mono.just("Can delete all users.");
+    }
+
+    @PostMapping("/users/{id}/reset-password")
+    public Mono<String> resetPassword() {
+        return Mono.just("Can reset user password.");
     }
 }
 ```
 
-# 5. Build
+# 5. เขียน Login Controller
+```java
+@Controller
+public class LoginController {
+    
+    @GetMapping("/login")
+    public Mono<String> login(){
+        return Mono.just("custom-login");
+    }
+    
+}
+```
+
+# 6. เขียน custom-login.html
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Custom Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Custom Login Page</h1>
+        <form method="post">
+            <input name="username" type="text" />
+            <br/>
+            <input name="password" type="password" />
+            <br/>
+            <button type="submit">Login</button>
+        </form>
+    </body>
+</html>
+```
+
+# 7. Config Thymleaf
+classpath:application.properties
+```properties
+#--------------------------------- Thymleaf ------------------------------------
+spring.thymeleaf.cache=false
+spring.thymeleaf.check-template=true
+spring.thymeleaf.check-template-location=true
+spring.thymeleaf.content-type=text/html
+spring.thymeleaf.enabled=true
+spring.thymeleaf.encoding=UTF-8
+spring.thymeleaf.mode=LEGACYHTML5
+spring.thymeleaf.prefix=classpath:/static/
+spring.thymeleaf.suffix=.html
+```
+
+# 8. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 6. Run 
+# 9. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 7. เข้าใช้งาน
+# 10. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
   
-หลังจากนั้นมันจะเด้งเข้าหน้า login (default จาก Spring Security)  
-  
+login path 
+> /login
+
+
+
 # Username/Password สำหรับเข้าใช้งาน
 - username = test
 - password = password  
