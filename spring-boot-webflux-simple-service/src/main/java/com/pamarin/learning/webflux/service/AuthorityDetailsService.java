@@ -17,6 +17,4 @@ public interface AuthorityDetailsService {
 
     Optional<AuthorityDetailsDto> findById(String id);
 
-    Optional<AuthorityDetailsDto> findByName(String id);
-
 }

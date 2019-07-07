@@ -43,12 +43,6 @@ public class AuthorityDetailsServiceImpl implements AuthorityDetailsService {
                 .map(this::convertToAuthorityDetailsDto);
     }
 
-    @Override
-    public Optional<AuthorityDetailsDto> findByName(String id) {
-        return authorityRepository.findByName(id)
-                .map(this::convertToAuthorityDetailsDto);
-    }
-
     private AuthorityDetailsDto convertToAuthorityDetailsDto(Authority authority) {
         return AuthorityDetailsDto.builder()
                 .id(authority.getId())
