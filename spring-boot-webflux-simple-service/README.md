@@ -224,7 +224,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 }
 ```
 
-# 7. เรียกใช้งาน Repository ผ่าน Controller
+# 7. เรียกใช้งาน Service ผ่าน Controller
 ``` java
 @RestController
 public class UserDetailsController {
