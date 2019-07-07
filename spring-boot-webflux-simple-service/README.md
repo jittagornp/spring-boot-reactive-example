@@ -103,69 +103,6 @@ public class User implements Serializable {
 
 }
 ```
-Authority.java  
-```java
-@Data
-@Entity
-@Table(name = Authority.TABLE_NAME)
-public class Authority implements Serializable {
-
-    public static final String TABLE_NAME = "authority";
-
-    @Id
-    private String id;
-
-    @Column(name = "name", unique = true, nullable = false)
-    private String name;
-
-    private String description;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "authority")
-    private List<UserAuthority> userAuthorities;
-
-    public List<UserAuthority> getUserAuthorities() {
-        if (userAuthorities == null) {
-            userAuthorities = new ArrayList<>();
-        }
-        return userAuthorities;
-    }
-
-}
-```
-UserAuthority.java  
-```java
-@Data
-@Entity
-@Table(name = UserAuthority.TABLE_NAME)
-public class UserAuthority implements Serializable {
-
-    public static final String TABLE_NAME = "user_authority";
-
-    @Data
-    @Embeddable
-    public static class UserAuthorityPK implements Serializable {
-
-        @Column(name = "user_id")
-        private String userId;
-
-        @Column(name = "authority_id")
-        private String authorityId;
-
-    }
-
-    @EmbeddedId
-    private UserAuthorityPK id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "authority_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Authority authority;
-
-}
-```
 
 - `@Data` เป็น annotation ของ lombox เอาไว้ generate code เช่น getter/setter method, hashcode + equals ให้ 
 - `@Entity` เป็น annotation ที่เอาไว้ระบุว่า class นี้เป็น entity class 
@@ -178,14 +115,6 @@ UserRepository.java
 ```java
 public interface UserRepository extends JpaRepository<User, String>{
     
-}
-```
-AuthorityRepository.java 
-```java
-public interface AuthorityRepository extends JpaRepository<Authority, String> {
-
-    Optional<Authority> findByName(String name);
-
 }
 ```
 
@@ -231,30 +160,9 @@ public class UserDetailsDto {
 }
 ```
 
-AuthorityDetailsDto.java  
-```java
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class AuthorityDetailsDto {
-
-    private String id;
-
-    private String name;
-
-    private String description;
-    
-    private long numberOfUsers;
-
-}
-```
-
 # 6. เขียน Service
 
-ประกาศ interface  
-UserDetailsService.java  
+ประกาศ interface UserDetailsService.java  
 ```java
 public interface UserDetailsService {
 
@@ -264,8 +172,7 @@ public interface UserDetailsService {
 
 }
 ```
-implement interface  
-UserDetailsServiceImpl.java   
+implement interface UserDetailsServiceImpl.java   
 ```java
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -317,54 +224,39 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 }
 ```
 
-# 5. เรียกใช้งาน Repository ผ่าน Controller
+# 7. เรียกใช้งาน Repository ผ่าน Controller
 ``` java
 @RestController
-public class UserController {
+public class UserDetailsController {
 
-    private final UserRepository userRepository;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailsController(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping({"", "/"})
-    public Flux<User> home() {
+    public Flux<UserDetailsDto> home() {
         return findAll();
     }
 
-    @GetMapping("/users")
-    public Flux<User> findAll() {
-        return Flux.fromIterable(userRepository.findAll());
+    @GetMapping("/user-details")
+    public Flux<UserDetailsDto> findAll() {
+        return Flux.fromIterable(userDetailsService.findAll());
     }
 
-    @GetMapping("/users/{id}")
-    public Mono<User> findById(@PathVariable("id") String id) {
-        return Mono.justOrEmpty(userRepository.findById(id))
+
+    @GetMapping("/user-details/{id}")
+    public Mono<UserDetailsDto> findById(@PathVariable("id") String id) {
+        return Mono.justOrEmpty(userDetailsService.findByUserId(id))
                 .switchIfEmpty(Mono.error(new NotFoundException("Not found user of id " + id)));
     }
 
-    @PostMapping("/users")
-    public Mono<User> save(@RequestBody User user) {
-        return Mono.just(userRepository.save(user));
-    }
-
-    @DeleteMapping("/users")
-    public Mono<Void> deleteAll() {
-        userRepository.deleteAll();
-        return Mono.empty();
-    }
-
-    @DeleteMapping("/users/{id}")
-    public Mono<Void> deleteById(@PathVariable("id") String id) {
-        userRepository.deleteById(id);
-        return Mono.empty();
-    }
 }
 ```
 
-# 6. Config application.properties
+# 8. Config application.properties
 ``` properties
 #------------------------------------ JPA --------------------------------------
 spring.jpa.hibernate.ddl-auto=none
@@ -391,13 +283,13 @@ spring.datasource.platform=postgres
 spring.datasource.type=org.postgresql.ds.PGSimpleDataSource
 ```
 
-# 7. Build
+# 9. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 8. Run 
+# 10. Run 
 ``` shell 
 $ mvn spring-boot:run \
     -Dserver.port=8080 \
@@ -415,6 +307,6 @@ $ mvn spring-boot:run \
 - DATABASE_SCHEMA คือ database schema ที่่ใช้ 
 
 
-# 8. เข้าใช้งาน
+# 11. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
