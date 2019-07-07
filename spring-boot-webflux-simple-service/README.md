@@ -251,6 +251,72 @@ public class AuthorityDetailsDto {
 }
 ```
 
+# 6. เขียน Service
+
+ประกาศ interface  
+UserDetailsService.java  
+```java
+public interface UserDetailsService {
+
+    List<UserDetailsDto> findAll();
+
+    Optional<UserDetailsDto> findByUserId(String id);
+
+}
+```
+implement interface  
+UserDetailsServiceImpl.java   
+```java
+@Service
+@Transactional(propagation = Propagation.REQUIRED)
+public class UserDetailsServiceImpl implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public Optional<UserDetailsDto> findByUserId(String id) {
+        return userRepository.findById(id)
+                .map(this::convertToUserDetailsDto);
+    }
+
+    private UserDetailsDto convertToUserDetailsDto(User user) {
+        return UserDetailsDto.builder()
+                .id(user.getId())
+                .name(user.getUsername())
+                .authorities(
+                        user.getUserAuthorities()
+                                .stream()
+                                .map(this::convertToAuthorityDto)
+                                .collect(toList())
+                )
+                .build();
+    }
+
+    private UserDetailsDto.AuthorityDto convertToAuthorityDto(UserAuthority userAuthority) {
+        Authority authority = userAuthority.getAuthority();
+        return UserDetailsDto.AuthorityDto.builder()
+                .id(userAuthority.getId().getAuthorityId())
+                .name(authority.getName())
+                .description(authority.getDescription())
+                .build();
+    }
+
+    @Override
+    public List<UserDetailsDto> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::convertToUserDetailsDto)
+                .collect(toList());
+    }
+
+}
+```
+
 # 5. เรียกใช้งาน Repository ผ่าน Controller
 ``` java
 @RestController
