@@ -1,5 +1,5 @@
-# spring-boot-webflux-postgresql
-ตัวอย่างการเขียน Spring-boot WebFlux Postgresql  
+# spring-boot-webflux-simple-service
+ตัวอย่างการเขียน Spring-boot WebFlux Simple Service  
 
 # 1. เพิ่ม Dependencies
 
@@ -73,6 +73,7 @@ public class AppStarter {
 ```
 
 # 3. เขียน entity 
+User.java 
 ```java
 @Data
 @Entity
@@ -90,8 +91,82 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<UserAuthority> userAuthorities;
+
+    public List<UserAuthority> getUserAuthorities() {
+        if (userAuthorities == null) {
+            userAuthorities = new ArrayList<>();
+        }
+        return userAuthorities;
+    }
+
 }
 ```
+Authority.java  
+```java
+@Data
+@Entity
+@Table(name = Authority.TABLE_NAME)
+public class Authority implements Serializable {
+
+    public static final String TABLE_NAME = "authority";
+
+    @Id
+    private String id;
+
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
+
+    private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "authority")
+    private List<UserAuthority> userAuthorities;
+
+    public List<UserAuthority> getUserAuthorities() {
+        if (userAuthorities == null) {
+            userAuthorities = new ArrayList<>();
+        }
+        return userAuthorities;
+    }
+
+}
+```
+UserAuthority.java  
+```java
+@Data
+@Entity
+@Table(name = UserAuthority.TABLE_NAME)
+public class UserAuthority implements Serializable {
+
+    public static final String TABLE_NAME = "user_authority";
+
+    @Data
+    @Embeddable
+    public static class UserAuthorityPK implements Serializable {
+
+        @Column(name = "user_id")
+        private String userId;
+
+        @Column(name = "authority_id")
+        private String authorityId;
+
+    }
+
+    @EmbeddedId
+    private UserAuthorityPK id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "authority_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Authority authority;
+
+}
+```
+
 - `@Data` เป็น annotation ของ lombox เอาไว้ generate code เช่น getter/setter method, hashcode + equals ให้ 
 - `@Entity` เป็น annotation ที่เอาไว้ระบุว่า class นี้เป็น entity class 
 - `@Table` เป็น annotation ที่เอาไว้ระบุว่าให้ class นี้ map ไปที่ database table ใด
@@ -99,9 +174,80 @@ public class User implements Serializable {
 - `@Column` เป็นการใช้ระบุข้อมูล column
 
 # 4. เขียน Repository 
+UserRepository.java 
 ```java
 public interface UserRepository extends JpaRepository<User, String>{
     
+}
+```
+AuthorityRepository.java 
+```java
+public interface AuthorityRepository extends JpaRepository<Authority, String> {
+
+    Optional<Authority> findByName(String name);
+
+}
+```
+
+# 5. เขียน DTO (Data Transfer Object)
+
+UserDetailsDto.java  
+```java
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserDetailsDto {
+
+    private String id;
+
+    private String name;
+
+    private List<AuthorityDto> authorities;
+
+    public List<AuthorityDto> getAuthorities() {
+        if (authorities == null) {
+            authorities = new ArrayList<>();
+        }
+        return authorities;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AuthorityDto {
+
+        private String id;
+
+        private String name;
+
+        private String description;
+
+    }
+
+}
+```
+
+AuthorityDetailsDto.java  
+```java
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthorityDetailsDto {
+
+    private String id;
+
+    private String name;
+
+    private String description;
+    
+    private long numberOfUsers;
+
 }
 ```
 
