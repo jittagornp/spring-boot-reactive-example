@@ -1,5 +1,5 @@
-# spring-boot-webflux-controller
-ตัวอย่างการเขียน Spring-boot WebFlux Controller 
+# spring-boot-webflux-session
+ตัวอย่างการเขียน Spring-boot WebFlux Session
 
 # 1. เพิ่ม Dependencies
 
@@ -46,23 +46,26 @@ public class AppStarter {
 
 # 3. เขียน Controller
 ``` java
-@RestController
-public class HomeController {
-    ....
-}
-
 @Slf4j
 @RestController
-public class LoginController {
+public class SessionController {
 
-    @PostMapping("/login")
-    public void login(@RequestBody LoginRequest req) {
-        log.debug("username => {}", req.getUsername());
-        log.debug("password => {}", req.getPassword());
+    @GetMapping({"", "/", "/session"})
+    public Mono<WebSession> statelessSession(WebSession webSession) {
+        return Mono.just(webSession);
     }
 
-}
+    @GetMapping("/session/create")
+    public Mono<String> createSession(WebSession webSession) {
+        webSession.start();
+        return Mono.just("create session => " + webSession.getId());
+    }
 
+    @GetMapping("/session/invalidate")
+    public Mono<String> invalidateSession(WebSession webSession) {
+        return webSession.invalidate().then(Mono.just("invalidate session => " + webSession.getId()));
+    }
+}
 ```
 
 # 4. Build
