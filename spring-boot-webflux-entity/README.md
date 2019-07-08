@@ -177,9 +177,14 @@ public class UserAuthority implements Serializable {
 4. ใส่ annotation `@Entity` 
 5. ใส่ Annotation `@Table` เพื่อ map ไปยัง table ที่ต้องการ (name = ???)
 6. กำหนด Id หรือ Primary Key ของ Table ด้วย `@Id`
-  - กรณีที่เป็น Composite Key (Key ร่วม) จะใช้ `@EmbeddedId` และ Key class จะใส่ `@Embeddable`  
+    - กรณีที่เป็น Composite Key (Key ร่วม) จะใช้ `@EmbeddedId` และ Key class จะใส่ `@Embeddable`  
 7. ประกาศ Getter / Setter / HashCode / Equals method ซึ่งสามารถใช้ `@Data` ของ lombox ช่วยได้  (มันจะ Generate ให้ Auto)  
-8. เขียน Relation Join Columns / Tables 
+8. เขียน Relation 
+    - `@OneToOne` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:1 
+    - `@OneToMany` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:M
+    - `@ManyToOne` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:M 
+    - `@ManyToMany` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ M:N ซึ่งในกรณีนี้ Hibernate จะสร้าง class ใหม่ขึ้นมาเชื่อมกลายเป็น 3 tables และมี relation เป็นแบบ `TABLE_A` 1 <-> M `TABLE_B` N <-> 1 `TABLE_C`
+9. Join Columns (ถ้ามี)
 
 # 4. Config application.properties
 ```properties
