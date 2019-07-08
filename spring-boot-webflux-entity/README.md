@@ -220,4 +220,4 @@ $ mvn spring-boot:run \
 - DATABASE_PASSWORD คือ รหัสผ่านที่คู่กับ username ที่ใช้ 
 - DATABASE_SCHEMA คือ database schema ที่่ใช้ 
 
-# ดูผลลัพธ์ที่ Database
+# ดูผลลัพธ์ที่ Console และ Database
