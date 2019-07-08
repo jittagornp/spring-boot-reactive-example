@@ -248,7 +248,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
    A() -> B() -> C()
 ```   
 
-ถ้าทั้ง method A(), B() และ C() เป็น `Propagation.REQUIRES_NEW` หมายความว่า ทั้ง 3 methods นี้จะใช้ Transactio คนละตัวก่อน การ commit ของ C() จะไม่มีผลต่อ B() และ A() การ commit ของ A() ก็ไม่มีผลต่อ B() และ C()   
+ถ้าทั้ง method A(), B() และ C() เป็น `Propagation.REQUIRES_NEW` หมายความว่า ทั้ง 3 methods นี้จะใช้ Transaction คนละตัวกัน 
+การ commit ของ C() จะไม่มีผลต่อ B() และ A()   
+การ commit ของ A() ก็ไม่มีผลต่อ B() และ C()     
 
 สามารถอ่านเพิ่มเติมได้ที่ [https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation)
 
