@@ -228,6 +228,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 - `@Transactional` คือ Service นี้มีการใช้ Transaction (TX)
 - `@Transactional(propagation = Propagation.REQUIRED)` เป็นการใช้ Transaction (TX) แบบ required จริง ๆ ไม่ต้องกำหนดก็ได้ เพราะ default จะเป็น `REQUIRED` อยู่แล้ว   
 
+### Transaction Propagation
+ที่ใช้บ่อย ๆ จะมี 2 ตัวคือ 
+- `Propagation.REQUIRED`
+- `Propagation.REQUIRES_NEW`
+
+สามารถอ่านเพิ่มเติมได้ที่ [https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation)
+
 # 7. เรียกใช้งาน Service ผ่าน Controller
 ``` java
 @RestController
