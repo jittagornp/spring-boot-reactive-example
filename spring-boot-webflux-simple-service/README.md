@@ -224,6 +224,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 }
 ```
 
+- `@Service` เป็นการบอกว่า class นี้เป็น Service  
+- `@Transactional` คือ Service นี้มีการใช้ Transaction (TX)
+- `@Transactional(propagation = Propagation.REQUIRED)` เป็นการใช้ Transaction (TX) แบบ required จริง ๆ ไม่ต้องกำหนดก็ได้ เพราะ default จะเป็น `REQUIRED` อยู่แล้ว   
+
 # 7. เรียกใช้งาน Service ผ่าน Controller
 ``` java
 @RestController
