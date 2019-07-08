@@ -89,8 +89,19 @@ public class SessionController {
 โดยเมื่อเราสั่ง webSession.start() spring จะ save() session นี้ลง session store (repository) และจะ    
 write http response header `Set-Cookie` กลับไปยัง browser เพื่อให้ browser จดจำ cookie id นี้ไว้  
   
-เมื่อเข้ามาใหม่ browser ก็จะส่ง cookie id เดิมกลับมาด้วย  ทำให้เราเห็นว่า ไม่ว่าจะ /session กี่ครั้ง ก็ยังได้ session id เดิม  
-
+เมื่อเข้ามาใหม่ browser ก็จะส่ง cookie id เดิมกลับมาด้วย  ทำให้เราเห็นว่า ไม่ว่าจะเรียก /session กี่ครั้ง ก็ยังได้ session id เดิม  
+สังเกตตรง `started` เป็น true เพราะเราสั่ง start session นี้แล้ว  
+```json
+{
+    "id": "52f0a4c2-4706-406f-9c2b-9410d5ff324b",
+    "attributes": {},
+    "creationTime": "2019-07-08T13:34:18.655Z",
+    "lastAccessTime": "2019-07-08T13:34:24.669Z",
+    "maxIdleTime": "PT30M",
+    "expired": false,
+    "started": true
+}
+```
 
 # 4. Build
 cd ไปที่ root ของ project จากนั้น  
