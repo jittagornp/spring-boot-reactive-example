@@ -75,4 +75,97 @@ public class AppStarter {
 
 # 3. เขียน Entity
 
-TODO  
+User.java  
+```java
+@Data
+@Entity
+@Table(name = User.TABLE_NAME)
+public class User implements Serializable {
+
+    public static final String TABLE_NAME = "user";
+
+    @Id
+    private String id;
+
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<UserAuthority> userAuthorities;
+
+    public List<UserAuthority> getUserAuthorities() {
+        if (userAuthorities == null) {
+            userAuthorities = new ArrayList<>();
+        }
+        return userAuthorities;
+    }
+
+}
+```
+Authority.java  
+```java 
+@Data
+@Entity
+@Table(name = Authority.TABLE_NAME)
+public class Authority implements Serializable {
+
+    public static final String TABLE_NAME = "authority";
+
+    @Id
+    private String id;
+
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
+
+    private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "authority")
+    private List<UserAuthority> userAuthorities;
+
+    public List<UserAuthority> getUserAuthorities() {
+        if (userAuthorities == null) {
+            userAuthorities = new ArrayList<>();
+        }
+        return userAuthorities;
+    }
+
+}
+```
+
+UserAuthority.java  
+```java
+@Data
+@Entity
+@Table(name = UserAuthority.TABLE_NAME)
+public class UserAuthority implements Serializable {
+
+    public static final String TABLE_NAME = "user_authority";
+
+    @Data
+    @Embeddable
+    public static class UserAuthorityPK implements Serializable {
+
+        @Column(name = "user_id")
+        private String userId;
+
+        @Column(name = "authority_id")
+        private String authorityId;
+
+    }
+
+    @EmbeddedId
+    private UserAuthorityPK id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "authority_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Authority authority;
+
+}
+```
