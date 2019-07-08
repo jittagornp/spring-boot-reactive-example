@@ -9,3 +9,4 @@
 | Servlet | Reactive (WebFlux) |
 --------- | ---------
 | Blocking I/O (Thread Pool)  | Non-Blocking I/O (Event Loop)    | 
+| Sychronous  | Asychronous    | 
