@@ -197,7 +197,7 @@ spring.datasource.platform=postgres
 spring.datasource.type=org.postgresql.ds.PGSimpleDataSource
 ```
 
-- `spring.jpa.hibernate.ddl-auto` เป็นการบอก Hibernate ว่าให้ทำคำสั่ง DDL อะไร ตอน Start Application 
+- `spring.jpa.hibernate.ddl-auto` เป็นการบอก Hibernate ว่าให้ทำคำสั่ง DDL (Data Definition Language) อะไร ตอน Start Application 
   - `none` คือ ไม่ต้องทำอะไร
   - `create` คือ ให้ทำการสร้าง table จาก entity ที่ประกาศไว้ ตอน start application  
   - `update` คือ ให้ทำการ update table ตาม entity ที่ประกาศไว้ ตอน start application  
@@ -205,7 +205,7 @@ spring.datasource.type=org.postgresql.ds.PGSimpleDataSource
   - `validate` คือ ให้ทำการเช็ค database schema หรือ table ว่ามีการเปลี่ยนแปลงหรือไม่ ถ้ามีการเปลี่ยนแปลง จะ error ตอน start application    
 
 ถ้าเป็นการเขียน entity ครั้งแรก (ตอน dev) ให้ใช้ `create` หลังจากนั้นแนะนำให้ใช้ `update` หรือ `none`    
-ส่วน production ให้เป็น `none` แล้วใช้วิธี create database จาก sql script เอา  
+ส่วน production ให้เป็น `none` แล้วใช้วิธี create database จาก sql script เอา ไม่ควรเปิด `create` หรือ `update` ตอนใช้งาน production *** ห้ามเด็ดขาด ***
 
 # 5. Build
 cd ไปที่ root ของ project จากนั้น  
