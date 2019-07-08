@@ -4,4 +4,4 @@
 |------------| --------- | -------------------|
 |   Web Server    | Tomcat  | Netty    | 
 |      I/O        | Blocking | Non-Blocking | 
-|   Request Processing   | Sychronous  | Asychronous    | 
+|   Request Processing   | Sychronous  | Asychronous  (Event Loop)  | 
