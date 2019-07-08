@@ -197,6 +197,13 @@ spring.datasource.platform=postgres
 spring.datasource.type=org.postgresql.ds.PGSimpleDataSource
 ```
 
+- `spring.jpa.hibernate.ddl-auto` เป็นการบอก Hibernate ว่าให้ทำคำสั่ง DDL อะไร ตอน Start Application 
+  - `none` คือ ไม่ต้องทำอะไร
+  - `create` คือ ให้ทำการสร้าง table จาก entity ที่ประกาศไว้ ตอน start application  
+  - `update` คือ ให้ทำการ update table ตาม entity ที่ประกาศไว้ ตอน start application  
+  - `create-drop` คือ ให้ create และ drop table หลังจากเลิกใช้งาน   
+  - `validate` คือ ให้ทำการเช็ค database schema หรือ table ว่ามีการเปลี่ยนแปลงหรือไม่ ถ้ามีการเปลี่ยนแปลง จะ error ตอน start application    
+
 # 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
