@@ -201,8 +201,10 @@ spring.datasource.type=org.postgresql.ds.PGSimpleDataSource
   - `none` คือ ไม่ต้องทำอะไร
   - `create` คือ ให้ทำการสร้าง table จาก entity ที่ประกาศไว้ ตอน start application  
   - `update` คือ ให้ทำการ update table ตาม entity ที่ประกาศไว้ ตอน start application  
-  - `create-drop` คือ ให้ create และ drop table หลังจากเลิกใช้งาน   
+  - `create-drop` คือ ให้ create และ drop table หลังจากเลิกใช้งาน จะใช้ตอนเขียน test คือ create ใช้งานเสร็จแล้ว drop ทิ้ง    
   - `validate` คือ ให้ทำการเช็ค database schema หรือ table ว่ามีการเปลี่ยนแปลงหรือไม่ ถ้ามีการเปลี่ยนแปลง จะ error ตอน start application    
+
+ถ้าเป็นการเขียน entity ครั้งแรก
 
 # 5. Build
 cd ไปที่ root ของ project จากนั้น  
