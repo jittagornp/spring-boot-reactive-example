@@ -121,6 +121,10 @@ public interface UserRepository extends JpaRepository<User, String>{
 
 # 5. เขียน DTO (Data Transfer Object)
 
+ในที่นี้เราจะไม่พ่น Object Entity ซึ่งเป็นโครงสร้างของ table ออกไปโดยตรง แต่จะแปลงเป็น DTO ก่อน แล้วค่อยพ่นออกไปทาง API หรือ RESTful อีกที เนื่องจาก  
+- DTO ถือเป็น View หรือเป็น Abstraction Layer ระหว่าง Business กับ Database Structure คือ ต่อให้มีการปรับเปลี่ยนโครงสร้าง database ก็ทำให้ไม่กระทบต่อโครงสร้าง API ที่เรา ได้ design ไว้ เพราะเรา design แยกกัน    
+- DTO ทำให้เรา focus ไปที่บทบาท หน้าที่ ของ API นั้น ๆ ว่ามันทำอะไร ใช้ข้อมูลแค่ไหน โดยไม่ต้องสนใจโครงสร้างการจัดเก็บจริง ๆ  
+
 UserDetailsDto.java  
 ```java
 @Getter
