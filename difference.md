@@ -1,0 +1,6 @@
+# ข้อแตกต่าง Servlet vs Reactive (WebFlux) 
+
+### Web Server
+| Servlet | Reactive |
+--------- | ---------
+| Tomcat  | Netty    | 
