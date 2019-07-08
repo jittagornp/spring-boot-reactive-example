@@ -171,12 +171,13 @@ public class UserAuthority implements Serializable {
 ```
 
 ### วิธีการเขียน Entity Class 
-1. New java class ข้นมา 
+1. New java class ขึ้นมา 
 2. Implements `java.io.Serializable`
-3. เขียน Attributes / Properties / Columns ที่ต้องการ
+3. เขียน Attributes / Properties / Columns ตามที่ต้องการ ด้วย `@Column` (อย่าลืมกำหนด Constrains)
 4. ใส่ annotation `@Entity` 
-5. ใส่ Annotation `@Table` เพื่อ map ไปยัง table ที่ต้องการ 
+5. ใส่ Annotation `@Table` เพื่อ map ไปยัง table ที่ต้องการ (name = ???)
 6. กำหนด Id หรือ Primary Key ของ Table ด้วย `@Id`
+  - กรณีที่เป็น Composite Key (Key ร่วม) จะใช้ `@EmbeddedId` และ Key class จะใส่ `@Embeddable`  
 7. ประกาศ Getter / Setter / HashCode / Equals method ซึ่งสามารถใช้ `@Data` ของ lombox ช่วยได้  (มันจะ Generate ให้ Auto)  
 8. เขียน Relation Join Columns / Tables 
 
