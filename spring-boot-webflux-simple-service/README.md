@@ -230,16 +230,25 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 ### Transaction Propagation
 ที่ใช้บ่อย ๆ จะมี 2 ตัวคือ 
-- `Propagation.REQUIRED` เป็นการบอกว่า method ภายใน service (class) นี้ required transaction ถ้ามีการใช้ transaction ครอบก่อน call service นี้แล้ว ให้ใช้ transaction เดิมต่อได้เลย ไม่ต้อง new transaction ขึ้นมาใหม่ แต่ถ้าไม่มีค่อย new transaction ขึ้นมาใหม่
+- `Propagation.REQUIRED` เป็นการบอกว่า method ภายใน service (class) นี้ required transaction ถ้ามีการใช้ transaction ครอบก่อน call service นี้แล้ว ให้ใช้ transaction เดิมต่อได้เลย โดยไม่ต้อง new transaction ขึ้นมาใหม่ แต่ถ้าไม่มีค่อย new transaction ขึ้นมาใหม่
 
 ตัวอย่าง
 ```
    A() -> B() -> C()
 ```   
    
-สมมติว่า method A() มีการใช้ Transaction แล้ว call method B() ซึ่ง B() เป็น `Propagation.REQUIRED` method B() จะใช้ Transaction เดิมต่อจาก method A() เลย โดยไม่ new Transaction ขึ้นมาใหม่ แต่หาก method A() ไม่มีการใช้ Transaction มาก่อน method B() ถึงจะ new Transaction ขึ้นมาใหม่       
+สมมติว่า method A() มีการใช้ Transaction แล้ว call method B() ซึ่ง B() เป็น `Propagation.REQUIRED` method B() จะใช้ Transaction เดิมต่อจาก method A() เลย โดยไม่ new Transaction ขึ้นมาใหม่ แต่หาก method A() ไม่มีการใช้ Transaction มาก่อน method B() ถึงจะ new Transaction ขึ้นมาใหม่   
+และถ้า method C() เป็น `Propagation.REQUIRED` ก็จะใช้ Transaction เดิมต่อจาก A() และ B()  
+การ commit หรือ rollback จะเกิดขึ้นเป็น Atomic คือ success ก็จะ success ทั้งหมด แต่ถ้า fail ก็จะ fail ทั้งหมดเหมือนกัน  
 
 - `Propagation.REQUIRES_NEW` เป็นการบอกว่า method ภายใน service (class) นี้ requires new transaction คือให้ new transaction ขึ้นมาใหม่เสมอ เมื่อมีการ call service นี้  
+
+ตัวอย่าง
+```
+   A() -> B() -> C()
+```   
+
+ถ้าทั้ง method A(), B() และ C() เป็น `Propagation.REQUIRES_NEW` หมายความว่า ทั้ง 3 methods นี้จะใช้ Transactio คนละตัวก่อน การ commit ของ C() จะไม่มีผลต่อ B() และ A() การ commit ของ A() ก็ไม่มีผลต่อ B() และ C()   
 
 สามารถอ่านเพิ่มเติมได้ที่ [https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation)
 
