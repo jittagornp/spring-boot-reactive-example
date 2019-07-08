@@ -68,6 +68,28 @@ public class SessionController {
 }
 ```
 
+- ถ้าเราเรียก / หรือ /session Spring จะ return Session หน้าาแบบนี้ออกไป 
+```json
+{
+    "id": "00d60831-8c1f-409d-9b18-7d0d15cd91c5",
+    "attributes": {},
+    "creationTime": "2019-07-08T13:11:12.856Z",
+    "lastAccessTime": "2019-07-08T13:11:12.856Z",
+    "maxIdleTime": "PT30M",
+    "expired": false,
+    "started": false
+}
+```
+ตรง `id` เป็น uuid และจะได้ค่าใหม่เสมอ (random)    
+สังเกตตรง `started` จะเป็น false คือ ยังไม่ได้สั่ง start ใช้งาน session นี้  
+  
+- ต่อมา ทดลองเรียก /session/create แล้วกลับไปเรียก /session ใหม่หลาย ๆ ครั้ง จะพบว่า  
+ไม่ว่าจะเรียก /session กี่ที ก็ได้ session id เดิม นั่งจากเราสั่ง start ใช้งาน session นี้แล้ว  
+โดยเมื่อเราสั่ง webSession.start() spring จะ save() session นี้ลง session store (repository) และ  
+write http response header `Set-Cookie` กลับไปยัง browser เพื่อให้ browser จดจำ cookie id นี้ไว้  
+เมื่อเข้ามาใหม่ browser ก็จะส่ง cookie id เดิมกลับมาด้วย  ทำให้เราเห็นว่า ไม่ว่าจะ /session กี่ครั้ง ก็ยังได้ session id เดิม  
+
+
 # 4. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
