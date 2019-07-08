@@ -182,8 +182,8 @@ public class UserAuthority implements Serializable {
 8. เขียน Relation 
     - `@OneToOne` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:1 
     - `@OneToMany` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:M
-    - `@ManyToOne` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:M 
-    - `@ManyToMany` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ M:N ซึ่งในกรณีนี้ Hibernate จะสร้าง class ใหม่ขึ้นมาเชื่อมกลายเป็น 3 tables และมี relation เป็นแบบ `TABLE_A` 1 <-> M `TABLE_B` N <-> 1 `TABLE_C`
+    - `@ManyToOne` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ M:1 
+    - `@ManyToMany` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ M:N ซึ่งกรณีนี้ Hibernate จะสร้าง table ใหม่ขึ้นมาเชื่อมกลายเป็น 3 tables และมี relation เป็นแบบ `TABLE_A` 1 <-> M `TABLE_C` N <-> 1 `TABLE_B` (TABLE_A และ TABLE_B เป็น table ที่เรากำหนด ส่วน `TABLE_C` Hibernate จะ Generate ให้)  แต่วิธีนี้ผมไม่ค่อยจะใช้สักเท่าไหร่ครับ เห็นข้อเสียของมันคือ Table กลาง (`TABLE_C`) เรา Custom เองไม่ได้ ผมจะใช้แค่  `@OneToMany` กับ `@ManyToOne` 
 9. Join Columns (ถ้ามี)
 
 # 4. Config application.properties
