@@ -3,7 +3,6 @@
  */
 package com.pamarin.learning.webflux.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,8 @@ public class User implements Serializable {
 
     @Id
     private String id;
+    
+    private String name;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
