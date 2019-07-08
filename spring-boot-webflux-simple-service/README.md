@@ -230,8 +230,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 ### Transaction Propagation
 ที่ใช้บ่อย ๆ จะมี 2 ตัวคือ 
-- `Propagation.REQUIRED`
-- `Propagation.REQUIRES_NEW`
+- `Propagation.REQUIRED` เป็นการบอกว่า method ภายใน service (class) นี้ required transaction ถ้ามีการใช้ transaction ครอบก่อน call service นี้แล้ว ให้ใช้ transaction เดิมต่อเลย ไม่ต้อง new transaction ขึ้นมาใหม่ 
+- `Propagation.REQUIRES_NEW` เป็นการบอกว่า method ภายใน service (class) นี้ requires new transaction คือให้ create transaction ขึ้นมาใหม่เสมอ เมื่อมีการ call service นี้  
 
 สามารถอ่านเพิ่มเติมได้ที่ [https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation)
 
