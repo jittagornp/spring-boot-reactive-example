@@ -226,7 +226,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 - `@Service` เป็นการบอกว่า class นี้เป็น Service  
 - `@Transactional` คือ Service นี้มีการใช้ Transaction (TX)
-- `@Transactional(propagation = Propagation.REQUIRED)` เป็นการใช้ Transaction (TX) แบบ required จริง ๆ ไม่ต้องกำหนดก็ได้ เพราะ default จะเป็น `REQUIRED` อยู่แล้ว   
+- `@Transactional(propagation = Propagation.REQUIRED)` เป็นการใช้ Transaction (TX) แบบ required ซึ่งจริง ๆ แล้ว ไม่ต้องกำหนดก็ได้ เพราะ default จะเป็น `REQUIRED` อยู่แล้ว   
 
 ### Transaction Propagation
 ที่ใช้บ่อย ๆ จะมี 2 ตัวคือ 
