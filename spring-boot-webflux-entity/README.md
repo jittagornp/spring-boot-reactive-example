@@ -1,5 +1,5 @@
-# spring-boot-webflux-simple-service
-ตัวอย่างการเขียน Spring-boot WebFlux Simple Service  
+# spring-boot-webflux-entity 
+ตัวอย่างการเขียน Spring-boot WebFlux Entity 
 
 # 1. เพิ่ม Dependencies
 
@@ -73,8 +73,9 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน entity 
-User.java 
+# 3. เขียน Entity
+
+User.java  
 ```java
 @Data
 @Entity
@@ -104,197 +105,93 @@ public class User implements Serializable {
 
 }
 ```
+Authority.java  
+```java 
+@Data
+@Entity
+@Table(name = Authority.TABLE_NAME)
+public class Authority implements Serializable {
 
-- `@Data` เป็น annotation ของ lombox เอาไว้ generate code เช่น getter/setter method, hashcode + equals ให้ 
-- `@Entity` เป็น annotation ที่เอาไว้ระบุว่า class นี้เป็น entity class 
-- `@Table` เป็น annotation ที่เอาไว้ระบุว่าให้ class นี้ map ไปที่ database table ใด
-- `@Id` เป็น annotation ที่เอาไว้ระบุว่าจะให้ attribute ใดเป็น primary key 
-- `@Column` เป็นการใช้ระบุข้อมูล column
+    public static final String TABLE_NAME = "authority";
 
-# 4. เขียน Repository 
-UserRepository.java 
-```java
-public interface UserRepository extends JpaRepository<User, String>{
-    
-}
-```
-
-# 5. เขียน DTO (Data Transfer Object)
-
-ในที่นี้เราจะไม่พ่น Object Entity ซึ่งเป็นโครงสร้างของ Table ออกไปโดยตรง แต่จะแปลงเป็น DTO ก่อน แล้วค่อยพ่นออกไปทาง API หรือ RESTful อีกที เนื่องจาก  
-- DTO ถือเป็น View หรือเป็น Abstraction Layer ระหว่าง Business กับ Database Structure คือ ต่อให้มีการปรับเปลี่ยนโครงสร้าง Database หรือการจัดเก็บข้อมูลหลังบ้านอื่น ๆ ก็ไม่ทำให้กระทบต่อโครงสร้าง API ที่เรา ได้ Design ไว้ เพราะเรา Design แยกกัน    
-- DTO ทำให้เรา Focus ไปที่บทบาท หน้าที่ ของ API นั้น ๆ ว่ามันทำอะไร ใช้ข้อมูลแค่ไหน โดยไม่ต้องสนใจโครงสร้างการจัดเก็บจริง ๆ หน้าจอ GUI เราต้องการข้อมูลแค่ไหน ลักษณะไหน เราก็ Design API หรือ DTO ที่มารองรับแค่นั้น   
-
-UserDetailsDto.java  
-```java
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class UserDetailsDto {
-
+    @Id
     private String id;
 
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    private List<AuthorityDto> authorities;
+    private String description;
 
-    public List<AuthorityDto> getAuthorities() {
-        if (authorities == null) {
-            authorities = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "authority")
+    private List<UserAuthority> userAuthorities;
+
+    public List<UserAuthority> getUserAuthorities() {
+        if (userAuthorities == null) {
+            userAuthorities = new ArrayList<>();
         }
-        return authorities;
-    }
-
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class AuthorityDto {
-
-        private String id;
-
-        private String name;
-
-        private String description;
-
+        return userAuthorities;
     }
 
 }
 ```
 
-# 6. เขียน Service
-
-ประกาศ interface UserDetailsService.java  
+UserAuthority.java  
 ```java
-public interface UserDetailsService {
+@Data
+@Entity
+@Table(name = UserAuthority.TABLE_NAME)
+public class UserAuthority implements Serializable {
 
-    List<UserDetailsDto> findAll();
+    public static final String TABLE_NAME = "user_authority";
 
-    Optional<UserDetailsDto> findByUserId(String id);
+    @Data
+    @Embeddable
+    public static class UserAuthorityPK implements Serializable {
 
-}
-```
-implement interface UserDetailsServiceImpl.java   
-```java
-@Service
-@Transactional(propagation = Propagation.REQUIRED)
-public class UserDetailsServiceImpl implements UserDetailsService {
+        @Column(name = "user_id")
+        private String userId;
 
-    private final UserRepository userRepository;
+        @Column(name = "authority_id")
+        private String authorityId;
 
-    @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
     }
 
-    @Override
-    public Optional<UserDetailsDto> findByUserId(String id) {
-        return userRepository.findById(id)
-                .map(this::convertToUserDetailsDto);
-    }
+    @EmbeddedId
+    private UserAuthorityPK id;
 
-    private UserDetailsDto convertToUserDetailsDto(User user) {
-        return UserDetailsDto.builder()
-                .id(user.getId())
-                .name(user.getUsername())
-                .authorities(
-                        user.getUserAuthorities()
-                                .stream()
-                                .map(this::convertToAuthorityDto)
-                                .collect(toList())
-                )
-                .build();
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private User user;
 
-    private UserDetailsDto.AuthorityDto convertToAuthorityDto(UserAuthority userAuthority) {
-        Authority authority = userAuthority.getAuthority();
-        return UserDetailsDto.AuthorityDto.builder()
-                .id(userAuthority.getId().getAuthorityId())
-                .name(authority.getName())
-                .description(authority.getDescription())
-                .build();
-    }
-
-    @Override
-    public List<UserDetailsDto> findAll() {
-        return userRepository.findAll()
-                .stream()
-                .map(this::convertToUserDetailsDto)
-                .collect(toList());
-    }
+    @ManyToOne
+    @JoinColumn(name = "authority_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Authority authority;
 
 }
 ```
 
-- `@Service` เป็นการบอกว่า class นี้เป็น Service  
-- `@Transactional` คือ Service นี้มีการใช้ Transaction (TX)
-- `@Transactional(propagation = Propagation.REQUIRED)` เป็นการใช้ Transaction (TX) แบบ required ซึ่งจริง ๆ แล้ว ไม่ต้องกำหนดก็ได้ เพราะ default จะเป็น `REQUIRED` อยู่แล้ว   
+### วิธีการเขียน Entity Class 
+1. New java class ขึ้นมา 
+2. Implements `java.io.Serializable`
+3. เขียน Attributes / Properties / Columns ตามที่ต้องการ ด้วย `@Column` (อย่าลืมกำหนด Constrains)
+4. ใส่ annotation `@Entity` 
+5. ใส่ Annotation `@Table` เพื่อ map ไปยัง table ที่ต้องการ (name = ???)
+6. กำหนด Id หรือ Primary Key ของ Table ด้วย `@Id`
+    - กรณีที่เป็น Composite Key (Key ร่วม) จะใช้ `@EmbeddedId` และ Key class จะใส่ `@Embeddable`  
+7. ประกาศ Getter / Setter / HashCode / Equals method ซึ่งสามารถใช้ `@Data` ของ lombox ช่วยได้  (มันจะ Generate ให้ Auto)  
+8. เขียน Relation 
+    - `@OneToOne` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:1 
+    - `@OneToMany` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ 1:M
+    - `@ManyToOne` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ M:1 
+    - `@ManyToMany` คือ class นี้ map ไปยัง attribute ที่ประกาศไว้แบบ M:N    
+     ซึ่งกรณีนี้ Hibernate จะสร้าง table ใหม่ขึ้นมาเชื่อมกลายเป็น 3 tables และมี relation เป็นแบบ   
+    `TABLE_A` 1 <-> M `TABLE_C` N <-> 1 `TABLE_B`      
+    (`TABLE_A` และ `TABLE_B` เป็น table ที่เรากำหนด ส่วน `TABLE_C` Hibernate จะ Generate ให้)    
+    แต่วิธีนี้ผมไม่ค่อยจะใช้สักเท่าไหร่ เห็นข้อเสียของมันคือ Table กลาง (`TABLE_C`) เรา Custom เองไม่ได้ ผมจะใช้แค่  `@OneToMany` กับ `@ManyToOne` 
+9. Join Columns (ถ้ามี)
 
-### Transaction Propagation
-ที่ใช้บ่อย ๆ จะมี 2 ตัวคือ 
-- `Propagation.REQUIRED` เป็นการบอกว่า method ภายใน service (class) นี้ required transaction ถ้ามีการใช้ transaction ครอบก่อน call service นี้แล้ว ให้ใช้ transaction เดิมต่อได้เลย โดยไม่ต้อง new transaction ขึ้นมาใหม่ แต่ถ้าไม่มีค่อย new transaction ขึ้นมาใหม่
-
-ตัวอย่าง
-```
-   A() -> B() -> C()
-```   
-   
-สมมติว่า method A() มีการใช้ Transaction แล้ว call method B() ซึ่ง B() เป็น `Propagation.REQUIRED` method B() จะใช้ Transaction เดิมต่อจาก method A() เลย โดยไม่ new Transaction ขึ้นมาใหม่ แต่หาก method A() ไม่มีการใช้ Transaction มาก่อน method B() ถึงจะ new Transaction ขึ้นมาใหม่   
-และถ้า method C() เป็น `Propagation.REQUIRED` ก็จะใช้ Transaction เดิมต่อจาก A() และ B()  
-การ commit หรือ rollback จะเกิดขึ้นเป็น Atomic คือ success ก็จะ success ทั้งหมด แต่ถ้า fail ก็จะ fail ทั้งหมดเหมือนกัน  
-
-- `Propagation.REQUIRES_NEW` เป็นการบอกว่า method ภายใน service (class) นี้ requires new transaction คือให้ new transaction ขึ้นมาใหม่เสมอ เมื่อมีการ call service นี้  
-
-ตัวอย่าง
-```
-   A() -> B() -> C()
-```   
-
-ถ้าทั้ง method A(), B() และ C() เป็น `Propagation.REQUIRES_NEW` หมายความว่า ทั้ง 3 methods นี้จะใช้ Transaction คนละตัวกัน 
-การ commit ของ C() จะไม่มีผลต่อ B() และ A()   
-การ commit ของ A() ก็ไม่มีผลต่อ B() และ C()     
-
-สามารถอ่านเพิ่มเติมได้ที่ [https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#tx-propagation)
-
-# 7. เรียกใช้งาน Service ผ่าน Controller
-
-UserDetailsController.java  
-``` java
-@RestController
-public class UserDetailsController {
-
-    private final UserDetailsService userDetailsService;
-
-    @Autowired
-    public UserDetailsController(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-    @GetMapping({"", "/"})
-    public Flux<UserDetailsDto> home() {
-        return findAll();
-    }
-
-    @GetMapping("/user-details")
-    public Flux<UserDetailsDto> findAll() {
-        return Flux.fromIterable(userDetailsService.findAll());
-    }
-
-
-    @GetMapping("/user-details/{id}")
-    public Mono<UserDetailsDto> findById(@PathVariable("id") String id) {
-        return Mono.justOrEmpty(userDetailsService.findByUserId(id))
-                .switchIfEmpty(Mono.error(new NotFoundException("Not found user of id " + id)));
-    }
-
-}
-```
-
-# 8. Config application.properties
-``` properties
+# 4. Config application.properties
+```properties
 #------------------------------------ JPA --------------------------------------
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.properties.hibernate.cache.use_second_level_cache=false
@@ -320,13 +217,23 @@ spring.datasource.platform=postgres
 spring.datasource.type=org.postgresql.ds.PGSimpleDataSource
 ```
 
-# 9. Build
+- `spring.jpa.hibernate.ddl-auto` เป็นการบอก Hibernate ว่าให้ทำคำสั่ง DDL (Data Definition Language) อะไร ตอน Start Application 
+  - `none` คือ ไม่ต้องทำอะไร
+  - `create` คือ ให้ทำการสร้าง table จาก entity ที่ประกาศไว้ ตอน start application  
+  - `update` คือ ให้ทำการ update table ตาม entity ที่ประกาศไว้ ตอน start application  
+  - `create-drop` คือ ให้ create และ drop table หลังจากเลิกใช้งาน จะใช้ตอนเขียน test คือ create ใช้งานเสร็จแล้ว drop ทิ้ง    
+  - `validate` คือ ให้ทำการเช็ค database schema หรือ table ว่ามีการเปลี่ยนแปลงหรือไม่ ถ้ามีการเปลี่ยนแปลง จะ error ตอน start application    
+
+ถ้าเป็นการเขียน entity ครั้งแรก (ตอน dev) ให้ใช้ `create` หลังจากนั้นแนะนำให้ใช้ `update` หรือ `none`    
+ส่วน production ให้เป็น `none` แล้วใช้วิธี create database จาก sql script เอา ไม่ควรเปิด `create` หรือ `update` ตอนใช้งาน production *** ห้ามเด็ดขาด ***
+
+# 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 10. Run 
+# 6. Run 
 ``` shell 
 $ mvn spring-boot:run \
     -Dserver.port=8080 \
@@ -343,7 +250,4 @@ $ mvn spring-boot:run \
 - DATABASE_PASSWORD คือ รหัสผ่านที่คู่กับ username ที่ใช้ 
 - DATABASE_SCHEMA คือ database schema ที่่ใช้ 
 
-
-# 11. เข้าใช้งาน
-
-เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+# ดูผลลัพธ์ที่ Console และ Database
