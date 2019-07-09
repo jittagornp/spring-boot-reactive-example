@@ -146,6 +146,14 @@ public class HomeController {
         return Mono.just("Hello => " + (authentication == null ? "anonymous user" : authentication.getName()));
     }
 
+    @GetMapping("/users/authorities")
+    public Flux<GrantedAuthority> getUserAuthorities() {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getAuthorities)
+                .flatMapMany(Flux::fromIterable);
+    }
+
     @PostMapping("/users")
     public Mono<String> createUser() {
         return Mono.just("Can create user.");
@@ -174,6 +182,8 @@ public class HomeController {
 ```
 
 - ทดสอบ login ด้วย username ต่าง ๆ แล้วลองเข้าใช้งาน service ต่าง ๆ ดู หากเข้าไม่ได้ spring จะ return `Access Denied` ซึ่งตรงนี้เราสามารถ customer error เองได้ ให้ดูตัวอย่างจาก [spring-boot-webflux-custom-error-handler](../spring-boot-webflux-custom-error-handler)
+
+- การ Get Current User Login เราสามารถใช้ `ReactiveSecurityContextHolder.getContext()` ได้  
 
 # 5. เขียน Login Controller
 ```java
