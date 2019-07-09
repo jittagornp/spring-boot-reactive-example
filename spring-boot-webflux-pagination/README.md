@@ -162,10 +162,9 @@ Method ไหนที่ต้องการทำ page จะมีการ�
 - `@RequestParam(name = "page", defaultValue = "0") int page` และ 
 - `@RequestParam(name = "size", defaultValue = "10") int size`
 
-เพื่อรับ query string `page` และ `size` จาก url   
+เพื่อรับ query string `page` และ `size` จาก url เช่น `http://localhost:8080?page=0&size=10`     
 แล้วแปลงเป็น `PageRequest.of(page, size)` ส่งเข้าไปเป็น parameter ของ userRepository.findAll(Pagable pagable)   
-เพื่อให้ spring-data นำไปแปลงเป็น sql query อีกที  
-
+เพื่อให้ spring-data นำไปแปลงเป็น sql query ต่อไป  
 
 # 6. Config application.properties
 ``` properties
