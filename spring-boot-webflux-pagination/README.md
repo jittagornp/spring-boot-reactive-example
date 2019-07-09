@@ -165,6 +165,8 @@ Method ไหนที่ต้องการทำ page จะมีการ�
 เพื่อรับ query string `page` และ `size` จาก url เช่น `http://localhost:8080?page=0&size=10`     
 แล้วแปลงเป็น `PageRequest.of(page, size)` ส่งเข้าไปเป็น parameter ของ userRepository.findAll(Pagable pagable)   
 เพื่อให้ spring-data นำไปแปลงเป็น sql query ต่อไป  
+  
+`@RequestParam` ถ้าเราไม่ส่ง query string นั้นมาทาง url มันจะใช้ค่า default ที่เรากำหนดไว้ใน `defaultValue`  
 
 # 6. Config application.properties
 ``` properties
