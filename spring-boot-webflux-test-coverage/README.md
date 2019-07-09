@@ -1,5 +1,5 @@
-# spring-boot-webflux-unit-test
-ตัวอย่างการเขียน Spring-boot WebFlux Unit Test 
+# spring-boot-webflux-test-coverage
+ตัวอย่างการเขียน Spring-boot WebFlux Test Coverage  
 
 # 1. เพิ่ม Dependencies
 
@@ -45,7 +45,50 @@ pom.xml
 - junit เป็น dependency สำหรับเขียน test ภาษา java  
 - assertj เป็น dependency สำหรับทำ assert (support junit ซึ่งจริง ๆ ใช้แค่ junit ก็ได้)
 
-# 2. เขียน Main Class 
+# 2. เพิ่ม JaCoCo Plugins 
+pom.xml
+```xml
+...
+
+<plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.7.6.201602180812</version>
+    <executions>
+        <execution>
+            <id>prepare-agent</id>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>post-unit-test</id>
+            <phase>test</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+            <configuration>
+                <dataFile>target/jacoco.exec</dataFile>
+                <outputDirectory>target/jacoco-ut</outputDirectory>
+            </configuration>
+        </execution>
+    </executions>
+    <configuration>
+        <systemPropertyVariables>
+            <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+        </systemPropertyVariables>
+    </configuration>
+</plugin>
+```
+
+# 3. เขียน Main Class 
 
 ``` java
 @SpringBootApplication
@@ -59,7 +102,7 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน Logic 
+# 4. เขียน Logic 
 ``` java
 public class ByteUtils {
 
@@ -72,7 +115,7 @@ public class ByteUtils {
 }
 ```
 
-# 4. เขียน Unit Test 
+# 5. เขียน Unit Test 
 ``` java 
 public class ByteUtils_xorTest {
     
@@ -95,13 +138,17 @@ public class ByteUtils_xorTest {
     
     ...
 ```
-# 5. Build
+# 6. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 6. ดูผลลัพธ์ที่ Console 
+# 7. ดูผลลัพธ์ที่ Console 
+
+# 8. ดู Test Coverage Result 
+
+โดยไปที่ root project จากนั้นเปิดไฟล์ `target/jacoco-ut/index.html` ขึ้นมาดู  
 
 # อ่านเพิ่มเติม 
 
