@@ -158,6 +158,15 @@ public class UserController {
 }
 ```
 
+Method ไหนที่ต้องการทำ page จะมีการกำหนด  
+- `@RequestParam(name = "page", defaultValue = "0") int page` และ 
+- `@RequestParam(name = "size", defaultValue = "10") int size`
+
+เพื่อรับ query string `page` และ `size` จาก url   
+แล้วแปลงเป็น `PageRequest.of(page, size)` ส่งเข้าไปเป็น parameter ของ userRepository.findAll(Pagable pagable)   
+เพื่อให้ spring-data นำไปแปลงเป็น sql query อีกที  
+
+
 # 6. Config application.properties
 ``` properties
 #------------------------------------ JPA --------------------------------------
