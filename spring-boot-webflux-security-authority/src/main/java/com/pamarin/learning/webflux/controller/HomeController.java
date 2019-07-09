@@ -3,12 +3,17 @@
  */
 package com.pamarin.learning.webflux.controller;
 
+import java.util.List;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -21,6 +26,14 @@ public class HomeController {
     @GetMapping({"", "/"})
     public Mono<String> hello(Authentication authentication) {
         return Mono.just("Hello => " + (authentication == null ? "anonymous user" : authentication.getName()));
+    }
+
+    @GetMapping("/users/authorities")
+    public Flux<GrantedAuthority> getUserAuthorities() {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getAuthorities)
+                .flatMapMany(Flux::fromIterable);
     }
 
     @PostMapping("/users")
