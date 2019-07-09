@@ -222,3 +222,48 @@ $ mvn spring-boot:run \
 # 8. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080?page=0&size=10](http://localhost:8080?page=0&size=10)
+
+#  ผลลัพธ์ 
+
+ หน้าตา page ที่ return มาจะประมาณนี้  
+ ```json
+ {
+    "content": [
+        {
+            "id": "5cff55864ca1bc12305164ba",
+            "username": "test1@gmail.com",
+            "password": "..."
+        },
+        {
+            "id": "5d09ffd14c3bda735d8ea555",
+            "username": "test2@gmail.com",
+            "password": "..."
+        }
+    ],
+    "pageable": {
+        "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+    },
+    "offset": 0,
+        "pageSize": 10,
+        "pageNumber": 0,
+        "unpaged": false,
+        "paged": true
+    },
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 3,
+    "size": 10,
+    "number": 0,
+    "first": true,
+    "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+    },
+    "numberOfElements": 3,
+    "empty": false
+}
+ ```
