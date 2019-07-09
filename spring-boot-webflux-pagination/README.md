@@ -211,4 +211,4 @@ $ mvn spring-boot:run \
 
 # 8. เข้าใช้งาน
 
-เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+เปิด browser แล้วเข้า [http://localhost:8080?page=0&size=10](http://localhost:8080?page=0&size=10)
