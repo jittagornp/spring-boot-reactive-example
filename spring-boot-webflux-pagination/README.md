@@ -1,5 +1,5 @@
-# spring-boot-webflux-postgresql
-ตัวอย่างการเขียน Spring-boot WebFlux Postgresql  
+# spring-boot-webflux-pagination 
+ตัวอย่างการเขียน Spring-boot WebFlux Pagination 
 
 # 1. เพิ่ม Dependencies
 
@@ -118,13 +118,19 @@ public class UserController {
     }
 
     @GetMapping({"", "/"})
-    public Flux<User> home() {
-        return findAll();
+    public Mono<Page<User>> home(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        return findAll(page, size);
     }
 
     @GetMapping("/users")
-    public Flux<User> findAll() {
-        return Flux.fromIterable(userRepository.findAll());
+    public Mono<Page<User>> findAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        return Mono.just(userRepository.findAll(PageRequest.of(page, size)));
     }
 
     @GetMapping("/users/{id}")
@@ -151,6 +157,16 @@ public class UserController {
     }
 }
 ```
+
+Method ไหนที่ต้องการทำ page จะมีการกำหนด  
+- `@RequestParam(name = "page", defaultValue = "0") int page` และ 
+- `@RequestParam(name = "size", defaultValue = "10") int size`
+
+เพื่อรับ query string `page` และ `size` จาก url เช่น `http://localhost:8080?page=0&size=10`     
+แล้วแปลงเป็น `PageRequest.of(page, size)` ส่งเข้าไปเป็น parameter ของ userRepository.findAll(Pagable pagable)   
+เพื่อให้ spring-data นำไปแปลงเป็น sql query ต่อไป  
+  
+`@RequestParam` ถ้าเราไม่ส่ง query string นั้นมาทาง url มันจะใช้ค่า default ที่เรากำหนดไว้ใน `defaultValue`  
 
 # 6. Config application.properties
 ``` properties
@@ -205,4 +221,49 @@ $ mvn spring-boot:run \
 
 # 8. เข้าใช้งาน
 
-เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+เปิด browser แล้วเข้า [http://localhost:8080?page=0&size=10](http://localhost:8080?page=0&size=10)
+
+#  ผลลัพธ์ 
+
+ หน้าตา page ที่ return มาจะประมาณนี้  
+ ```json
+ {
+    "content": [
+        {
+            "id": "5cff55864ca1bc12305164ba",
+            "username": "test1@gmail.com",
+            "password": "..."
+        },
+        {
+            "id": "5d09ffd14c3bda735d8ea555",
+            "username": "test2@gmail.com",
+            "password": "..."
+        }
+    ],
+    "pageable": {
+        "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+    },
+    "offset": 0,
+        "pageSize": 10,
+        "pageNumber": 0,
+        "unpaged": false,
+        "paged": true
+    },
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 3,
+    "size": 10,
+    "number": 0,
+    "first": true,
+    "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+    },
+    "numberOfElements": 3,
+    "empty": false
+}
+ ```
