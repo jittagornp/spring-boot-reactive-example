@@ -148,7 +148,9 @@ $ mvn clean install
 
 # 8. ดู Test Coverage Result 
 
-โดยไปที่ root project จากนั้นเปิดไฟล์ `target/jacoco-ut/index.html` ขึ้นมาดู  
+โดยไปที่ root project จากนั้นเปิดไฟล์ `target/jacoco-ut/index.html` ขึ้นมาดู จะได้ผลลัพธ์เป็น  
+
+![test_coverage_result.png](test_coverage_result.png)  
 
 # อ่านเพิ่มเติม 
 
