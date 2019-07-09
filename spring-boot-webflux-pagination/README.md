@@ -1,5 +1,5 @@
-# spring-boot-webflux-postgresql
-ตัวอย่างการเขียน Spring-boot WebFlux Postgresql  
+# spring-boot-webflux-pagination 
+ตัวอย่างการเขียน Spring-boot WebFlux Pagination 
 
 # 1. เพิ่ม Dependencies
 
@@ -118,13 +118,19 @@ public class UserController {
     }
 
     @GetMapping({"", "/"})
-    public Flux<User> home() {
-        return findAll();
+    public Mono<Page<User>> home(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        return findAll(page, size);
     }
 
     @GetMapping("/users")
-    public Flux<User> findAll() {
-        return Flux.fromIterable(userRepository.findAll());
+    public Mono<Page<User>> findAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        return Mono.just(userRepository.findAll(PageRequest.of(page, size)));
     }
 
     @GetMapping("/users/{id}")
