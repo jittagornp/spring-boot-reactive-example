@@ -42,6 +42,7 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-dockerfile](spring-boot-webflux-dockerfile) - การสร้าง Dockerfile การ Build Image และการ Run Container Spring-boot 
 - [spring-boot-webflux-logging](spring-boot-webflux-logging) - การ Config และใช้งาน Logging  
 - [spring-boot-webflux-controller](spring-boot-webflux-controller)  - การเขียน Controller 
+- [spring-boot-webflux-form-data](spring-boot-webflux-form-data) - การรับค่าจาก Html Form 
 - [spring-boot-webflux-download-file](spring-boot-webflux-download-file) - การ Download File 
 - [spring-boot-webflux-session](spring-boot-webflux-session) - พื้นฐานการใช้ Session 
 - [spring-boot-webflux-configuration-properties](spring-boot-webflux-configuration-properties) - การอ่าน Config จาก application.properties 

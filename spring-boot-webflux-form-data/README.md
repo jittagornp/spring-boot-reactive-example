@@ -1,5 +1,5 @@
-# spring-boot-webflux-controller
-ตัวอย่างการเขียน Spring-boot WebFlux Controller 
+# spring-boot-webflux-form-data
+ตัวอย่างการเขียน Spring-boot WebFlux Form Data 
 
 # 1. เพิ่ม Dependencies
 
@@ -44,38 +44,55 @@ public class AppStarter {
 }
 ```
 
-# 3. เขียน Controller
-``` java
-@RestController
-public class HomeController {
-    ....
+# 3. เขียน Model หรือ DTO
+```java
+@Getter
+@Setter
+public class RegisterForm {
+
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
 }
-
-@Slf4j
-@RestController
-public class LoginController {
-
-    @PostMapping("/login")
-    public void login(@RequestBody LoginRequest req) {
-        log.debug("username => {}", req.getUsername());
-        log.debug("password => {}", req.getPassword());
-    }
-
-}
-
 ```
 
-# 4. Build
+# 4. เขียน Controller
+``` java
+@Slf4j
+@RestController
+public class RegisterFormController {
+    
+    @GetMapping({"", "/"})
+    public Mono<String> hello() {
+        return Mono.just("Hello world.");
+    }
+
+    @PostMapping("/register")
+    public Mono<RegisterForm> register(RegisterForm form) {
+        return Mono.just(form);
+    }
+}
+```
+
+# 5. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean install
 ```
 
-# 5. Run 
+# 6. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 6. เข้าใช้งาน
+# 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+# ทดสอบ
+
+ ลองยิง postman POST ไปยัง `/register` ดังนี้ 
+ 
+ ![form-data.png](form-data.png)
