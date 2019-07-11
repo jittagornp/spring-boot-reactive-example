@@ -46,6 +46,7 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-download-file](spring-boot-webflux-download-file) - การ Download File 
 - [spring-boot-webflux-upload-file](spring-boot-webflux-upload-file) - การ Upload File  
 - [spring-boot-webflux-session](spring-boot-webflux-session) - พื้นฐานการใช้ Session 
+- [spring-boot-webflux-cookie](spring-boot-webflux-cookie) - พื้นฐานการใช้ Cookie 
 - [spring-boot-webflux-configuration-properties](spring-boot-webflux-configuration-properties) - การอ่าน Config จาก application.properties 
 - [spring-boot-webflux-thymleaf](spring-boot-webflux-thymleaf)  - การใช้ Thymleaf ทำ View (Server Site) Rendering (HTML)    
 - [spring-boot-webflux-filter](spring-boot-webflux-filter) - การเขียน Filter  
