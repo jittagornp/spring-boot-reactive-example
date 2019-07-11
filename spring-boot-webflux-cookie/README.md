@@ -1,5 +1,5 @@
-# spring-boot-webflux-session
-ตัวอย่างการเขียน Spring-boot WebFlux Session
+# spring-boot-webflux-cookie 
+ตัวอย่างการเขียน Spring-boot WebFlux Cookie 
 
 # 1. เพิ่ม Dependencies
 
@@ -48,73 +48,29 @@ public class AppStarter {
 ``` java
 @Slf4j
 @RestController
-public class SessionController {
+public class CookieController {
 
-    @GetMapping({"", "/", "/session"})
-    public Mono<WebSession> statelessSession(WebSession webSession) {
-        return Mono.just(webSession);
+    @GetMapping({"", "/", "/cookies"})
+    public Mono<String> getCookie(@CookieValue(value = "access_token", defaultValue = "") String accessToken) {
+        return Mono.just("cookie value => " + accessToken);
     }
 
-    @GetMapping("/session/create")
-    public Mono<String> createSession(WebSession webSession) {
-        webSession.start();
-        return Mono.just("create session => " + webSession.getId());
+    @GetMapping("/cookies/create")
+    public Mono<ResponseCookie> createCookie(ServerWebExchange exchange) {
+        String accessToken = UUID.randomUUID().toString();
+        ResponseCookie cookie = ResponseCookie.from("access_token", accessToken).build();
+        exchange.getResponse().addCookie(cookie);
+        return Mono.just(cookie);
     }
 
-    @GetMapping("/session/invalidate")
-    public Mono<String> invalidateSession(WebSession webSession) {
-        return webSession.invalidate().then(Mono.just("invalidate session => " + webSession.getId()));
+    @GetMapping("/cookies/invalidate")
+    public Mono<String> invalidateCookie(@CookieValue(value = "access_token", defaultValue = "") String accessToken, ServerWebExchange exchange) {
+        ResponseCookie cookie = ResponseCookie.from("access_token", "").maxAge(0).build();
+        exchange.getResponse().addCookie(cookie);
+        return Mono.just("invalidate cookie => " + accessToken);
     }
 }
 ```
-
-### 3.1 Get Current Session  
-ถ้าเราเรียก `/` หรือ `/session` Spring จะ return Session หน้าตาแบบนี้ออกไป 
-```json
-{
-    "id": "00d60831-8c1f-409d-9b18-7d0d15cd91c5",
-    "attributes": {},
-    "creationTime": "2019-07-08T13:11:12.856Z",
-    "lastAccessTime": "2019-07-08T13:11:12.856Z",
-    "maxIdleTime": "PT30M",
-    "expired": false,
-    "started": false
-}
-```
-ตรง `id` เป็น uuid และจะได้ค่าใหม่เสมอ (random)    
-สังเกตตรง `started` จะเป็น false คือ ยังไม่ได้สั่ง start ใช้งาน session นี้  
-
-### 3.2 Start Session 
-ต่อมา ทดลองเรียก `/session/create` แล้วกลับไปเรียก `/session` ใหม่หลาย ๆ ครั้ง จะพบว่า   
-
-ไม่ว่าจะเรียก `/session` กี่ครั้ง ก็จะได้ session id เดิม เนื่องจากเราสั่ง start ใช้งาน session นี้แล้ว  
-  
-โดยเมื่อเราสั่ง webSession.start() spring จะ save() session นี้ลง session store (repository) และจะ    
-write http response header `Set-Cookie` กลับไปยัง browser เพื่อให้ browser จดจำ cookie id นี้ไว้  
-  
-เมื่อเข้ามาใหม่ browser ก็จะส่ง cookie id เดิมกลับมาด้วย    
-ทำให้เห็นว่า ไม่ว่าจะเรียก `/session` กี่ครั้ง ก็ยังได้ session id เดิม  
-และสังเกตตรง `started` จะเป็น true เพราะเราสั่ง start session นี้แล้ว   
-```json
-{
-    "id": "52f0a4c2-4706-406f-9c2b-9410d5ff324b",
-    "attributes": {},
-    "creationTime": "2019-07-08T13:34:18.655Z",
-    "lastAccessTime": "2019-07-08T13:34:24.669Z",
-    "maxIdleTime": "PT30M",
-    "expired": false,
-    "started": true
-}
-```
-
-### 3.3 Invalidate Session 
-จากนั้นลองเรียก `/session/invalidate` จะเป็นการ invalidate หรือ revoke หรือ stop การใช้งาน session นั้น ๆ  
-  
-โดยเมื่อเราเรียก webSession.invalidate() spring จะ delete() session นั้นออกจาก session store (repository) และจะ 
-write empty cookie ไปกับ http response header `Set-Cookie` เพื่อกลับไป clear ค่า session id ที่ browser เคยเก็บไว้  
-  
-ทำให้เมื่อเราเรียก `/session` อีกครั้ง ก็จะกลับมาได้ session id ใหม่เสมอ เหมือนข้อ 3.1  
-
 
 # 4. Build
 cd ไปที่ root ของ project จากนั้น  
