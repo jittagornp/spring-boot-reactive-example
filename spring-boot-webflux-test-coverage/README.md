@@ -53,7 +53,7 @@ pom.xml
 <plugin>
     <groupId>org.jacoco</groupId>
     <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.7.6.201602180812</version>
+    <version>0.8.4</version>
     <executions>
         <execution>
             <id>prepare-agent</id>
