@@ -71,6 +71,12 @@ public class CookieController {
     }
 }
 ```
+- `@CookieValue(value = "access_token", defaultValue = "")` เป็นการอ่านค่า Cookie ชื่อ `access_token` ที่ browser ส่งมา    
+ถ้าไม่มี defaultValue จะเป็น empty string 
+
+- การเขียน Cookie เราจะใช้ `exchange.getResponse().addCookie(cookie);` ซึ่ง spring จะเขียน http header `Set-Cookie` กลับไปกับ response จากนั้น browser ก็จะจัดเก็บค่า cookie นั้นไว้  
+
+- การ Invalidate cookie หรือลบ cookie จะทำเหมือนกับการเขียน cookie เพียงแต่ค่าของ cookie เราจะ set เป็น empty string และ set `maxAge(0)` เพื่อให้ cookie นั้นหมดอายุ browser ก็จะ clear cookie นั้นทิ้งไป   
 
 # 4. Build
 cd ไปที่ root ของ project จากนั้น  
