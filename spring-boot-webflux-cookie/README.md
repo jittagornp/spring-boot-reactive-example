@@ -93,4 +93,8 @@ $ mvn spring-boot:run
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
+# ทดสอบ
+- ใช้ Google Chrome ทดลองสร้าง cookie โดยการเข้า [http://localhost:8080/cookies/create](http://localhost:8080/cookies/create)  
+- จากนัั้นกด F12 ไปที่ tab Application แล้วไปที่เมนู Storage > Cookies ดังภาพ  
+
 ![cookie.png](cookie.png)
