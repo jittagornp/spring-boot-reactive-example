@@ -78,5 +78,6 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [สร้าง Reactive RESTful Web Service ด้วย Spring WebFlux](https://medium.com/@phayao/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-reactive-restful-web-service-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-spring-webflux-c42094a3424e)
 - [สร้าง Reactive RESTful API ด้วย Spring WebFlux และ MongoDB](https://developers.ascendcorp.com/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-reactive-restful-api-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-spring-webflux-%E0%B9%81%E0%B8%A5%E0%B8%B0-mongodb-868d645dd9f6)
 - [Build Criteria Queries with JPA Specification](https://github.com/wenhao/jpa-spec)
+- [Spring Reactive Sample](https://github.com/hantsy/spring-reactive-sample)
 
 ขอบคุณสำหรับเจ้าของบทความครับ 
