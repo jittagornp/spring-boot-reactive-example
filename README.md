@@ -80,4 +80,4 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [Build Criteria Queries with JPA Specification](https://github.com/wenhao/jpa-spec)
 - [Spring Reactive Sample](https://github.com/hantsy/spring-reactive-sample)
 
-ขอบคุณสำหรับเจ้าของบทความครับ 
+ขอบคุณสำหรับเจ้าของบทความครับ (Thank you for Article and Reference.)
