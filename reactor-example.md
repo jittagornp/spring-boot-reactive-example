@@ -809,3 +809,30 @@ output
 - message => task 4 at 2019-07-22T23:47:57.106  
 - message => task 5 at 2019-07-22T23:47:58.106  
 ```
+
+### Flux.repeat 
+การทำซ้ำ
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3")
+                .repeat(1)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 1  
+- message => 2  
+- message => 3  
+```
