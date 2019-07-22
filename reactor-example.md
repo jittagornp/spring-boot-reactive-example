@@ -39,7 +39,7 @@ output
 
 ### Mono.just 
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
-- ข้อมูลห้ามเป็น `null` **** 
+- ข้อมูลห้ามเป็น `null` ****  เพราะจะเกิด `java.lang.NullPointerException: value`
 
 ```java
 @Slf4j
@@ -656,3 +656,29 @@ output
 - message => 5 
 ```
 
+### Flux.fromStream
+การสร้าง Flux จาก Java 8 Stream 
+- ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: Stream s must be provided` 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Stream<String> stream = Stream.of("1", "2", "3", "4", "5");
+        Flux.fromStream(stream)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5 
+```
