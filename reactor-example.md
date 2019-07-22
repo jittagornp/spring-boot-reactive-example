@@ -4,6 +4,7 @@
 ตัวอย่างการใช้ Mono 
 # Mono.just 
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
+- ข้อมูลต้องห้ามเป็น `null` **** 
 
 ```java
 @Slf4j
@@ -23,6 +24,27 @@ output
 ```
 - message => Hello at 2019-07-22T16:07:03.309
 ```
+
+# Mono.justOrEmpty
+การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
+- ข้อมูลเป็น `null` ได้
+
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.justOrEmpty(null)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+- จะไม่มีการเรียก `doOnNext` เนื่องจากไม่มีข้อมูลปล่อยออกมา  
 
 # Mono.defer
 การสร้าง Mono แบบ Lazy Load 
