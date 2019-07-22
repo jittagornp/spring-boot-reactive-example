@@ -800,7 +800,7 @@ public class ReactorExample {
 
 }
 ```
-- อย่าลืม call `.complete()` ให้เป็นนิสัย เพื่อไม่ให้เกิด `Memory Leak`  
+- หากหยุดปล่อยข้อมูลแล้ว อย่าลืม call `.complete()` ให้เป็นนิสัย เพื่อไม่ให้เกิด `Memory Leak`    
 output
 ```
 - message => task 1 at 2019-07-22T23:47:54.078  
