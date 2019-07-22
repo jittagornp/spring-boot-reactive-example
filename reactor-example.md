@@ -2,7 +2,7 @@
 
 # Mono
 ตัวอย่างการใช้ Mono 
-# Mono.just 
+### Mono.just 
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลต้องห้ามเป็น `null` **** 
 
@@ -25,7 +25,7 @@ output
 - message => Hello at 2019-07-22T16:07:03.309
 ```
 
-# Mono.justOrEmpty
+### Mono.justOrEmpty
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลเป็น `null` ได้
 
@@ -46,7 +46,7 @@ public class ReactorExample {
 output
 - จะไม่มีการเรียก `doOnNext` เนื่องจากไม่มีข้อมูลปล่อยออกมา  
 
-# Mono.defer
+### Mono.defer
 การสร้าง Mono แบบ Lazy Load 
 
 ```java 
@@ -67,7 +67,7 @@ output
 ```
 - message => Hello at 2019-07-22T16:09:45.886
 ```
-# Mono.create
+### Mono.create
 การสร้าง Mono แบบ Asynchronous
 ```java
 @Slf4j
@@ -98,8 +98,8 @@ output
 ```
 
 # Flux
-
-- #### Flux.just 
+ตัวอย่างการใช้ Flux
+### Flux.just 
 การสร้าง Flux จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 
 ```java
