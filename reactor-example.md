@@ -4,7 +4,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 ซึ่ง implements  ตาม Spec ของ Reactive Streams [https://www.reactive-streams.org/](https://www.reactive-streams.org/)   
 ใช้เป็น Core ในการเขียน Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O   
 การใช้ Reactor จะมี 2 ส่วนหลัก ๆ ที่ต้องทำความเข้าใจ คือ 
-- `Mono` เป็น Publisher สำหรับปล่อย (publish) ข้อมูลตั้งแต่ 0 ถึง 1 elements และ 
+- `Mono` เป็น Publisher สำหรับปล่อย (publish) ข้อมูลตั้งแต่ 0 ถึง 1 element และ 
 - `Flux` เป็น Publisher สำหรับปล่อย (publish) ข้อมูลตั้งแต่ 0 ถึง N elements 
   
 พื้นฐานการใช้ Reactor จะเหมือนกันกับ RxJava ฉะนั้นสามารถอ่าน Concept ต่าง ๆ แทนกันได้ โดยอ่านได้จากบทความนี้ [RxJava series - part 1 - ตอน อะไรเอ่ย ReactiveX?](https://medium.com/@nutron/what-is-reactivex-38293abb81cb) ขอบคุณเจ้าของบทความครับ  
@@ -599,13 +599,40 @@ output
 ตัวอย่างการใช้ Flux
 ### Flux.just 
 การสร้าง Flux จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
-
+- ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException`  
 ```java
 @Slf4j
 public class ReactorExample {
 
     public static void main(String[] args) {
         Flux.just("1", "2", "3", "4", "5")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5 
+```
+
+### Flux.fromIterable
+การสร้าง Flux จาก Java Collections (Iterable)  
+- ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: iterable` 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("1", "2", "3", "4", "5");
+        Flux.fromIterable(list)
                 .doOnNext(message -> {
                     log.debug("message => {}", message);
                 })
