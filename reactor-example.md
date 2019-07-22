@@ -276,6 +276,7 @@ public class ReactorExample {
             }
             callback.success("Hello from Task 1");
         });
+        
         Mono<String> task2 = Mono.create(callback -> {
             try {
                 log.debug("task 2 wait 1 second");
@@ -285,6 +286,7 @@ public class ReactorExample {
             }
             callback.success("Hello from Task 2");
         });
+        
         log.debug("start at {}", LocalDateTime.now());
         Mono.zip(task1, task2)
                 .doOnNext(response -> {
@@ -309,7 +311,7 @@ output (ใช้เวลาทำงาน 3 + 1 = 4 วินาที)
 - end at 2019-07-22T18:15:03.216
 ```
 
-- Parallel 
+- Parallel (ใช้ `.subscribeOn(Schedulers.newElastic(name, ttlSeconds))`)
 ```java
 @Slf4j
 public class ReactorExample {
@@ -324,6 +326,7 @@ public class ReactorExample {
             }
             callback.success("Hello from Task 1");
         }).subscribeOn(Schedulers.newElastic("scheduler 1", 1));
+        
         Mono<String> task2 = Mono.create((MonoSink<String> callback) -> {
             try {
                 log.debug("task 2 wait 1 second");
@@ -333,6 +336,7 @@ public class ReactorExample {
             }
             callback.success("Hello from Task 2");
        }).subscribeOn(Schedulers.newElastic("scheduler 2", 1));
+       
         Mono<String> task3 = Mono.create((MonoSink<String> callback) -> {
             try {
                 log.debug("task 3 wait 5 seconds");
@@ -342,6 +346,7 @@ public class ReactorExample {
             }
             callback.success("Hello from Task 3");
        }).subscribeOn(Schedulers.newElastic("scheduler 3", 1));
+       
         log.debug("start at {}", LocalDateTime.now());
         Mono.zip(task1, task2, task3)
                 .doOnNext(response -> {
