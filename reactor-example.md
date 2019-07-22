@@ -772,3 +772,39 @@ output
 - message => 7  
 - message => 8    
 ``` 
+
+### Flux.create
+การสร้าง Flux แบบ Asynchronous เหมือน `Mono.create`  
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.create(callback -> {
+            for (int i = 1; i <= 5; i++) {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException ex) {
+                   
+                }
+                callback.next("task " + i + " at " + LocalDateTime.now());
+            }
+            callback.complete();
+            
+        })
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => task 1 at 2019-07-22T23:47:54.078  
+- message => task 2 at 2019-07-22T23:47:55.079  
+- message => task 3 at 2019-07-22T23:47:56.093  
+- message => task 4 at 2019-07-22T23:47:57.106  
+- message => task 5 at 2019-07-22T23:47:58.106  
+```
