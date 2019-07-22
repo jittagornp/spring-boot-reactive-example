@@ -478,6 +478,29 @@ output
 ```
 ข้อมูล message ที่ 2 และ 3 เหมือน message ที่ 1 เนื่องจากมีการ cache result ไว้ 5 นาที  
 
+### Mono.flux
+การแปลงจาก Mono -> Flux 
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux<String> flux = Mono.just("Hello at " + LocalDateTime.now())
+                .flux();
+
+        flux.doOnNext(message -> {
+            log.debug("message => {}", message);
+        })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => Hello at 2019-07-22T21:17:33.880  
+```
+
 # Flux
 ตัวอย่างการใช้ Flux
 ### Flux.just 
