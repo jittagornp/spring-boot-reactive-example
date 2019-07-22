@@ -266,28 +266,29 @@ output
 @Slf4j
 public class ReactorExample {
 
-    public static void main(String[] args) {
-        Mono<String> task1 = Mono.create(callback -> {
-            try {
-                log.debug("task 1 wait 3 seconds");
-                Thread.sleep(3000L);
-            } catch (InterruptedException ex) {
+    private static void delay(String name, int seconds) {
+        try {
+            log.debug("{} wait {} seconds", name, seconds);
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException ex) {
 
-            }
+        }
+    }
+
+    public static void main(String[] args) {
+        
+        Mono<String> task1 = Mono.create(callback -> {
+            delay("task 1", 3);
             callback.success("Hello from Task 1");
         });
         
         Mono<String> task2 = Mono.create(callback -> {
-            try {
-                log.debug("task 2 wait 1 second");
-                Thread.sleep(1000L);
-            } catch (InterruptedException ex) {
-
-            }
+            delay("task 2", 1);
             callback.success("Hello from Task 2");
         });
-        
+ 
         log.debug("start at {}", LocalDateTime.now());
+        
         Mono.zip(task1, task2)
                 .doOnNext(response -> {
                     log.debug("task 1-> {}", response.getT1());
@@ -303,12 +304,12 @@ public class ReactorExample {
 ```
 output (ใช้เวลาทำงาน 3 + 1 = 4 วินาที)  
 ```
-- start at 2019-07-22T18:14:59.118
+- start at 2019-07-22T18:42:30.950
 - task 1 wait 3 seconds  
 - task 2 wait 1 second  
 - task 1-> Hello from Task 1  
 - task 2-> Hello from Task 2   
-- end at 2019-07-22T18:15:03.216
+- end at 2019-07-22T18:42:35.045
 ```
 
 - Parallel (ใช้ `.subscribeOn(Schedulers.newElastic(name, ttlSeconds))`)
