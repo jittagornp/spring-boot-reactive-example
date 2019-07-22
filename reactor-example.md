@@ -682,3 +682,29 @@ output
 - message => 4  
 - message => 5 
 ```
+### Flux.range 
+การสร้าง Flux จากช่วงที่กำหนด (start จาก 3 ไป 5 จำนวน)   
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        int start = 3;
+        int count = 5;
+        Flux.range(start, count)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 3  
+- message => 4  
+- message => 5  
+- message => 6  
+- message => 7 
+```
