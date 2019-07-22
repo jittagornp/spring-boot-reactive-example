@@ -117,7 +117,7 @@ output
 
 ### Mono.filter
 ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด  
-example 1   
+- example 1   
 ```java
 @Slf4j
 public class ReactorExample {
@@ -137,7 +137,7 @@ output
 ```
 - message => 2
 ```
-example 2   
+- example 2   
 ```java
 @Slf4j
 public class ReactorExample {
