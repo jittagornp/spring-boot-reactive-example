@@ -300,7 +300,7 @@ public class ReactorExample {
         });
         log.debug("start at {}", LocalDateTime.now());
         Mono.zip(task1, task2, task3)
-                .doOnSuccess(response -> {
+                .doOnNext(response -> {
                     log.debug("task 1-> {}", response.getT1());
                     log.debug("task 2-> {}", response.getT2());
                     log.debug("task 3-> {}", response.getT3());
