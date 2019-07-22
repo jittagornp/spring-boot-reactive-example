@@ -2,6 +2,26 @@
 
 # Mono
 ตัวอย่างการใช้ Mono 
+
+### Mono.empty
+เป็นการสร้าง empty mono ซึ่งจะไม่มีข้อมูลปล่อยออกมา 
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.empty()
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+- ไม่มีข้อมูล
+
 ### Mono.just 
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลต้องห้ามเป็น `null` **** 
@@ -206,7 +226,7 @@ output
 - wait 3 seconds... at 2019-07-22T16:16:55.602  
 - message => Hello at 2019-07-22T16:16:58.603
 ```
-# Mono.flatMap
+### Mono.flatMap
 คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous
 ```java
 @Slf4j
