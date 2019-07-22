@@ -881,3 +881,30 @@ output
 ```
 - message => [1, 2, 3, 4, 5]  
 ```
+
+### Flux.skip && Flux.take 
+สำหรับเลือกข้อมูลตามช่วงที่กำหนด  
+- `skip` สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด 
+- `take` สำหรับเลือกข้อมูลตามจำนวนที่กำหนด  
+```
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
+                .skip(2)
+                .take(3)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => C  
+- message => D  
+- message => E    
+```
