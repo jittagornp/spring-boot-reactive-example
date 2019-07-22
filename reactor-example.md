@@ -16,8 +16,8 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 - [Reactive systems using Reactor](https://musigma.blog/2016/11/21/reactor.html)
 
 # Table of Content 
-- (Mono)[#mono]
-- (Flux)[#flux]
+- [Mono](#mono)
+- [Flux](#flux)
 
 # Mono
 ตัวอย่างการใช้ Mono 
