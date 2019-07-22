@@ -92,6 +92,28 @@ output
 ```
 - errror => Not found data
 ```
+
+### Mono.map
+ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา  
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.just(1000)
+                .map(number -> number * 2)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 2000  
+```
  
 ### Mono.defer
 การสร้าง Mono แบบ Lazy Load 
