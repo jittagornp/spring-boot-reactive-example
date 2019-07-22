@@ -708,3 +708,67 @@ output
 - message => 6  
 - message => 7 
 ```
+
+### Flux.concat
+สำหรับ concat หรือ ต่อ Publisher ต่าง ๆ ให้เป็น Flux เดียว 
+- example 1
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.concat(
+                Mono.just("task 1"),
+                Mono.just("task 2"),
+                Mono.just("task 3"),
+                Mono.just("task 4"),
+                Mono.just("task 5")
+        )
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => task 1  
+- message => task 2  
+- message => task 3  
+- message => task 4  
+- message => task 5    
+```
+- example 2
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.concat(
+                Mono.just("1"),
+                Flux.just("2", "3"),
+                Mono.just("4"),
+                Flux.just("5", "6", "7"),
+                Mono.just("8")
+        )
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5  
+- message => 6  
+- message => 7  
+- message => 8    
+``` 
