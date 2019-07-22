@@ -860,7 +860,7 @@ output
 ```
 
 ### Flux.collectList 
-การแปลงจาก Flux<?> ไปเป็น Mono<List<?>>  
+การแปลงจาก `Flux<?>` ไปเป็น `Mono<List<?>>`   
 ```java 
 @Slf4j
 public class ReactorExample {
