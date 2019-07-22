@@ -271,7 +271,7 @@ public class ReactorExample {
                 log.debug("task 1 wait 3 seconds");
                 Thread.sleep(3000L);
             } catch (InterruptedException ex) {
-                
+
             }
             callback.success("Hello from Task 1");
         });
@@ -280,25 +280,16 @@ public class ReactorExample {
                 log.debug("task 2 wait 1 second");
                 Thread.sleep(1000L);
             } catch (InterruptedException ex) {
-                
+
             }
             callback.success("Hello from Task 2");
         });
-        Mono<String> task3 = Mono.create(callback -> {
-            try {
-                log.debug("task 3 wait 5 seconds");
-                Thread.sleep(5000L);
-            } catch (InterruptedException ex) {
-                
-            }
-            callback.success("Hello from Task 3");
-        });
         log.debug("start at {}", LocalDateTime.now());
-        Mono.zip(task1, task2, task3)
+        Mono.zip(task1, task2)
+                
                 .doOnNext(response -> {
                     log.debug("task 1-> {}", response.getT1());
                     log.debug("task 2-> {}", response.getT2());
-                    log.debug("task 3-> {}", response.getT3());
                 })
                 .doOnSuccess(response -> {
                     log.debug("end at {}", LocalDateTime.now());
@@ -310,14 +301,12 @@ public class ReactorExample {
 ```
 output
 ```
-- start at 2019-07-22T17:15:02.783  
+- start at 2019-07-22T18:14:59.118
 - task 1 wait 3 seconds  
 - task 2 wait 1 second  
-- task 3 wait 5 seconds  
 - task 1-> Hello from Task 1  
-- task 2-> Hello from Task 2  
-- task 3-> Hello from Task 3  
-- end at 2019-07-22T17:15:11.811  
+- task 2-> Hello from Task 2   
+- end at 2019-07-22T18:15:03.216
 ```
 
 # Flux
