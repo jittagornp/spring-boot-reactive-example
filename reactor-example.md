@@ -547,6 +547,44 @@ output
 - message 2 => Hello 2 at 2019-07-22T21:28:57.146  
 - message 3 => Hello 3 at 2019-07-22T21:28:59.147  
 ```
+### Mono.concatWith
+เป็นการเชื่อม Mono 2 อันเข้าด้วยกัน กลายเป็น Flux 
+```java
+@Slf4j
+public class ReactorExample {
+
+    private static Mono<String> task(final String message, int delay) {
+        return Mono.defer(() -> {
+            try {
+                Thread.sleep(delay * 1000);
+            } catch (InterruptedException ex) {
+
+            }
+            return Mono.just(message + " " + LocalDateTime.now());
+        });
+    }
+
+    public static void main(String[] args) {
+
+        Mono<String> task1 = task("Hello 1 at", 3);
+        Mono<String> task2 = task("Hello 2 at", 1);
+
+        Flux<String> flux = task1.concatWith(task2);
+
+        flux
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => Hello 1 at 2019-07-22T21:41:58.132  
+- message => Hello 2 at 2019-07-22T21:41:59.161  
+```
 
 # Flux
 ตัวอย่างการใช้ Flux
