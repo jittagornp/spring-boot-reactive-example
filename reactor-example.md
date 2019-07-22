@@ -21,7 +21,7 @@ public class ReactorExample {
 ```
 output
 ```
-message => Hello at 2019-07-22T16:07:03.309
+- message => Hello at 2019-07-22T16:07:03.309
 ```
 
 # Mono.defer
@@ -43,7 +43,36 @@ public class ReactorExample {
 ```
 output
 ```
-message => Hello at 2019-07-22T16:09:45.886
+- message => Hello at 2019-07-22T16:09:45.886
+```
+# Mono.create
+การสร้าง Mono แบบ Asynchronous
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.create(callback -> {
+            try {
+                log.debug("wait 3 seconds... at " + LocalDateTime.now());
+                Thread.sleep(3000L);
+            } catch (InterruptedException ex) {
+                //
+            }
+            callback.success("Hello at " + LocalDateTime.now());
+        })
+        .doOnNext(message -> {
+            log.debug("message => {}", message);
+        })
+        .subscribe();
+    }
+
+}
+```
+output
+```
+- wait 3 seconds... at 2019-07-22T16:16:55.602  
+- message => Hello at 2019-07-22T16:16:58.603
 ```
 
 # Flux
