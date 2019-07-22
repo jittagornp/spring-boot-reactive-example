@@ -45,6 +45,33 @@ output
 - message => Hello at 2019-07-22T16:07:03.309
 ```
 
+### Mono.log
+การ log ข้อมูลแต่ละ step ออกมาดู
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.just("Hello at " + LocalDateTime.now())
+                .log()
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- | onSubscribe([Synchronous Fuseable] Operators.ScalarSubscription)  
+- | request(unbounded)  
+- | onNext(Hello at 2019-07-22T21:12:06.912)  
+- message => Hello at 2019-07-22T21:12:06.912  
+- | onComplete()  
+```
+
+
 ### Mono.justOrEmpty
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลเป็น `null` ได้
