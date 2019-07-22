@@ -114,6 +114,47 @@ output
 ```
 - message => 2000  
 ```
+
+### Mono.filter
+ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด  
+example 1   
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.just(2)
+                .filter(number -> (number % 2 == 0))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 2
+```
+example 2   
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.just(3)
+                .filter(number -> (number % 2 == 0))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+- ไม่มีข้อมูล
  
 ### Mono.defer
 การสร้าง Mono แบบ Lazy Load 
