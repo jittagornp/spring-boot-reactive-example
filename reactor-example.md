@@ -810,6 +810,28 @@ output
 - message => task 5 at 2019-07-22T23:47:58.106  
 ```
 
+### Flux.count
+การนับจำนวน elements 
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3", "4", "5")
+                .count()
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 5  
+```
+
 ### Flux.repeat 
 การทำซ้ำ
 ```java
