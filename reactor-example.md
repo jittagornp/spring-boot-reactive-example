@@ -103,6 +103,25 @@ output
 การสร้าง Flux จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 
 ```java
-Flux.just("1", "2", "3", "4", "5")
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3", "4", "5")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5 
 ```
 
