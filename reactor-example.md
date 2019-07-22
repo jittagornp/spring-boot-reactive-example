@@ -1,6 +1,6 @@
 # ตัวอย่างการเขียน Reactor 
 
-Reactor เป็น library สำหรับเขียน Reactive เหมือนกับกัน Rx (Reactive Extension) ที่ทาง Microsoft สร้างขึ้นมา   
+Reactor เป็น library สำหรับเขียน Reactive เหมือนกับกัน Rx (Reactive Extension) ที่ทาง Microsoft สร้างขึ้นมา [http://reactivex.io/](http://reactivex.io/)  
 ซึ่ง implements  ตาม Spec ของ Reactive Streams [https://www.reactive-streams.org/](https://www.reactive-streams.org/)   
 ใช้เป็น Core ในการเขียน Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O   
 การใช้ Reactor จะมี 2 ส่วนหลัก ๆ ที่ต้องทำความเข้าใจ คือ 
