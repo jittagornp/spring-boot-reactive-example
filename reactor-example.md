@@ -24,7 +24,27 @@ output
 message => Hello at 2019-07-22T16:07:03.309
 ```
 
+# Mono.defer
+การสร้าง Mono แบบ Lazy Load 
 
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.defer(() -> Mono.just("Hello at " + LocalDateTime.now()))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+message => Hello at 2019-07-22T16:09:45.886
+```
 
 # Flux
 
