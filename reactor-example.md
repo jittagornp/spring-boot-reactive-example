@@ -1,5 +1,7 @@
 # ตัวอย่างการเขียน Reactor 
 
+> [https://projectreactor.io](https://projectreactor.io)  
+
 Reactor เป็น library สำหรับเขียน Reactive เหมือนกับกัน Rx (Reactive Extension) ที่ทาง Microsoft สร้างขึ้นมา [http://reactivex.io/](http://reactivex.io/)  
 ซึ่ง implements  ตาม Spec ของ Reactive Streams [https://www.reactive-streams.org/](https://www.reactive-streams.org/)   
 ใช้เป็น Core ในการเขียน Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O   
@@ -8,6 +10,10 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 - `Flux` เป็น Publisher สำหรับปล่อย (publish) ข้อมูลตั้งแต่ 0 ถึง N elements 
   
 พื้นฐานการใช้ Reactor จะเหมือนกันกับ RxJava ฉะนั้นสามารถอ่าน Concept ต่าง ๆ แทนกันได้ โดยอ่านได้จากบทความนี้ [RxJava series - part 1 - ตอน อะไรเอ่ย ReactiveX?](https://medium.com/@nutron/what-is-reactivex-38293abb81cb) ขอบคุณเจ้าของบทความครับ  
+
+# บทความอื่น ๆ
+- [https://projectreactor.io/learn](https://projectreactor.io/learn)
+- [Reactive systems using Reactor](https://musigma.blog/2016/11/21/reactor.html)
 
 # Mono
 ตัวอย่างการใช้ Mono 
