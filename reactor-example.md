@@ -206,6 +206,38 @@ output
 - wait 3 seconds... at 2019-07-22T16:16:55.602  
 - message => Hello at 2019-07-22T16:16:58.603
 ```
+# Mono.flatMap
+คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.just(100)
+                .flatMap(number -> {
+                    return Mono.create(callback -> {
+                        try {
+                            log.debug("wait 3 seconds... at " + LocalDateTime.now());
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ex) {
+                            
+                        }
+                        callback.success(number * 5);
+                    });
+                })
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- wait 3 seconds... at 2019-07-22T16:54:23.923
+- message => 500
+```
 
 # Flux
 ตัวอย่างการใช้ Flux
