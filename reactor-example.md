@@ -370,6 +370,23 @@ output (ใช้เวลาทำงานมากที่สุดคือ
 - task 3-> Hello from Task 3  
 - end at 2019-07-22T18:38:50.920
 ```
+### Mono.block
+การทำงานแบบ Blocking I/O หรือ Synchronous
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        String message = Mono.just("Hello World").block();
+        log.debug("message => {}", message);
+    }
+
+}
+```
+output
+```
+- message => Hello World
+```
 
 # Flux
 ตัวอย่างการใช้ Flux
