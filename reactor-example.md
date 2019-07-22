@@ -1,13 +1,30 @@
 # ตัวอย่างการเขียน Reactor 
 
 # Mono
-
-- #### Mono.just 
+ตัวอย่างการใช้ Mono 
+# Mono.just 
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 
 ```java
-Mono.just("Hello World")
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.just("Hello at " + LocalDateTime.now())
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
 ```
+output
+```
+message => Hello at 2019-07-22T16:07:03.309
+```
+
+
 
 # Flux
 
