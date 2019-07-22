@@ -316,38 +316,34 @@ output (ใช้เวลาทำงาน 3 + 1 = 4 วินาที)
 @Slf4j
 public class ReactorExample {
 
-    public static void main(String[] args) {
-        Mono<String> task1 = Mono.create((MonoSink<String> callback) -> {
-            try {
-                log.debug("task 1 wait 3 seconds");
-                Thread.sleep(3000L);
-            } catch (InterruptedException ex) {
+    private static void delay(String name, int seconds) {
+        try {
+            log.debug("{} wait {} seconds", name, seconds);
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException ex) {
 
-            }
+        }
+    }
+
+    public static void main(String[] args) {
+        
+        Mono<String> task1 = Mono.create((MonoSink<String> callback) -> {
+            delay("task 1", 3);
             callback.success("Hello from Task 1");
         }).subscribeOn(Schedulers.newElastic("scheduler 1", 1));
         
         Mono<String> task2 = Mono.create((MonoSink<String> callback) -> {
-            try {
-                log.debug("task 2 wait 1 second");
-                Thread.sleep(1000L);
-            } catch (InterruptedException ex) {
-
-            }
+            delay("task 2", 1);
             callback.success("Hello from Task 2");
-       }).subscribeOn(Schedulers.newElastic("scheduler 2", 1));
-       
+        }).subscribeOn(Schedulers.newElastic("scheduler 2", 1));
+        
         Mono<String> task3 = Mono.create((MonoSink<String> callback) -> {
-            try {
-                log.debug("task 3 wait 5 seconds");
-                Thread.sleep(5000L);
-            } catch (InterruptedException ex) {
-
-            }
+            delay("task 3", 5);
             callback.success("Hello from Task 3");
-       }).subscribeOn(Schedulers.newElastic("scheduler 3", 1));
-       
+        }).subscribeOn(Schedulers.newElastic("scheduler 3", 1));
+        
         log.debug("start at {}", LocalDateTime.now());
+        
         Mono.zip(task1, task2, task3)
                 .doOnNext(response -> {
                     log.debug("task 1-> {}", response.getT1());
@@ -364,14 +360,14 @@ public class ReactorExample {
 ```
 output (ใช้เวลาทำงานมากที่สุดคือ 5 วินาที)    
 ```
-- start at 2019-07-22T18:21:20.031 
-- task 2 wait 1 second  
+- start at 2019-07-22T18:38:45.892
 - task 1 wait 3 seconds  
+- task 2 wait 1 seconds  
 - task 3 wait 5 seconds  
 - task 1-> Hello from Task 1  
 - task 2-> Hello from Task 2  
 - task 3-> Hello from Task 3  
-- end at 2019-07-22T18:21:25.060  
+- end at 2019-07-22T18:38:50.920
 ```
 
 # Flux
