@@ -501,6 +501,53 @@ output
 - message => Hello at 2019-07-22T21:17:33.880  
 ```
 
+### Mono.then
+การทำงานตามลำดับด้วย `then`
+```java
+@Slf4j
+public class ReactorExample {
+
+    private static Mono<String> task(final String message, int delay) {
+        return Mono.defer(() -> {
+            try {
+                Thread.sleep(delay * 1000);
+            } catch (InterruptedException ex) {
+
+            }
+            return Mono.just(message + " " + LocalDateTime.now());
+        });
+    }
+
+    public static void main(String[] args) {
+
+        Mono<String> task1 = task("Hello 1 at", 3);
+        Mono<String> task2 = task("Hello 2 at", 1);
+        Mono<String> task3 = task("Hello 3 at", 2);
+        
+        task1
+                .doOnNext(message -> {
+                    log.debug("message 1 => {}", message);
+                })
+                .then(task2)
+                .doOnNext(message -> {
+                    log.debug("message 2 => {}", message);
+                })
+                .then(task3)
+                .doOnNext(message -> {
+                    log.debug("message 3 => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message 1 => Hello 1 at 2019-07-22T21:28:56.144  
+- message 2 => Hello 2 at 2019-07-22T21:28:57.146  
+- message 3 => Hello 3 at 2019-07-22T21:28:59.147  
+```
+
 # Flux
 ตัวอย่างการใช้ Flux
 ### Flux.just 
