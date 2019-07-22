@@ -858,3 +858,26 @@ output
 - message => 2  
 - message => 3  
 ```
+
+### Flux.collectList 
+การแปลงจาก Flux<?> ไปเป็น Mono<List<?>>  
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono<List<String>> list = Flux.just("1", "2", "3", "4", "5")
+                .collectList();
+        
+                list.doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => [1, 2, 3, 4, 5]  
+```
