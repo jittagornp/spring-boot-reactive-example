@@ -259,6 +259,71 @@ output
 - message => 500
 ```
 
+### Mono.zip
+เป็นการรวม response แบบตามลำดับ คือ
+- ถ้า task 1 ทำงาน 3 วินาที
+- ถ้า task 2 ทำงาน 1 วินาที
+- ถ้า task 3 ทำงาน 5 วินาที
+มันจะทำงาน task 1, task 2 และ task 3 ตามลำดับ ได้ผลรวมเวลาเป็น 9 วินาที 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono<String> task1 = Mono.create(callback -> {
+            try {
+                log.debug("task 1 wait 3 seconds");
+                Thread.sleep(3000L);
+            } catch (InterruptedException ex) {
+                
+            }
+            callback.success("Hello from Task 1");
+        });
+        Mono<String> task2 = Mono.create(callback -> {
+            try {
+                log.debug("task 2 wait 1 second");
+                Thread.sleep(1000L);
+            } catch (InterruptedException ex) {
+                
+            }
+            callback.success("Hello from Task 2");
+        });
+        Mono<String> task3 = Mono.create(callback -> {
+            try {
+                log.debug("task 3 wait 5 seconds");
+                Thread.sleep(5000L);
+            } catch (InterruptedException ex) {
+                
+            }
+            callback.success("Hello from Task 3");
+        });
+        log.debug("start at {}", LocalDateTime.now());
+        Mono.zip(task1, task2, task3)
+                .doOnSuccess(response -> {
+                    log.debug("task 1-> {}", response.getT1());
+                    log.debug("task 2-> {}", response.getT2());
+                    log.debug("task 3-> {}", response.getT3());
+                })
+                .doOnSuccess(response -> {
+                    log.debug("end at {}", LocalDateTime.now());
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- start at 2019-07-22T17:15:02.783  
+- task 1 wait 3 seconds  
+- task 2 wait 1 second  
+- task 3 wait 5 seconds  
+- task 1-> Hello from Task 1  
+- task 2-> Hello from Task 2  
+- task 3-> Hello from Task 3  
+- end at 2019-07-22T17:15:11.811  
+```
+
 # Flux
 ตัวอย่างการใช้ Flux
 ### Flux.just 
