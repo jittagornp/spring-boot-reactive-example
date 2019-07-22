@@ -68,6 +68,31 @@ output
 - message => Hello at 2019-07-22T16:35:16.656 
 ```
 
+### Mono.error
+สำหรับปล่อยข้อมูล error หรือ Exception ออกมา 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono.justOrEmpty(null)
+                .switchIfEmpty(Mono.error(new RuntimeException("Not found data")))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .doOnError(e -> {
+                    log.debug("errror => {}", e.getMessage());
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- errror => Not found data
+```
+ 
 ### Mono.defer
 การสร้าง Mono แบบ Lazy Load 
 
