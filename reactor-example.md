@@ -197,6 +197,7 @@ output
 ```
 - message => Hello at 2019-07-22T16:09:45.886
 ```
+
 ### Mono.create
 การสร้าง Mono แบบ Asynchronous
 ```java
@@ -387,6 +388,68 @@ output
 ```
 - message => Hello World
 ```
+
+### Mono.cache
+สำหรับ Cache ข้อมูล ตามเวลาที่กำหนด  
+- กรณีไม่ cache 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono<String> defer = Mono.defer(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+
+            }
+            return Mono.just("Hello at " + LocalDateTime.now());
+        });
+        
+        log.debug("message => {}", defer.block());
+        log.debug("message => {}", defer.block());
+        log.debug("message => {}", defer.block());
+    }
+
+}
+```
+output
+```
+- message => Hello at 2019-07-22T21:06:21.169  
+- message => Hello at 2019-07-22T21:06:22.186  
+- message => Hello at 2019-07-22T21:06:23.186  
+```
+สังเกตว่า ผลลัพธ์ (เวลาของแต่ละ message) ไม่เหมือนกัน  
+
+- กรณี cache 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono<String> defer = Mono.defer(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+
+            }
+            return Mono.just("Hello at " + LocalDateTime.now());
+        }).cache(Duration.ofMinutes(5));
+        
+        log.debug("message => {}", defer.block());
+        log.debug("message => {}", defer.block());
+        log.debug("message => {}", defer.block());
+    }
+
+}
+```
+output
+```
+- message => Hello at 2019-07-22T21:08:31.852  
+- message => Hello at 2019-07-22T21:08:31.852  
+- message => Hello at 2019-07-22T21:08:31.852  
+```
+ข้อมูล message ที่ 2 และ 3 เหมือน message ที่ 1 เนื่องจากมีการ cache result ไว้ 5 นาที  
 
 # Flux
 ตัวอย่างการใช้ Flux
