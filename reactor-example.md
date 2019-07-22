@@ -261,6 +261,7 @@ output
 
 ### Mono.zip
 เป็นการรวม response จาก Mono ต่าง ๆ
+- Sequencial 
 ```java
 @Slf4j
 public class ReactorExample {
@@ -286,7 +287,6 @@ public class ReactorExample {
         });
         log.debug("start at {}", LocalDateTime.now());
         Mono.zip(task1, task2)
-                
                 .doOnNext(response -> {
                     log.debug("task 1-> {}", response.getT1());
                     log.debug("task 2-> {}", response.getT2());
@@ -299,7 +299,7 @@ public class ReactorExample {
 
 }
 ```
-output
+output (ใช้เวลาทำงาน 3 + 1 = 4 วินาที)  
 ```
 - start at 2019-07-22T18:14:59.118
 - task 1 wait 3 seconds  
@@ -307,6 +307,66 @@ output
 - task 1-> Hello from Task 1  
 - task 2-> Hello from Task 2   
 - end at 2019-07-22T18:15:03.216
+```
+
+- Parallel 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono<String> task1 = Mono.create((MonoSink<String> callback) -> {
+            try {
+                log.debug("task 1 wait 3 seconds");
+                Thread.sleep(3000L);
+            } catch (InterruptedException ex) {
+
+            }
+            callback.success("Hello from Task 1");
+        }).subscribeOn(Schedulers.newElastic("scheduler 1", 1));
+        Mono<String> task2 = Mono.create((MonoSink<String> callback) -> {
+            try {
+                log.debug("task 2 wait 1 second");
+                Thread.sleep(1000L);
+            } catch (InterruptedException ex) {
+
+            }
+            callback.success("Hello from Task 2");
+       }).subscribeOn(Schedulers.newElastic("scheduler 2", 1));
+        Mono<String> task3 = Mono.create((MonoSink<String> callback) -> {
+            try {
+                log.debug("task 3 wait 5 seconds");
+                Thread.sleep(5000L);
+            } catch (InterruptedException ex) {
+
+            }
+            callback.success("Hello from Task 3");
+       }).subscribeOn(Schedulers.newElastic("scheduler 3", 1));
+        log.debug("start at {}", LocalDateTime.now());
+        Mono.zip(task1, task2, task3)
+                .doOnNext(response -> {
+                    log.debug("task 1-> {}", response.getT1());
+                    log.debug("task 2-> {}", response.getT2());
+                    log.debug("task 3-> {}", response.getT3());
+                })
+                .doOnSuccess(response -> {
+                    log.debug("end at {}", LocalDateTime.now());
+                })
+                .subscribe();
+    }
+
+}
+```
+output (ใช้เวลาทำงานมากที่สุดคือ 5 วินาที)    
+```
+- start at 2019-07-22T18:21:20.031 
+- task 2 wait 1 second  
+- task 1 wait 3 seconds  
+- task 3 wait 5 seconds  
+- task 1-> Hello from Task 1  
+- task 2-> Hello from Task 2  
+- task 3-> Hello from Task 3  
+- end at 2019-07-22T18:21:25.060  
 ```
 
 # Flux
