@@ -682,7 +682,7 @@ public class MonoTimeoutExample {
     public static void main(String[] args) {
         Mono.create(callback -> {
             try {
-                log.debug("wait 5 second... at " + LocalDateTime.now());
+                log.debug("wait 5 seconds... at " + LocalDateTime.now());
                 Thread.sleep(5000L);
             } catch (InterruptedException ex) {
                 //
@@ -701,7 +701,7 @@ public class MonoTimeoutExample {
 ```
 output
 ```
-- wait 5 second... at 2019-07-23T14:53:27.468  
+- wait 5 seconds... at 2019-07-23T14:53:27.468  
 - message => Hello from timeout  
 ```
 
