@@ -33,8 +33,8 @@ public class MonoFlowExample {
                 .doOnCancel(() -> log.debug("doOnCacel..."))
                 .doOnError(e -> log.debug("doOnError... {}", e.getMessage()))
                 .doOnSuccess(value -> log.debug("doOnSuccess... {}", value))
-                .doOnSuccessOrError((value, e) -> log.debug("doOnSuccessOrError... {} or {}", value, e.getMessage()))
-                .doAfterSuccessOrError((value, e) -> log.debug("doAfterSuccessOrError... {} or {}", value, e.getMessage()))
+                .doOnSuccessOrError((value, e) -> log.debug("doOnSuccessOrError... {} or {}", value, (e == null ? null : e.getMessage())))
+                .doAfterSuccessOrError((value, e) -> log.debug("doAfterSuccessOrError... {} or {}", value, (e == null ? null : e.getMessage())))
                 .doAfterTerminate(() -> log.debug("doAfterTerminate..."))
                 .doOnTerminate(() -> log.debug("doOnTerminate..."))
                 .doOnSubscribe(subscription -> {
@@ -57,11 +57,11 @@ output
 - doOnEach... ON_COMPLETE : value => null  
 - doOnNext... A  
 - doOnSuccess... A  
-- doOnCacel...  
-- doOnTerminate...  
-- doFinally... onError  
+- doOnSuccessOrError... A or null  
 - doAfterTerminate...  
-- doAfterSuccessOrError... null or null  
+- doAfterSuccessOrError... A or null  
+- doOnTerminate...  
+- doFinally... onComplete  
 - doOnSubscribe... 1234567890  
 - doOnCacel...  
 ```
