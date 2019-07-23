@@ -46,6 +46,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.collectList](#fluxcollectlist)
   - [Flux.skip](#fluxskip)
   - [Flux.take](#fluxtake)
+  - [Flux.filter](#fluxfilter)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1022,3 +1023,31 @@ output
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.filter
+ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Mono.filter` 
+
+```java
+@Slf4j
+public class FluxFilterExample {
+    
+    public static void main(String[] args) {
+        Flux.just(1, 2, 3, 4, 5)
+                .filter(number -> (number % 2 == 0))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => 2  
+- message => 4  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)  
+
+
