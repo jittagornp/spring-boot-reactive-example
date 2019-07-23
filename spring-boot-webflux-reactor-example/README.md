@@ -1116,7 +1116,7 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.all
-สำหรับเช็คเงื่อนไขว่า `ทั้งหมด` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
+สำหรับเช็คว่า `ทั้งหมด` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
 ```java
 @Slf4j
 public class FluxAllExample {
