@@ -49,6 +49,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.collectList](#fluxcollectlist)
   - [Flux.skip](#fluxskip)
   - [Flux.take](#fluxtake)
+  - [Flux.all](#fluxall)
   - [Flux.filter](#fluxfilter)
   - [Flux.map](#fluxmap)
   - [Flux.buffer](#fluxbuffer)
@@ -1110,6 +1111,38 @@ output
 - message => C  
 - message => D  
 - message => E    
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.all
+สำหรับเช็คเงื่อนไขว่า `ทั้งหมด` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
+```java
+@Slf4j
+public class FluxAllExample {
+
+    public static void main(String[] args) {
+        Flux.just(
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+        )
+                .all(day -> day.endsWith("day"))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => true
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
