@@ -674,7 +674,7 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.timeout
-ใช้สำหรับจำกัดเวลาในการตอบสนอง เช่น ถ้าไม่ตอบสนองภายใน 3 วินาที จะเกืด `java.util.concurrent.TimeoutException`  
+ใช้สำหรับจำกัดเวลาในการตอบสนอง เช่น ถ้าไม่ตอบสนองภายใน 3 วินาที จะเกิด `java.util.concurrent.TimeoutException`  
 ```java
 @Slf4j
 public class MonoTimeoutExample {
