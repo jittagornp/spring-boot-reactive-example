@@ -157,7 +157,7 @@ output
   - [Flux.sample](#fluxsample)
   - [Flux.distinct](#fluxdistinct)
   - [Flux.sort](#fluxsort)
-  - (Flux.zip)(#fluxzip)
+  - [Flux.zip](#fluxzip)
 
 # Mono
 ตัวอย่างการใช้ Mono 
