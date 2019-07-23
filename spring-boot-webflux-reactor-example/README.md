@@ -156,6 +156,7 @@ output
   - [Flux.buffer](#fluxbuffer)
   - [Flux.sample](#fluxsample)
   - [Flux.distinct](#fluxdistinct)
+  - [Flux.sort](#fluxsort)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1440,6 +1441,50 @@ output
 - message => D  
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)  
+ 
+### Flux.sort 
+สำหรับจัดเรียงข้อมูล
+```java
+@Slf4j
+public class FluxTodoExample {
 
+    public static void main(String[] args) {
+        Flux.just(2, 3, 5, 4, 1, 9, 7, 6, 8, 0)
+                .doOnNext(message -> {
+                    log.debug("before sort => {}", message);
+                })
+                .sort((numb1, numb2) -> numb1 - numb2)
+                .doOnNext(message -> {
+                    log.debug("sorted => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- before sort => 2  
+- before sort => 3  
+- before sort => 5  
+- before sort => 4  
+- before sort => 1  
+- before sort => 9  
+- before sort => 7  
+- before sort => 6  
+- before sort => 8  
+- before sort => 0  
+- sorted => 0  
+- sorted => 1  
+- sorted => 2  
+- sorted => 3  
+- sorted => 4  
+- sorted => 5  
+- sorted => 6  
+- sorted => 7   
+- sorted => 8   
+- sorted => 9  
+```
 [กลับไปข้างบน &#x2191;](#table-of-content)  
  
