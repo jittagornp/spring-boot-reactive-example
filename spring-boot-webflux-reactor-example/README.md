@@ -16,6 +16,70 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 - [Reactive systems using Reactor](https://musigma.blog/2016/11/21/reactor.html)
 - [Reactor by Example](https://www.infoq.com/articles/reactor-by-example/) 
 
+# Flow
+
+### Flux Flow
+
+```java
+Flux.just("1", "2", "3")
+    .doFirst(() -> {
+        log.debug("doFirst...");
+    })
+    .doOnRequest(value -> {
+        log.debug("doOnRequest... {}", value);
+    })
+    .doOnEach(consumer -> {
+        log.debug("doOnEach... {} : value => {}", consumer.getType().name(), consumer.get());
+    })
+    .doOnNext(value -> {
+        log.debug("doOnNext... {}", value);
+    })
+    .doOnCancel(() -> {
+        log.debug("doOnCacel...");
+    })
+    .doOnError(e -> {
+        log.debug("doOnError... {}", e.getMessage());
+    })
+    .doOnComplete(() -> {
+        log.debug("doOnComplete...");
+    })
+    .doAfterTerminate(() -> {
+        log.debug("doAfterTerminate...");
+    })
+    .doOnTerminate(() -> {
+        log.debug("doOnTerminate...");
+    })
+    .doOnSubscribe(consumer -> {
+        consumer.request(111);
+        log.debug("doOnSubscribe...");
+    })
+    .doFinally(consumer -> {
+        log.debug("doFinally... {}", consumer.toString());
+    })
+    .doOnDiscard(Object.class, consumer -> {
+        log.debug("doOnDiscard... {}", consumer.toString());
+    })
+    .subscribe();
+```
+output
+```
+- doFirst...  
+- doOnRequest... 111  
+- doOnNext... 1  
+- doOnEach... ON_NEXT : value => 1  
+- doOnNext... 2  
+- doOnEach... ON_NEXT : value => 2  
+- doOnNext... 3  
+- doOnEach... ON_NEXT : value => 3  
+- doOnEach... ON_COMPLETE : value => null  
+- doOnComplete...  
+- doOnTerminate...  
+- doFinally... onComplete  
+- doAfterTerminate...  
+- doOnSubscribe...  
+- doOnCacel...  
+```
+
 # Table of Content 
 - [Mono](#mono)
   - [Mono.empty](#monoempty)
