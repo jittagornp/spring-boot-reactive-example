@@ -1516,7 +1516,7 @@ output
 - message => [2,7]  
 - message => [3,8]  
 ```
-- exxample 2
+- example 2
 ```java
 @Slf4j
 public class FluxZipExample2 {
