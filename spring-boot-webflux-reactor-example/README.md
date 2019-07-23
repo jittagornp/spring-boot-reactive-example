@@ -50,6 +50,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.skip](#fluxskip)
   - [Flux.take](#fluxtake)
   - [Flux.all](#fluxall)
+  - [Flux.any](#fluxany)
   - [Flux.filter](#fluxfilter)
   - [Flux.map](#fluxmap)
   - [Flux.buffer](#fluxbuffer)
