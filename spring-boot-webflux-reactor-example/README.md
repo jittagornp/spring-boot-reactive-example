@@ -1194,7 +1194,7 @@ public class FluxBufferExample {
 
 }
 ```
-- การใช้ `Flux.create` อย่าลืม call `.complete()` ด้วยเสมอ เพื่อป้องกัน `Memory Leak`
+- การใช้ `Flux.create` อย่าลืม call `.complete()` ด้วยเสมอ เพื่อป้องกัน `Memory Leak`  
 output
 ```
 - message => [0, 1, 2, 3, 4]  
@@ -1242,5 +1242,6 @@ output
 - message => 12  
 - message => 14  
 ```
+- การใช้ `Flux.create` อย่าลืม call `.complete()` ด้วยเสมอ เพื่อป้องกัน `Memory Leak`    
 
 [กลับไปข้างบน &#x2191;](#table-of-content)  
