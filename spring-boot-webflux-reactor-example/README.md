@@ -14,6 +14,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 # บทความอื่น ๆ
 - [https://projectreactor.io/learn](https://projectreactor.io/learn)
 - [Reactive systems using Reactor](https://musigma.blog/2016/11/21/reactor.html)
+- [Reactor by Example](https://www.infoq.com/articles/reactor-by-example/) 
 
 # Table of Content 
 - [Mono](#mono)
@@ -48,6 +49,8 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.collectList](#fluxcollectlist)
   - [Flux.skip](#fluxskip)
   - [Flux.take](#fluxtake)
+  - [Flux.all](#fluxall)
+  - [Flux.any](#fluxany)
   - [Flux.filter](#fluxfilter)
   - [Flux.map](#fluxmap)
   - [Flux.buffer](#fluxbuffer)
@@ -1109,6 +1112,70 @@ output
 - message => C  
 - message => D  
 - message => E    
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.all
+สำหรับเช็คว่าข้อมูล `ทั้งหมด` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
+```java
+@Slf4j
+public class FluxAllExample {
+
+    public static void main(String[] args) {
+        Flux.just(
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+        )
+                .all(day -> day.endsWith("day"))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => true
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.any
+สำหรับเช็คว่าข้อมูล `บางตัว` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
+```java
+@Slf4j
+public class FluxAnyExample {
+
+    public static void main(String[] args) {
+        Flux.just(
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+        )
+                .any(day -> day.startsWith("Mon"))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => true
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
