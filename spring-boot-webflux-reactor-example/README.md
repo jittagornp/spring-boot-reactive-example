@@ -157,6 +157,7 @@ output
   - [Flux.sample](#fluxsample)
   - [Flux.distinct](#fluxdistinct)
   - [Flux.sort](#fluxsort)
+  - (Flux.zip)(#fluxzip)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1488,3 +1489,56 @@ output
 ```
 [กลับไปข้างบน &#x2191;](#table-of-content)  
  
+### Flux.zip  
+เป็นการผสาน/รวม ข้อมูลแต่ละกล่มหรือคู่ flux เข้าด้วยกัน  
+- example 1
+```java
+@Slf4j
+public class FluxZipExample1 {
+    
+    public static void main(String[] args) {
+        
+        Flux<String> flux1 = Flux.just("1", "2", "3", "4", "5");
+        Flux<String> flux2 = Flux.just("6", "7", "8");
+        
+        Flux.zip(flux1, flux2)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => [1,6]  
+- message => [2,7]  
+- message => [3,8]  
+```
+- exxample 2
+```java
+@Slf4j
+public class FluxZipExample2 {
+    
+    public static void main(String[] args) {
+        
+        Flux<String> flux1 = Flux.just("1", "2", "3", "4", "5");
+        Flux<String> flux2 = Flux.just("6", "7", "8");
+        Flux<String> flux3 = Flux.just("9", "10", "11", "12");
+        
+        Flux.zip(flux1, flux2, flux3)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => [1,6,9]  
+- message => [2,7,10]  
+- message => [3,8,11]  
+```
