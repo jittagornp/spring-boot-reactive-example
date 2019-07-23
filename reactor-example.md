@@ -1,13 +1,51 @@
 # ตัวอย่างการเขียน Reactor 
 
-Reactor เป็น library สำหรับเขียน Reactive เหมือนกับกัน Rx (Reactive Extension) ที่ทาง Microsoft สร้างขึ้นมา [http://reactivex.io/](http://reactivex.io/)  
+> [https://projectreactor.io](https://projectreactor.io)  
+
+Reactor เป็น library สำหรับเขียน Reactive เหมือนกันกับ Rx (Reactive Extension) ที่ทาง Microsoft สร้างขึ้นมา [http://reactivex.io/](http://reactivex.io/)  
 ซึ่ง implements  ตาม Spec ของ Reactive Streams [https://www.reactive-streams.org/](https://www.reactive-streams.org/)   
 ใช้เป็น Core ในการเขียน Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O   
 การใช้ Reactor จะมี 2 ส่วนหลัก ๆ ที่ต้องทำความเข้าใจ คือ 
-- `Mono` เป็น Publisher สำหรับปล่อย (publish) ข้อมูลตั้งแต่ 0 ถึง 1 elements และ 
+- `Mono` เป็น Publisher สำหรับปล่อย (publish) ข้อมูลตั้งแต่ 0 ถึง 1 element และ 
 - `Flux` เป็น Publisher สำหรับปล่อย (publish) ข้อมูลตั้งแต่ 0 ถึง N elements 
   
 พื้นฐานการใช้ Reactor จะเหมือนกันกับ RxJava ฉะนั้นสามารถอ่าน Concept ต่าง ๆ แทนกันได้ โดยอ่านได้จากบทความนี้ [RxJava series - part 1 - ตอน อะไรเอ่ย ReactiveX?](https://medium.com/@nutron/what-is-reactivex-38293abb81cb) ขอบคุณเจ้าของบทความครับ  
+
+# บทความอื่น ๆ
+- [https://projectreactor.io/learn](https://projectreactor.io/learn)
+- [Reactive systems using Reactor](https://musigma.blog/2016/11/21/reactor.html)
+
+# Table of Content 
+- [Mono](#mono)
+  - [Mono.empty](#monoempty)
+  - [Mono.just](#monojust)
+  - [Mono.log](#monolog)
+  - [Mono.justOrEmpty](#monojustorempty)
+  - [Mono.switchIfEmpty](#monoswitchifempty)
+  - [Mono.error](#monoerror)
+  - [Mono.map](#monomap)
+  - [Mono.filter](#monofilter)
+  - [Mono.defer](#monodefer)
+  - [Mono.create](#monocreate)
+  - [Mono.flatMap](#monoflatmap)
+  - [Mono.zip](#monozip)
+  - [Mono.block](#monoblock)
+  - [Mono.cache](#monocache)
+  - [Mono.flux](#monoflux)
+  - [Mono.then](#monothen)
+  - [Mono.concatWith](#monoconcatwith)
+- [Flux](#flux)
+  - [Flux.just](#fluxjust)
+  - [Flux.fromIterable](#fluxfromiterable)
+  - [Flux.fromStream](#fluxfromstream)
+  - [Flux.range](#fluxrange)
+  - [Flux.concat](#fluxconcat)
+  - [Flux.create](#fluxcreate)
+  - [Flux.count](#fluxcount)
+  - [Flux.repeat](#fluxrepeat)
+  - [Flux.collectList](#fluxcollectlist)
+  - [Flux.skip](#fluxskip)
+  - [Flux.take](#fluxtake)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -31,9 +69,11 @@ public class ReactorExample {
 output
 - ไม่มีข้อมูล
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.just 
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
-- ข้อมูลห้ามเป็น `null` **** 
+- ข้อมูลห้ามเป็น `null` ****  เพราะจะเกิด `java.lang.NullPointerException: value`
 
 ```java
 @Slf4j
@@ -53,6 +93,8 @@ output
 ```
 - message => Hello at 2019-07-22T16:07:03.309
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.log
 การ log ข้อมูลแต่ละ step ออกมาดู
@@ -79,7 +121,7 @@ output
 - message => Hello at 2019-07-22T21:12:06.912  
 - | onComplete()  
 ```
-
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.justOrEmpty
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
@@ -102,6 +144,8 @@ public class ReactorExample {
 output
 - จะไม่มีการเรียก `doOnNext` เนื่องจากไม่มีข้อมูลปล่อยออกมา  
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.switchIfEmpty
 ทำการเปลี่ยน (switch) Mono ถ้าไม่มีข้อมูลถูกปล่อยออกมาจาก source 
 ```java 
@@ -123,6 +167,8 @@ output
 ```
 - message => Hello at 2019-07-22T16:35:16.656 
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.error
 สำหรับปล่อยข้อมูล error หรือ Exception ออกมา 
@@ -149,6 +195,8 @@ output
 - errror => Not found data
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.map
 ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา  
 ```java
@@ -170,6 +218,8 @@ output
 ```
 - message => 2000  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.filter
 ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด  
@@ -211,6 +261,8 @@ public class ReactorExample {
 ```
 output
 - ไม่มีข้อมูล
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
  
 ### Mono.defer
 การสร้าง Mono แบบ Lazy Load 
@@ -233,6 +285,8 @@ output
 ```
 - message => Hello at 2019-07-22T16:09:45.886
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.create
 การสร้าง Mono แบบ Asynchronous
@@ -263,6 +317,9 @@ output
 - wait 3 seconds... at 2019-07-22T16:16:55.602  
 - message => Hello at 2019-07-22T16:16:58.603
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.flatMap
 คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous
 ```java
@@ -295,6 +352,8 @@ output
 - wait 3 seconds... at 2019-07-22T16:54:23.923
 - message => 500
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.zip
 เป็นการรวม response จาก Mono ต่าง ๆ
@@ -407,6 +466,9 @@ output (ใช้เวลาทำงานมากที่สุดคือ
 - task 3-> Hello from Task 3  
 - end at 2019-07-22T18:38:50.920
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.block
 การทำงานแบบ Blocking I/O หรือ Synchronous
 ```java
@@ -424,6 +486,8 @@ output
 ```
 - message => Hello World
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.cache
 สำหรับ Cache ข้อมูล ตามเวลาที่กำหนด  
@@ -487,6 +551,8 @@ output
 ```
 ข้อมูล message ที่ 2 และ 3 เหมือน message ที่ 1 เนื่องจากมีการ cache result ไว้ 5 นาที  
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.flux
 การแปลงจาก Mono -> Flux 
 ```java 
@@ -509,6 +575,8 @@ output
 ```
 - message => Hello at 2019-07-22T21:17:33.880  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.then
 การทำงานตามลำดับด้วย `then`
@@ -556,6 +624,9 @@ output
 - message 2 => Hello 2 at 2019-07-22T21:28:57.146  
 - message 3 => Hello 3 at 2019-07-22T21:28:59.147  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.concatWith
 เป็นการเชื่อม Mono 2 อันเข้าด้วยกัน กลายเป็น Flux 
 ```java
@@ -595,11 +666,13 @@ output
 - message => Hello 2 at 2019-07-22T21:41:59.161  
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 # Flux
 ตัวอย่างการใช้ Flux
 ### Flux.just 
 การสร้าง Flux จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
-
+- ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException`  
 ```java
 @Slf4j
 public class ReactorExample {
@@ -623,3 +696,329 @@ output
 - message => 5 
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.fromIterable
+การสร้าง Flux จาก Java Collections (Iterable)  
+- ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: iterable` 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("1", "2", "3", "4", "5");
+        Flux.fromIterable(list)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5 
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.fromStream
+การสร้าง Flux จาก Java 8 Stream 
+- ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: Stream s must be provided` 
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Stream<String> stream = Stream.of("1", "2", "3", "4", "5");
+        Flux.fromStream(stream)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5 
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.range 
+การสร้าง Flux จากช่วงที่กำหนด (start จาก 3 ไป 5 จำนวน)   
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        int start = 3;
+        int count = 5;
+        Flux.range(start, count)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 3  
+- message => 4  
+- message => 5  
+- message => 6  
+- message => 7 
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.concat
+สำหรับ concat หรือ ต่อ Publisher ต่าง ๆ ให้เป็น Flux เดียว 
+- example 1
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.concat(
+                Mono.just("task 1"),
+                Mono.just("task 2"),
+                Mono.just("task 3"),
+                Mono.just("task 4"),
+                Mono.just("task 5")
+        )
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => task 1  
+- message => task 2  
+- message => task 3  
+- message => task 4  
+- message => task 5    
+```
+- example 2
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.concat(
+                Mono.just("1"),
+                Flux.just("2", "3"),
+                Mono.just("4"),
+                Flux.just("5", "6", "7"),
+                Mono.just("8")
+        )
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5  
+- message => 6  
+- message => 7  
+- message => 8    
+``` 
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.create
+การสร้าง Flux แบบ Asynchronous เหมือน `Mono.create`  
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.create(callback -> {
+            for (int i = 1; i <= 5; i++) {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException ex) {
+                   
+                }
+                callback.next("task " + i + " at " + LocalDateTime.now());
+            }
+            callback.complete();
+            
+        })
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+- หากหยุดปล่อยข้อมูลแล้ว อย่าลืม call `.complete()` ให้เป็นนิสัย เพื่อไม่ให้เกิด `Memory Leak`    
+output
+```
+- message => task 1 at 2019-07-22T23:47:54.078  
+- message => task 2 at 2019-07-22T23:47:55.079  
+- message => task 3 at 2019-07-22T23:47:56.093  
+- message => task 4 at 2019-07-22T23:47:57.106  
+- message => task 5 at 2019-07-22T23:47:58.106  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.count
+การนับจำนวน elements 
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3", "4", "5")
+                .count()
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 5  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.repeat 
+การทำซ้ำ
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3")
+                .repeat(1)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 1  
+- message => 2  
+- message => 3  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.collectList 
+การแปลงจาก `Flux<?>` ไปเป็น `Mono<List<?>>`   
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Mono<List<String>> list = Flux.just("1", "2", "3", "4", "5")
+                .collectList();
+        
+                list.doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => [1, 2, 3, 4, 5]  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.skip
+สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด    
+```java
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
+                .skip(2)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => C  
+- message => D  
+- message => E   
+- message => F   
+- message => G   
+- message => H   
+```
+[กลับไปข้างบน &#x2191;](#table-of-content)  
+
+### Flux.take
+สำหรับเลือกข้อมูลตามจำนวนที่กำหนด   
+```java 
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
+                .skip(2)
+                .take(3)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => C  
+- message => D  
+- message => E    
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
