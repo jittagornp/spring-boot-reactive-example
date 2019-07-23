@@ -52,6 +52,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.map](#fluxmap)
   - [Flux.buffer](#fluxbuffer)
   - [Flux.sample](#fluxsample)
+  - [Flux.distinct](#fluxdistinct)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1245,3 +1246,33 @@ output
 - การใช้ `Flux.create` อย่าลืม call `.complete()` ด้วยเสมอ เพื่อป้องกัน `Memory Leak`    
 
 [กลับไปข้างบน &#x2191;](#table-of-content)  
+
+### Flux.distinct
+การจำแนกข้อมูลที่แตกต่างกัน
+
+```java
+@Slf4j
+public class FluxDistinctExample {
+    
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C", "A", "A", "B", "D")
+                .distinct()
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => A  
+- message => B  
+- message => C  
+- message => D  
+```
+
+
+[กลับไปข้างบน &#x2191;](#table-of-content)  
+ 
