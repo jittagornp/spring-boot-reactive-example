@@ -1108,6 +1108,7 @@ public class FluxBufferExample {
 
 }
 ```
+- การใช้ `Flux.create` อย่าลืม call `.complete()` ด้วยเสมอ เพื่อป้องกัน `Memory Leak`
 output
 ```
 - message => [0, 1, 2, 3, 4]  
