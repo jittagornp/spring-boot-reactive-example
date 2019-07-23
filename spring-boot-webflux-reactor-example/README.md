@@ -18,65 +18,101 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 
 # Flow
 
+Reactor `Mono` และ `Flux` จะมี Flow การทำงานตามลำดับเป็นดังนี้ 
+
+### Mono Flow
+
+```java
+@Slf4j
+public class MonoFlowExample {
+
+    public static void main(String[] args) {
+        Mono.just("A")
+                .doFirst(() -> log.debug("doFirst..."))
+                .doOnRequest(value -> log.debug("doOnRequest... {}", value))
+                .doOnEach(signal -> log.debug("doOnEach... {} : value => {}", signal.getType().name(), signal.get()))
+                .doOnNext(value -> log.debug("doOnNext... {}", value))
+                .doOnCancel(() -> log.debug("doOnCacel..."))
+                .doOnError(e -> log.debug("doOnError... {}", e.getMessage()))
+                .doOnSuccess(value -> log.debug("doOnSuccess... {}", value))
+                .doOnSuccessOrError((value, e) -> log.debug("doOnSuccessOrError... {} or {}", value, (e == null ? null : e.getMessage())))
+                .doAfterSuccessOrError((value, e) -> log.debug("doAfterSuccessOrError... {} or {}", value, (e == null ? null : e.getMessage())))
+                .doAfterTerminate(() -> log.debug("doAfterTerminate..."))
+                .doOnTerminate(() -> log.debug("doOnTerminate..."))
+                .doOnSubscribe(subscription -> {
+                    long id = 1234567890;
+                    subscription.request(id);
+                    log.debug("doOnSubscribe... {}", id);
+                })
+                .doFinally(signalType -> log.debug("doFinally... {}", signalType.toString()))
+                .doOnDiscard(Object.class, value -> log.debug("doOnDiscard... {}", value))
+                .subscribe();
+    }
+
+}
+```
+output  
+```
+- doFirst...  
+- doOnRequest... 1234567890  
+- doOnEach... ON_NEXT : value => A  
+- doOnEach... ON_COMPLETE : value => null  
+- doOnNext... A  
+- doOnSuccess... A  
+- doOnSuccessOrError... A or null  
+- doAfterTerminate...  
+- doAfterSuccessOrError... A or null  
+- doOnTerminate...  
+- doFinally... onComplete  
+- doOnSubscribe... 1234567890  
+- doOnCacel...  
+```
+
 ### Flux Flow
 
 ```java
-Flux.just("1", "2", "3")
-    .doFirst(() -> {
-        log.debug("doFirst...");
-    })
-    .doOnRequest(value -> {
-        log.debug("doOnRequest... {}", value);
-    })
-    .doOnEach(consumer -> {
-        log.debug("doOnEach... {} : value => {}", consumer.getType().name(), consumer.get());
-    })
-    .doOnNext(value -> {
-        log.debug("doOnNext... {}", value);
-    })
-    .doOnCancel(() -> {
-        log.debug("doOnCacel...");
-    })
-    .doOnError(e -> {
-        log.debug("doOnError... {}", e.getMessage());
-    })
-    .doOnComplete(() -> {
-        log.debug("doOnComplete...");
-    })
-    .doAfterTerminate(() -> {
-        log.debug("doAfterTerminate...");
-    })
-    .doOnTerminate(() -> {
-        log.debug("doOnTerminate...");
-    })
-    .doOnSubscribe(consumer -> {
-        consumer.request(111);
-        log.debug("doOnSubscribe...");
-    })
-    .doFinally(consumer -> {
-        log.debug("doFinally... {}", consumer.toString());
-    })
-    .doOnDiscard(Object.class, consumer -> {
-        log.debug("doOnDiscard... {}", consumer.toString());
-    })
-    .subscribe();
+@Slf4j
+public class FluxFlowExample {
+
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C")
+                .doFirst(() -> log.debug("doFirst..."))
+                .doOnRequest(value -> log.debug("doOnRequest... {}", value))
+                .doOnEach(signal -> log.debug("doOnEach... {} : value => {}", signal.getType().name(), signal.get()))
+                .doOnNext(value -> log.debug("doOnNext... {}", value))
+                .doOnCancel(() -> log.debug("doOnCacel..."))
+                .doOnError(e -> log.debug("doOnError... {}", e.getMessage()))
+                .doOnComplete(() -> log.debug("doOnComplete..."))
+                .doAfterTerminate(() -> log.debug("doAfterTerminate..."))
+                .doOnTerminate(() -> log.debug("doOnTerminate..."))
+                .doOnSubscribe(subscription -> {
+                    long id = 123456890;
+                    subscription.request(id);
+                    log.debug("doOnSubscribe... {}", id);
+                })
+                .doFinally(signalType -> log.debug("doFinally... {}", signalType.toString()))
+                .doOnDiscard(Object.class, value -> log.debug("doOnDiscard... {}", value))
+                .subscribe();
+    }
+
+}
 ```
 output
 ```
 - doFirst...  
-- doOnRequest... 111  
-- doOnNext... 1  
-- doOnEach... ON_NEXT : value => 1  
-- doOnNext... 2  
-- doOnEach... ON_NEXT : value => 2  
-- doOnNext... 3  
-- doOnEach... ON_NEXT : value => 3  
+- doOnRequest... 123456890  
+- doOnNext... A  
+- doOnEach... ON_NEXT : value => A  
+- doOnNext... B  
+- doOnEach... ON_NEXT : value => B  
+- doOnNext... C  
+- doOnEach... ON_NEXT : value => C  
 - doOnEach... ON_COMPLETE : value => null  
 - doOnComplete...  
 - doOnTerminate...  
 - doFinally... onComplete  
 - doAfterTerminate...  
-- doOnSubscribe...  
+- doOnSubscribe... 123456890    
 - doOnCacel...  
 ```
 
