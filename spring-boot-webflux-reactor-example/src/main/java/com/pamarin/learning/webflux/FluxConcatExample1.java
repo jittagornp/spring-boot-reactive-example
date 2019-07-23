@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
  * @author jitta
  */
 @Slf4j
-public class FluxConcatExample {
+public class FluxConcatExample1 {
     
     public static void main(String[] args) {
         Flux.concat(
