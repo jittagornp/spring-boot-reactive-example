@@ -1454,7 +1454,7 @@ public class FluxTodoExample {
                 .doOnNext(message -> {
                     log.debug("before sort => {}", message);
                 })
-                .sort()
+                .sort((numb1, numb2) -> numb1 - numb2)
                 .doOnNext(message -> {
                     log.debug("sorted => {}", message);
                 })
