@@ -1116,7 +1116,7 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.all
-สำหรับเช็คว่า `ทั้งหมด` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
+สำหรับเช็คว่าข้อมูล `ทั้งหมด` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
 ```java
 @Slf4j
 public class FluxAllExample {
@@ -1132,6 +1132,38 @@ public class FluxAllExample {
                 "Saturday"
         )
                 .all(day -> day.endsWith("day"))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => true
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.any
+สำหรับเช็คว่าข้อมูล `บางตัว` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
+```java
+@Slf4j
+public class FluxAnyExample {
+
+    public static void main(String[] args) {
+        Flux.just(
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+        )
+                .any(day -> day.startsWith("Mon"))
                 .doOnNext(message -> {
                     log.debug("message => {}", message);
                 })
