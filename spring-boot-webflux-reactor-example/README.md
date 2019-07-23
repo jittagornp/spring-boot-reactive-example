@@ -54,7 +54,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 เป็นการสร้าง empty mono ซึ่งจะไม่มีข้อมูลปล่อยออกมา 
 ```java 
 @Slf4j
-public class ReactorExample {
+public class MonoEmptyExample {
 
     public static void main(String[] args) {
         Mono.empty()
@@ -77,7 +77,7 @@ output
 
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoJustExample {
 
     public static void main(String[] args) {
         Mono.just("Hello at " + LocalDateTime.now())
@@ -100,7 +100,7 @@ output
 การ log ข้อมูลแต่ละ step ออกมาดู
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoLogExample {
 
     public static void main(String[] args) {
         Mono.just("Hello at " + LocalDateTime.now())
@@ -129,7 +129,7 @@ output
 
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoJustOrEmptyExample {
 
     public static void main(String[] args) {
         Mono.justOrEmpty(null)
@@ -150,7 +150,7 @@ output
 ทำการเปลี่ยน (switch) Mono ถ้าไม่มีข้อมูลถูกปล่อยออกมาจาก source 
 ```java 
 @Slf4j
-public class ReactorExample {
+public class MonoSwithIfEmptyExample {
 
     public static void main(String[] args) {
         Mono.justOrEmpty(null)
@@ -174,7 +174,7 @@ output
 สำหรับปล่อยข้อมูล error หรือ Exception ออกมา 
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoErrorExample {
 
     public static void main(String[] args) {
         Mono.justOrEmpty(null)
@@ -201,7 +201,7 @@ output
 ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา  
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoMapExample {
 
     public static void main(String[] args) {
         Mono.just(1000)
@@ -226,7 +226,7 @@ output
 - example 1   
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoFilterExample1 {
 
     public static void main(String[] args) {
         Mono.just(2)
@@ -246,7 +246,7 @@ output
 - example 2   
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoFilterExample1 {
 
     public static void main(String[] args) {
         Mono.just(3)
@@ -269,7 +269,7 @@ output
 
 ```java 
 @Slf4j
-public class ReactorExample {
+public class MonoDeferExample {
 
     public static void main(String[] args) {
         Mono.defer(() -> Mono.just("Hello at " + LocalDateTime.now()))
@@ -292,7 +292,7 @@ output
 การสร้าง Mono แบบ Asynchronous
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoCreateExample {
 
     public static void main(String[] args) {
         Mono.create(callback -> {
@@ -324,7 +324,7 @@ output
 คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoFlatMapExample {
 
     public static void main(String[] args) {
         Mono.just(100)
@@ -360,7 +360,7 @@ output
 - Sequencial 
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoZipExample1 {
 
     private static void delay(String name, int seconds) {
         try {
@@ -411,7 +411,7 @@ output (ใช้เวลาทำงาน 3 + 1 = 4 วินาที)
 - Parallel (ใช้ `.subscribeOn(Schedulers.newElastic(name, ttlSeconds))`)
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoZipExample2 {
 
     private static void delay(String name, int seconds) {
         try {
@@ -473,7 +473,7 @@ output (ใช้เวลาทำงานมากที่สุดคือ
 การทำงานแบบ Blocking I/O หรือ Synchronous
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoBlockExample {
 
     public static void main(String[] args) {
         String message = Mono.just("Hello World").block();
@@ -494,7 +494,7 @@ output
 - กรณีไม่ cache 
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoCacheExample1 {
 
     public static void main(String[] args) {
         Mono<String> defer = Mono.defer(() -> {
@@ -524,7 +524,7 @@ output
 - กรณี cache 
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoCacheExample2 {
 
     public static void main(String[] args) {
         Mono<String> defer = Mono.defer(() -> {
@@ -557,7 +557,7 @@ output
 การแปลงจาก Mono -> Flux 
 ```java 
 @Slf4j
-public class ReactorExample {
+public class MonoFluxExample {
 
     public static void main(String[] args) {
         Flux<String> flux = Mono.just("Hello at " + LocalDateTime.now())
@@ -582,7 +582,7 @@ output
 การทำงานตามลำดับด้วย `then`
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoThenExample {
 
     private static Mono<String> task(final String message, int delay) {
         return Mono.defer(() -> {
@@ -631,7 +631,7 @@ output
 เป็นการเชื่อม Mono 2 อันเข้าด้วยกัน กลายเป็น Flux 
 ```java
 @Slf4j
-public class ReactorExample {
+public class MonoConcatWithExample {
 
     private static Mono<String> task(final String message, int delay) {
         return Mono.defer(() -> {
@@ -675,7 +675,7 @@ output
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException`  
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxJustExample {
 
     public static void main(String[] args) {
         Flux.just("1", "2", "3", "4", "5")
@@ -703,7 +703,7 @@ output
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: iterable` 
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxFromIterableExample {
 
     public static void main(String[] args) {
         List<String> list = Arrays.asList("1", "2", "3", "4", "5");
@@ -732,7 +732,7 @@ output
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: Stream s must be provided` 
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxFromStreamExample {
 
     public static void main(String[] args) {
         Stream<String> stream = Stream.of("1", "2", "3", "4", "5");
@@ -760,7 +760,7 @@ output
 การสร้าง Flux จากช่วงที่กำหนด (start จาก 3 ไป 5 จำนวน)   
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxRangeExample {
 
     public static void main(String[] args) {
         int start = 3;
@@ -790,7 +790,7 @@ output
 - example 1
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxConcatExample1 {
 
     public static void main(String[] args) {
         Flux.concat(
@@ -819,7 +819,7 @@ output
 - example 2
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxConcatExample2 {
 
     public static void main(String[] args) {
         Flux.concat(
@@ -855,7 +855,7 @@ output
 การสร้าง Flux แบบ Asynchronous เหมือน `Mono.create`  
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxCreateExample {
 
     public static void main(String[] args) {
         Flux.create(callback -> {
@@ -894,7 +894,7 @@ output
 การนับจำนวน elements 
 ```java 
 @Slf4j
-public class ReactorExample {
+public class FluxCountExample {
 
     public static void main(String[] args) {
         Flux.just("1", "2", "3", "4", "5")
@@ -918,7 +918,7 @@ output
 การทำซ้ำ
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxRepeatExample {
 
     public static void main(String[] args) {
         Flux.just("1", "2", "3")
@@ -947,7 +947,7 @@ output
 การแปลงจาก `Flux<?>` ไปเป็น `Mono<List<?>>`   
 ```java 
 @Slf4j
-public class ReactorExample {
+public class FluxCollectListExample {
 
     public static void main(String[] args) {
         Mono<List<String>> list = Flux.just("1", "2", "3", "4", "5")
@@ -972,7 +972,7 @@ output
 สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด    
 ```java
 @Slf4j
-public class ReactorExample {
+public class FluxSkipExample {
 
     public static void main(String[] args) {
         Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
@@ -1000,7 +1000,7 @@ output
 สำหรับเลือกข้อมูลตามจำนวนที่กำหนด   
 ```java 
 @Slf4j
-public class ReactorExample {
+public class FluxTakeExample {
 
     public static void main(String[] args) {
         Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
