@@ -48,6 +48,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.take](#fluxtake)
   - [Flux.filter](#fluxfilter)
   - [Flux.map](#fluxmap)
+  - [Flux.buffer](#fluxbuffer)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1075,6 +1076,44 @@ output
 - message => 6  
 - message => 8 
 - message => 10 
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)    
+
+### Flux.buffer
+เก็บข้อมูลลง buffer ตามจำนวนที่กำหนด แล้วค่อยปล่อยออกมาเป็นชุด  
+```java
+@Slf4j
+public class FluxBufferExample {
+
+    public static void main(String[] args) {
+        Flux.create(callback -> {
+            for (int i = 0; i < 15; i++) {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException ex) {
+
+                }
+                callback.next(i);
+            }
+            callback.complete();
+
+        })
+                .buffer(5)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+- การใช้ `Flux.create` อย่าลืม call `.complete()` ด้วยเสมอ เพื่อป้องกัน `Memory Leak`
+output
+```
+- message => [0, 1, 2, 3, 4]  
+- message => [5, 6, 7, 8, 9]  
+- message => [10, 11, 12, 13, 14]  
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
