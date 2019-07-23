@@ -994,6 +994,7 @@ output
 - message => G   
 - message => H   
 ```
+[กลับไปข้างบน &#x2191;](#table-of-content)  
 
 ### Flux.take
 สำหรับเลือกข้อมูลตามจำนวนที่กำหนด   
