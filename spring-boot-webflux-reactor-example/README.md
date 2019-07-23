@@ -34,6 +34,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Mono.flux](#monoflux)
   - [Mono.then](#monothen)
   - [Mono.concatWith](#monoconcatwith)
+  - [Mono.timeout](#monotimeout)
 - [Flux](#flux)
   - [Flux.just](#fluxjust)
   - [Flux.fromIterable](#fluxfromiterable)
@@ -668,6 +669,40 @@ output
 ```
 - message => Hello 1 at 2019-07-22T21:41:58.132  
 - message => Hello 2 at 2019-07-22T21:41:59.161  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Mono.timeout
+ใช้สำหรับจำกัดเวลาในการตอบสนอง เช่น ถ้าไม่ตอบสนองภายใน 3 วินาที จะเกืด `java.util.concurrent.TimeoutException`  
+```java
+@Slf4j
+public class MonoTimeoutExample {
+
+    public static void main(String[] args) {
+        Mono.create(callback -> {
+            try {
+                log.debug("wait 5 second... at " + LocalDateTime.now());
+                Thread.sleep(5000L);
+            } catch (InterruptedException ex) {
+                //
+            }
+            callback.success("Hello at " + LocalDateTime.now());
+        })
+                .timeout(Duration.ofSeconds(3))
+                .onErrorResume(TimeoutException.class, e -> Mono.just("Hello from timeout"))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- wait 5 second... at 2019-07-23T14:53:27.468  
+- message => Hello from timeout  
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
