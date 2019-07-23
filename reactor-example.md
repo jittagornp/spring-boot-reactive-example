@@ -44,7 +44,8 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.count](#fluxcount)
   - [Flux.repeat](#fluxrepeat)
   - [Flux.collectList](#fluxcollectlist)
-  - [Flux.skip && Flux.take](#fluxskip--fluxtake)
+  - [Flux.skip](#fluxskip)
+  - [Flux.take](#fluxtake)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -967,10 +968,34 @@ output
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
-### Flux.skip && Flux.take 
-สำหรับเลือกข้อมูลตามช่วงที่กำหนด  
-- `skip` สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด 
-- `take` สำหรับเลือกข้อมูลตามจำนวนที่กำหนด  
+### Flux.skip
+สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด  
+@Slf4j
+public class ReactorExample {
+
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
+                .skip(2)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => C  
+- message => D  
+- message => E   
+- message => F   
+- message => G   
+- message => H   
+```
+
+### Flux.skip
+สำหรับเลือกข้อมูลตามจำนวนที่กำหนด   
 ```java 
 @Slf4j
 public class ReactorExample {
