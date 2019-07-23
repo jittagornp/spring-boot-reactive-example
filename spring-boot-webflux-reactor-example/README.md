@@ -49,6 +49,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Flux.filter](#fluxfilter)
   - [Flux.map](#fluxmap)
   - [Flux.buffer](#fluxbuffer)
+  - [Flux.sample](#fluxsample)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1117,3 +1118,44 @@ output
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
+
+### Flux.sample
+สำหรับชะลอการรับข้อมูลตามเวลาที่กำหนด (บางครั้งข้อมูลปล่อยออกมาเร็วเกินไป)
+- เช่น การพิมพ์ keyboard 
+```java
+@Slf4j
+public class FluxSampleExample {
+
+    public static void main(String[] args) {
+        Flux.create(callback -> {
+            for (int i = 0; i < 15; i++) {
+                try {
+                    Thread.sleep(100L);
+                } catch (InterruptedException ex) {
+
+                }
+                callback.next(i);
+            }
+            callback.complete();
+
+        })
+                .sample(Duration.ofMillis(300))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 1  
+- message => 4  
+- message => 7  
+- message => 10  
+- message => 12  
+- message => 14  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)  
