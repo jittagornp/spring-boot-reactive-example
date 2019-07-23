@@ -93,6 +93,8 @@ output
 - message => Hello at 2019-07-22T16:07:03.309
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.log
 การ log ข้อมูลแต่ละ step ออกมาดู
 ```java
@@ -118,7 +120,7 @@ output
 - message => Hello at 2019-07-22T21:12:06.912  
 - | onComplete()  
 ```
-
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.justOrEmpty
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
@@ -141,6 +143,8 @@ public class ReactorExample {
 output
 - จะไม่มีการเรียก `doOnNext` เนื่องจากไม่มีข้อมูลปล่อยออกมา  
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.switchIfEmpty
 ทำการเปลี่ยน (switch) Mono ถ้าไม่มีข้อมูลถูกปล่อยออกมาจาก source 
 ```java 
@@ -162,6 +166,8 @@ output
 ```
 - message => Hello at 2019-07-22T16:35:16.656 
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.error
 สำหรับปล่อยข้อมูล error หรือ Exception ออกมา 
@@ -188,6 +194,8 @@ output
 - errror => Not found data
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.map
 ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา  
 ```java
@@ -209,6 +217,8 @@ output
 ```
 - message => 2000  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.filter
 ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด  
@@ -250,6 +260,8 @@ public class ReactorExample {
 ```
 output
 - ไม่มีข้อมูล
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
  
 ### Mono.defer
 การสร้าง Mono แบบ Lazy Load 
@@ -272,6 +284,8 @@ output
 ```
 - message => Hello at 2019-07-22T16:09:45.886
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.create
 การสร้าง Mono แบบ Asynchronous
@@ -302,6 +316,9 @@ output
 - wait 3 seconds... at 2019-07-22T16:16:55.602  
 - message => Hello at 2019-07-22T16:16:58.603
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.flatMap
 คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous
 ```java
@@ -334,6 +351,8 @@ output
 - wait 3 seconds... at 2019-07-22T16:54:23.923
 - message => 500
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.zip
 เป็นการรวม response จาก Mono ต่าง ๆ
@@ -446,6 +465,9 @@ output (ใช้เวลาทำงานมากที่สุดคือ
 - task 3-> Hello from Task 3  
 - end at 2019-07-22T18:38:50.920
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.block
 การทำงานแบบ Blocking I/O หรือ Synchronous
 ```java
@@ -463,6 +485,8 @@ output
 ```
 - message => Hello World
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.cache
 สำหรับ Cache ข้อมูล ตามเวลาที่กำหนด  
@@ -526,6 +550,8 @@ output
 ```
 ข้อมูล message ที่ 2 และ 3 เหมือน message ที่ 1 เนื่องจากมีการ cache result ไว้ 5 นาที  
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.flux
 การแปลงจาก Mono -> Flux 
 ```java 
@@ -548,6 +574,8 @@ output
 ```
 - message => Hello at 2019-07-22T21:17:33.880  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.then
 การทำงานตามลำดับด้วย `then`
@@ -595,6 +623,9 @@ output
 - message 2 => Hello 2 at 2019-07-22T21:28:57.146  
 - message 3 => Hello 3 at 2019-07-22T21:28:59.147  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Mono.concatWith
 เป็นการเชื่อม Mono 2 อันเข้าด้วยกัน กลายเป็น Flux 
 ```java
@@ -634,6 +665,8 @@ output
 - message => Hello 2 at 2019-07-22T21:41:59.161  
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 # Flux
 ตัวอย่างการใช้ Flux
 ### Flux.just 
@@ -662,6 +695,8 @@ output
 - message => 5 
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.fromIterable
 การสร้าง Flux จาก Java Collections (Iterable)  
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: iterable` 
@@ -689,6 +724,8 @@ output
 - message => 5 
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.fromStream
 การสร้าง Flux จาก Java 8 Stream 
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: Stream s must be provided` 
@@ -715,6 +752,9 @@ output
 - message => 4  
 - message => 5 
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.range 
 การสร้าง Flux จากช่วงที่กำหนด (start จาก 3 ไป 5 จำนวน)   
 ```java
@@ -741,6 +781,8 @@ output
 - message => 6  
 - message => 7 
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.concat
 สำหรับ concat หรือ ต่อ Publisher ต่าง ๆ ให้เป็น Flux เดียว 
@@ -806,6 +848,8 @@ output
 - message => 8    
 ``` 
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.create
 การสร้าง Flux แบบ Asynchronous เหมือน `Mono.create`  
 ```java
@@ -843,6 +887,8 @@ output
 - message => task 5 at 2019-07-22T23:47:58.106  
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.count
 การนับจำนวน elements 
 ```java 
@@ -864,6 +910,8 @@ output
 ```
 - message => 5  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.repeat 
 การทำซ้ำ
@@ -892,6 +940,8 @@ output
 - message => 3  
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.collectList 
 การแปลงจาก `Flux<?>` ไปเป็น `Mono<List<?>>`   
 ```java 
@@ -914,6 +964,8 @@ output
 ```
 - message => [1, 2, 3, 4, 5]  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.skip && Flux.take 
 สำหรับเลือกข้อมูลตามช่วงที่กำหนด  
@@ -941,3 +993,5 @@ output
 - message => D  
 - message => E    
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
