@@ -21,45 +21,30 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 ### Flux Flow
 
 ```java
-Flux.just("1", "2", "3")
-    .doFirst(() -> {
-        log.debug("doFirst...");
-    })
-    .doOnRequest(value -> {
-        log.debug("doOnRequest... {}", value);
-    })
-    .doOnEach(consumer -> {
-        log.debug("doOnEach... {} : value => {}", consumer.getType().name(), consumer.get());
-    })
-    .doOnNext(value -> {
-        log.debug("doOnNext... {}", value);
-    })
-    .doOnCancel(() -> {
-        log.debug("doOnCacel...");
-    })
-    .doOnError(e -> {
-        log.debug("doOnError... {}", e.getMessage());
-    })
-    .doOnComplete(() -> {
-        log.debug("doOnComplete...");
-    })
-    .doAfterTerminate(() -> {
-        log.debug("doAfterTerminate...");
-    })
-    .doOnTerminate(() -> {
-        log.debug("doOnTerminate...");
-    })
-    .doOnSubscribe(consumer -> {
-        consumer.request(111);
-        log.debug("doOnSubscribe...");
-    })
-    .doFinally(consumer -> {
-        log.debug("doFinally... {}", consumer.toString());
-    })
-    .doOnDiscard(Object.class, consumer -> {
-        log.debug("doOnDiscard... {}", consumer.toString());
-    })
-    .subscribe();
+@Slf4j
+public class FluxFlowExample {
+
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3")
+                .doFirst(() -> log.debug("doFirst..."))
+                .doOnRequest(value -> log.debug("doOnRequest... {}", value))
+                .doOnEach(consumer -> log.debug("doOnEach... {} : value => {}", consumer.getType().name(), consumer.get()))
+                .doOnNext(value -> log.debug("doOnNext... {}", value))
+                .doOnCancel(() -> log.debug("doOnCacel..."))
+                .doOnError(e -> log.debug("doOnError... {}", e.getMessage()))
+                .doOnComplete(() -> log.debug("doOnComplete..."))
+                .doAfterTerminate(() -> log.debug("doAfterTerminate..."))
+                .doOnTerminate(() -> log.debug("doOnTerminate..."))
+                .doOnSubscribe(consumer -> {
+                    consumer.request(111);
+                    log.debug("doOnSubscribe...");
+                })
+                .doFinally(consumer -> log.debug("doFinally... {}", consumer.toString()))
+                .doOnDiscard(Object.class, consumer -> log.debug("doOnDiscard... {}", consumer.toString()))
+                .subscribe();
+    }
+
+}
 ```
 output
 ```
