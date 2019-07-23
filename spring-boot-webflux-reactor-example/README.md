@@ -126,6 +126,7 @@ output
   - [Mono.error](#monoerror)
   - [Mono.map](#monomap)
   - [Mono.filter](#monofilter)
+  - [Mono.fromCallable](#monofromcallable)
   - [Mono.defer](#monodefer)
   - [Mono.create](#monocreate)
   - [Mono.flatMap](#monoflatmap)
@@ -373,6 +374,30 @@ public class MonoFilterExample1 {
 ```
 output
 - ไม่มีข้อมูล
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+ 
+ ### Mono.fromCallable 
+การสร้าง Mono แบบ Lazy Load 
+
+```java 
+@Slf4j
+public class MonoFromCallableExample {
+    
+    public static void main(String[] args) {
+        Mono.fromCallable(() -> "Hello at " + LocalDateTime.now())
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => Hello at 2019-07-23T22:47:50.758
+```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
  
