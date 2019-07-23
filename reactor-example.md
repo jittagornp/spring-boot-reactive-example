@@ -969,7 +969,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.skip
-สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด  
+สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด    
+```java
 @Slf4j
 public class ReactorExample {
 
