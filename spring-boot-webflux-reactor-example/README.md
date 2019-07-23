@@ -1490,7 +1490,7 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)  
  
 ### Flux.zip  
-เป็นการผสาน/รวม ข้อมูลแต่ละกล่มหรือคู่ flux เข้าด้วยกัน  
+เป็นการผสาน/รวม ข้อมูลแต่ละกลุ่มหรือคู่ flux เข้าด้วยกัน  
 - example 1
 ```java
 @Slf4j
@@ -1542,7 +1542,7 @@ output
 - message => [2,7,10]  
 - message => [3,8,11]  
 ```
-- example 3
+- example 3 (ทดลองหน่วงเวลาแต่ละ Flux ไม่เท่ากัน) 
 ```java
 @Slf4j
 public class FluxZipExample3 {
@@ -1577,12 +1577,13 @@ public class FluxZipExample3 {
 
 }
 ```
-output
+output 
 ```
 - message => [1,6,9]  
 - message => [2,7,10]  
 - message => [3,8,11]  
 ```
+- แสดงว่า `.zip()` ไม่ได้ขึ้นอยู่กับเวลา   
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
