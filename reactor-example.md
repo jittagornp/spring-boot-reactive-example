@@ -995,7 +995,7 @@ output
 - message => H   
 ```
 
-### Flux.skip
+### Flux.take
 สำหรับเลือกข้อมูลตามจำนวนที่กำหนด   
 ```java 
 @Slf4j
