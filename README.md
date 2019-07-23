@@ -32,7 +32,7 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
   - [รู้ลึกการทำงานแบบ Asynchronous กับ Event Loop](https://www.babelcoder.com/blog/posts/asynchronous-javascript-and-event-loop) 
 
 # ตัวอย่างการเขียน Reactor 
-- [Reactor Example](reactor-example.md)
+- [Reactor Example](./spring-boot-webflux-reactor-example)
 
 # เริ่ม 
 
