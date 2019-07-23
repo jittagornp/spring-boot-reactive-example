@@ -35,6 +35,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
   - [Mono.then](#monothen)
   - [Mono.concatWith](#monoconcatwith)
   - [Mono.timeout](#monotimeout)
+  - [Mono.filterWhen](#monofilterwhen)
 - [Flux](#flux)
   - [Flux.just](#fluxjust)
   - [Flux.fromIterable](#fluxfromiterable)
@@ -703,6 +704,55 @@ output
 ```
 - wait 5 seconds... at 2019-07-23T14:53:27.468  
 - message => Hello from timeout  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Mono.filterWhen
+ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Flux.filter` แต่ทำงานแบบ Asynchronous 
+```java
+@Slf4j
+public class MonoFilterWhenExample {
+
+    public static void main(String[] args) {
+        int randomNumber = (int) (Math.random() * 100); //0 to 100
+        log.debug("random number => {}", randomNumber);
+        Mono.just(randomNumber)
+                .filterWhen(number -> {
+                    return Mono.create(callback -> {
+                        try {
+                            log.debug("wait 3 seconds... at " + LocalDateTime.now());
+                            Thread.sleep(3000L);
+                        } catch (InterruptedException ex) {
+                            //
+                        }
+                        callback.success(number % 2 == 0);
+                    });
+                })
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .doOnSuccess(message -> {
+                    log.debug("success at " + LocalDateTime.now());
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+- result 1 
+```
+- random number => 65  
+- wait 3 seconds... at 2019-07-23T15:34:27.101  
+- success at 2019-07-23T15:34:30.101  
+```
+- result 2 
+```
+- random number => 46  
+- wait 3 seconds... at 2019-07-23T15:35:41.460  
+- message => 46  
+- success at 2019-07-23T15:35:44.462  
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
