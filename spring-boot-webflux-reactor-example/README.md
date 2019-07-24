@@ -122,6 +122,7 @@ output
   - [Mono.just](#monojust)
   - [Mono.log](#monolog)
   - [Mono.justOrEmpty](#monojustorempty)
+  - [Mono.defaultIfEmpty](#monodefaultifempty)
   - [Mono.switchIfEmpty](#monoswitchifempty)
   - [Mono.error](#monoerror)
   - [Mono.map](#monomap)
@@ -256,6 +257,30 @@ public class MonoJustOrEmptyExample {
 ```
 output
 - จะไม่มีการเรียก `doOnNext` เนื่องจากไม่มีข้อมูลปล่อยออกมา  
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Mono.defaultIfEmpty
+คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา
+```java
+@Slf4j
+public class MonoDefaultIfEmptyExample {
+
+    public static void main(String[] args) {
+        Mono.justOrEmpty(null)
+                .defaultIfEmpty("Hello World")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => Hello World
+```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
