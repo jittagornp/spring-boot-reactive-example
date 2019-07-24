@@ -144,6 +144,7 @@ output
   - [Flux.fromIterable](#fluxfromiterable)
   - [Flux.fromStream](#fluxfromstream)
   - [Flux.range](#fluxrange)
+  - [Flux.defaultIfEmpty](#fluxdefaultifempty)
   - [Flux.switchIfEmpty](#fluxswitchifempty)
   - [Flux.concat](#fluxconcat)
   - [Flux.create](#fluxcreate)
@@ -1031,6 +1032,31 @@ output
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
+### Flux.defaultIfEmpty
+
+คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา `Mono.defaultIfEmpty`
+```java
+@Slf4j
+public class FluxDefaultIfEmptyExample {
+    
+    public static void main(String[] args) {
+        Flux.fromIterable(Collections.emptyList())
+                .defaultIfEmpty("0")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => 0
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.switchIfEmpty
 ทำการเปลี่ยน (switch) `Flux` ถ้าไม่มีข้อมูลถูกปล่อยออกมา ทำงานเหมือน `Mono.switchIfEmpty`
 ```java
@@ -1054,6 +1080,8 @@ output
 - message => 2  
 - message => 3  
 ```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.concat
 สำหรับ concat หรือ ต่อ Publisher ต่าง ๆ ให้เป็น Flux เดียว 
