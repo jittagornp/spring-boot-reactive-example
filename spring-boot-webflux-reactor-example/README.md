@@ -1035,7 +1035,7 @@ output
 
 ### Flux.defaultIfEmpty
 
-คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา `Mono.defaultIfEmpty`
+คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา ทำงานเหมือน `Mono.defaultIfEmpty`
 ```java
 @Slf4j
 public class FluxDefaultIfEmptyExample {
