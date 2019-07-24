@@ -148,6 +148,7 @@ output
   - [Flux.switchIfEmpty](#fluxswitchifempty)
   - [Flux.concat](#fluxconcat)
   - [Flux.create](#fluxcreate)
+  - [Flux.generate](#fluxgenerate)
   - [Flux.count](#fluxcount)
   - [Flux.repeat](#fluxrepeat)
   - [Flux.collectList](#fluxcollectlist)
@@ -1184,6 +1185,51 @@ output
 - message => task 3 at 2019-07-22T23:47:56.093  
 - message => task 4 at 2019-07-22T23:47:57.106  
 - message => task 5 at 2019-07-22T23:47:58.106  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.generate
+สำหรับปล่อยข้อมูลออกมาเรื่อย ๆ จนกว่าจะสั่งหยุด หรือเรียก complete 
+
+```java
+@Slf4j
+public class FluxGenerateExample {
+
+    public static void main(String[] args) {
+        Flux.generate(
+                () -> 0, //initial value or state 
+                (value, sink) -> {
+
+                    if (value >= 5) {
+                        sink.complete();
+                    }
+
+                    sink.next(value + " at " + LocalDateTime.now());
+
+                    try {
+                        Thread.sleep(1000L);
+                    } catch (InterruptedException ex) {
+
+                    }
+
+                    return value + 1;
+                })
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => 0 at 2019-07-24T15:50:25.223  
+- message => 1 at 2019-07-24T15:50:26.225  
+- message => 2 at 2019-07-24T15:50:27.226  
+- message => 3 at 2019-07-24T15:50:28.227  
+- message => 4 at 2019-07-24T15:50:29.227  
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
