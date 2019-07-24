@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
  * @author jitta
  */
 @Slf4j
-public class FlixSkipExample {
+public class FluxSkipExample {
     
     public static void main(String[] args) {
         Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
