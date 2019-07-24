@@ -868,7 +868,7 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.filterWhen
-ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Flux.filter` แต่ทำงานแบบ Asynchronous 
+ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Mono.filter` แต่ทำงานแบบ Asynchronous 
 ```java
 @Slf4j
 public class MonoFilterWhenExample {
