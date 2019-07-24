@@ -1317,7 +1317,7 @@ output
 ```java
 @Slf4j
 public class FluxSkipExample {
-
+    
     public static void main(String[] args) {
         Flux.just("A", "B", "C", "D", "E", "F", "G", "H")
                 .skip(2)
@@ -1326,7 +1326,7 @@ public class FluxSkipExample {
                 })
                 .subscribe();
     }
-
+    
 }
 ```
 output
