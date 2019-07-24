@@ -163,6 +163,7 @@ output
   - [Flux.distinct](#fluxdistinct)
   - [Flux.sort](#fluxsort)
   - [Flux.zip](#fluxzip)
+  - [Flux.concatWithValues](#fluxconcatwithvalues)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -868,7 +869,7 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.filterWhen
-ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Flux.filter` แต่ทำงานแบบ Asynchronous 
+ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Mono.filter` แต่ทำงานแบบ Asynchronous 
 ```java
 @Slf4j
 public class MonoFilterWhenExample {
@@ -1035,7 +1036,7 @@ output
 
 ### Flux.defaultIfEmpty
 
-คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา `Mono.defaultIfEmpty`
+คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา ทำงานเหมือน `Mono.defaultIfEmpty`
 ```java
 @Slf4j
 public class FluxDefaultIfEmptyExample {
@@ -1736,4 +1737,33 @@ output
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
+### Flux.concatWithValues
 
+สำหรับเชื่อมต่อข้อมูลต่าง ๆ เข้าไปใน `Flux`
+
+```java
+@Slf4j
+public class FluxConcatWithValuesExample {
+    
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3")
+                .concatWithValues("4", "5", "6")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => 4  
+- message => 5  
+- message => 6  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)    
