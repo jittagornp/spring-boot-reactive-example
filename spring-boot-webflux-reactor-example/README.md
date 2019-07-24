@@ -144,6 +144,7 @@ output
   - [Flux.fromIterable](#fluxfromiterable)
   - [Flux.fromStream](#fluxfromstream)
   - [Flux.range](#fluxrange)
+  - [Flux.defaultIfEmpty](#fluxdefaultifempty)
   - [Flux.switchIfEmpty](#fluxswitchifempty)
   - [Flux.concat](#fluxconcat)
   - [Flux.create](#fluxcreate)
@@ -1027,6 +1028,31 @@ output
 - message => 5  
 - message => 6  
 - message => 7 
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.defaultIfEmpty
+
+คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา `Mono.defaultIfEmpty`
+```java
+@Slf4j
+public class FluxDefaultIfEmptyExample {
+    
+    public static void main(String[] args) {
+        Flux.fromIterable(Collections.emptyList())
+                .defaultIfEmpty("0")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => 0
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
