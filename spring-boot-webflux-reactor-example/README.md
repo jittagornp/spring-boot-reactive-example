@@ -1055,6 +1055,8 @@ output
 - message => 3  
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
 ### Flux.concat
 สำหรับ concat หรือ ต่อ Publisher ต่าง ๆ ให้เป็น Flux เดียว 
 - example 1
