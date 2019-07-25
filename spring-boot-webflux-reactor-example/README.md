@@ -163,6 +163,7 @@ output
   - [Flux.distinct](#fluxdistinct)
   - [Flux.sort](#fluxsort)
   - [Flux.zip](#fluxzip)
+  - [Flux.zipWith](#fluxzipwith)
   - [Flux.concatWithValues](#fluxconcatwithvalues)
 
 # Mono
@@ -1736,6 +1737,32 @@ output
 - แสดงว่า `.zip()` ไม่ได้ขึ้นอยู่กับเวลา   
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
+
+### Flux.zipWith
+เป็นการผสาน/รวม ข้อมูลแต่ละคู่ flux เข้าด้วยกัน คล้าย ๆ `Flux.zip`  
+```java
+@Slf4j
+public class FluxZipWithExample {
+    
+    public static void main(String[] args) {
+        Flux.just("1", "2", "3")
+                .zipWith(Flux.just("4", "5", "6", "7", "8"))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => [1,4]  
+- message => [2,5]  
+- message => [3,6]  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)  
 
 ### Flux.concatWithValues
 
