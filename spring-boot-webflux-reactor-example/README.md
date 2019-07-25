@@ -195,6 +195,8 @@ public class MonoNeverExample {
 output
 - ไม่มีข้อมูล 
 
+[กลับไปข้างบน &#x2191;](#table-of-content)  
+
 ### Mono.empty
 > Create a `Mono` that completes without emitting any item.  
   
@@ -223,6 +225,7 @@ output
   
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลห้ามเป็น `null` ****  เพราะจะเกิด `java.lang.NullPointerException: value`
+- จะ captured ข้อมูล ณ ตอนสร้าง `Mono`  
 
 ```java
 @Slf4j
