@@ -280,6 +280,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.justOrEmpty
+> Create a new `Mono` that emits the specified item if `Optional#isPresent()` otherwise only emits onComplete.
+  
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลเป็น `null` ได้
 
@@ -303,6 +305,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.defaultIfEmpty
+> Provide a default single value if this mono is completed without any data  
+  
 คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา
 ```java
 @Slf4j
@@ -327,6 +331,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.switchIfEmpty
+> Fallback to an alternative `Mono` if this mono is completed without data
+  
 ทำการเปลี่ยน (switch) Mono ถ้าไม่มีข้อมูลถูกปล่อยออกมาจาก source 
 ```java 
 @Slf4j
@@ -351,6 +357,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.error
+> Create a `Mono` that terminates with the specified error immediately after
+  
 สำหรับปล่อยข้อมูล error หรือ Exception ออกมา 
 ```java
 @Slf4j
@@ -378,6 +386,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.map
+> Transform the item emitted by this `Mono` by applying a synchronous function to it.
+  
 ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา  
 ```java
 @Slf4j
@@ -402,6 +412,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.filter
+> If this `Mono` is valued, test the result and replay it if predicate returns true.  
+> Otherwise complete without value.
+  
 ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด  
 - example 1   
 ```java
@@ -445,7 +458,10 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
  
  ### Mono.fromCallable 
-การสร้าง Mono แบบ Lazy Load 
+ > Create a `Mono` producing its value using the provided `Callable`.    
+ > If the Callable resolves to `null`, the resulting `Mono` completes empty.  
+   
+การสร้าง Mono แบบ Lazy Load  
 
 ```java 
 @Slf4j
