@@ -175,7 +175,7 @@ output
 ตัวอย่างการใช้ Mono 
 
 ### Mono.never 
-> Return a {@link Mono} that will never signal any data, error or completion signal, essentially running indefinitely.  
+> Return a `Mono` that will never signal any data, error or completion signal, essentially running indefinitely.  
   
 จะไม่มีการปล่อยข้อมูลออกมา 
 ```java
