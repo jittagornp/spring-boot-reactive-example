@@ -165,6 +165,7 @@ output
   - [Flux.zip](#fluxzip)
   - [Flux.zipWith](#fluxzipwith)
   - [Flux.concatWithValues](#fluxconcatwithvalues)
+  - [Flux.groupBy](#fluxgroupby)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1791,6 +1792,37 @@ output
 - message => 4  
 - message => 5  
 - message => 6  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)    
+
+### Flux.groupBy
+
+สำหรับจัดกลุ่มข้อมูลเข้าด้วยกัน 
+
+```java
+@Slf4j
+public class FluxGroupByExample {
+
+    public static void main(String[] args) {
+        Flux.just("A", "A", "B", "C", "D", "B", "F", "C", "A")
+                .groupBy(value -> value)
+                .flatMap(flux -> flux.count().map(count -> flux.key() + ":" + count))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- message => A:3  
+- message => B:2  
+- message => C:2  
+- message => D:1  
+- message => F:1  
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
