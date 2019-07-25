@@ -1318,7 +1318,7 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 
-### Flux.collectList
+### Flux.collectMap  
 
 การเก็บลง map
 
