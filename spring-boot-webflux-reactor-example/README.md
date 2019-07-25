@@ -196,6 +196,8 @@ output
 - ไม่มีข้อมูล 
 
 ### Mono.empty
+> Represents an empty publisher which only calls onSubscribe and onComplete.  
+  
 เป็นการสร้าง empty mono ซึ่งจะไม่มีข้อมูลปล่อยออกมา 
 ```java 
 @Slf4j
@@ -217,6 +219,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.just 
+> Create a new `Mono` that emits the specified item, which is captured at instantiation time.
+  
 การสร้าง Mono จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลห้ามเป็น `null` ****  เพราะจะเกิด `java.lang.NullPointerException: value`
 
