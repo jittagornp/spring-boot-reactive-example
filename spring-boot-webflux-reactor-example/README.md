@@ -166,6 +166,7 @@ output
   - [Flux.zipWith](#fluxzipwith)
   - [Flux.concatWithValues](#fluxconcatwithvalues)
   - [Flux.groupBy](#fluxgroupby)
+  - [Flux.hasElement](#fluxhaselement)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1823,6 +1824,53 @@ output
 - message => C:2  
 - message => D:1  
 - message => F:1  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)    
+
+### Flux.hasElement
+
+เช็คว่ามีข้อมูลนี้อยู่หรือไม่ 
+
+- example 1 
+```java
+@Slf4j
+public class FluxHasElementExample1 {
+    
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C", "D", "F")
+                .hasElement("A")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => true
+```
+- example 2
+```java
+@Slf4j
+public class FluxHasElementExample2 {
+    
+    public static void main(String[] args) {
+        Flux.just("A", "B", "C", "D", "F")
+                .hasElement("Z")
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => false
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
