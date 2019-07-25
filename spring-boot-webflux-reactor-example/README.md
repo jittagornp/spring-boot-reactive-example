@@ -196,7 +196,7 @@ output
 - ไม่มีข้อมูล 
 
 ### Mono.empty
-> Represents an empty publisher which only calls onSubscribe and onComplete.  
+> Create a `Mono` that completes without emitting any item.  
   
 เป็นการสร้าง empty mono ซึ่งจะไม่มีข้อมูลปล่อยออกมา 
 ```java 
