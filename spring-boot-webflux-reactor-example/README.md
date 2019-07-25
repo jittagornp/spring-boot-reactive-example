@@ -249,6 +249,10 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.log
+> Observe all Reactive Streams signals and trace them using `Logger` support.  
+> Default will use `Level#INFO` and `java.util.logging`.  
+> If `SLF4J` is available, it will be used instead.  
+  
 การ log ข้อมูลแต่ละ step ออกมาดู
 ```java
 @Slf4j
