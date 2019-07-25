@@ -152,6 +152,7 @@ output
   - [Flux.count](#fluxcount)
   - [Flux.repeat](#fluxrepeat)
   - [Flux.collectList](#fluxcollectlist)
+  - [Flux.collectMap](#fluxcollectmap)
   - [Flux.skip](#fluxskip)
   - [Flux.take](#fluxtake)
   - [Flux.all](#fluxall)
@@ -1312,6 +1313,57 @@ public class FluxCollectListExample {
 output
 ```
 - message => [1, 2, 3, 4, 5]  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+
+### Flux.collectMap  
+
+การเก็บลง map
+
+```java 
+@Slf4j
+public class FluxTodoExample {
+
+    public static void main(String[] args) {
+        Flux.just(
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+        )
+                .collectMap(value -> value.substring(0, 3))
+                .doOnNext(map -> {
+                    log.debug("size => {}", map.size());
+                    log.debug("map => {}", map);
+                    log.debug("day => {}", map.get("Sun"));
+                    log.debug("day => {}", map.get("Mon"));
+                    log.debug("day => {}", map.get("Tue"));
+                    log.debug("day => {}", map.get("Wed"));
+                    log.debug("day => {}", map.get("Thu"));
+                    log.debug("day => {}", map.get("Fri"));
+                    log.debug("day => {}", map.get("Sat"));
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- size => 7  
+- map => {Thu=Thursday, Tue=Tuesday, Wed=Wednesday, Sat=Saturday, Fri=Friday, Sun=Sunday, Mon=Monday}  
+- day => Sunday  
+- day => Monday  
+- day => Tuesday  
+- day => Wednesday  
+- day => Thursday  
+- day => Friday  
+- day => Saturday  
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
