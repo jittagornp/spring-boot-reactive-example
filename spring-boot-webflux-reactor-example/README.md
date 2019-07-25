@@ -168,6 +168,7 @@ output
   - [Flux.concatWithValues](#fluxconcatwithvalues)
   - [Flux.groupBy](#fluxgroupby)
   - [Flux.hasElement](#fluxhaselement)
+  - [Flux.flatMap](#fluxflatmap)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -1926,3 +1927,50 @@ output
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
+
+### Flux.flatMap
+
+คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous  
+
+```java
+@Slf4j
+public class FluxFlatMapExample {
+    
+    public static void main(String[] args) {
+        Flux.just(1, 2, 3, 4, 5)
+                .flatMap(number -> {
+                    return Flux.create(callback -> {
+                        try {
+                            log.debug("wait 3 seconds... at " + LocalDateTime.now());
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ex) {
+                            
+                        }
+                        callback.next(number * 10);
+                        callback.complete();
+                    });
+                })
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- wait 3 seconds... at 2019-07-25T18:19:24.491  
+- message => 10  
+- wait 3 seconds... at 2019-07-25T18:19:27.495  
+- message => 20  
+- wait 3 seconds... at 2019-07-25T18:19:30.496  
+- message => 30  
+- wait 3 seconds... at 2019-07-25T18:19:33.498  
+- message => 40  
+- wait 3 seconds... at 2019-07-25T18:19:36.499  
+- message => 50  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)   
+
