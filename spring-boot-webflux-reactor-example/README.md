@@ -2,7 +2,7 @@
 
 > [https://projectreactor.io](https://projectreactor.io)  
 
-# API 
+# API
 
 > [https://projectreactor.io/docs/core/release/api/](https://projectreactor.io/docs/core/release/api/)
 
@@ -1019,6 +1019,8 @@ output
 # Flux 
 ตัวอย่างการใช้ Flux
 ### Flux.just 
+> Create a `Flux` that emits the provided elements and then completes.
+  
 การสร้าง Flux จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException`  
 ```java
@@ -1047,6 +1049,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.fromIterable
+> Create a `Flux` that emits the items contained in the provided `Iterable`.  
+> A new iterator will be created for each subscriber.
+  
 การสร้าง Flux จาก Java Collections (Iterable)  
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: iterable` 
 ```java
@@ -1076,6 +1081,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.fromStream
+> Create a `Flux` that emits the items contained in the provided `Stream`.  
+> Keep in mind that a `Stream` cannot be re-used, which can be problematic in
+> case of multiple subscriptions or re-subscription (like with `#repeat()` or
+> `#retry()`). The `Stream` is `Stream#close() closed` automatically
+> by the operator on cancellation, error or completion.
+  
 การสร้าง Flux จาก Java 8 Stream 
 - ข้อมูลห้ามเป็น `null` เพราะจะเกิด `java.lang.NullPointerException: Stream s must be provided` 
 ```java
@@ -1105,6 +1116,10 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.range 
+> Build a `Flux` that will only emit a sequence of `count` incrementing integers,
+> starting from `start`. That is, emit integers between `start` (included)
+> and `start + count` (excluded) then complete.
+  
 การสร้าง Flux จากช่วงที่กำหนด (start จาก 3 ไป 5 จำนวน)   
 ```java
 @Slf4j
@@ -1134,7 +1149,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.defaultIfEmpty
-
+> Provide a default unique value if this sequence is completed without any data  
+  
 คืนค่า default กรณีที่ไม่มีข้อมูลปล่อยออกมา ทำงานเหมือน `Mono.defaultIfEmpty`
 ```java
 @Slf4j
@@ -1159,6 +1175,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.switchIfEmpty
+> Switch to an alternative `Publisher` if this sequence is completed without any data.  
+  
 ทำการเปลี่ยน (switch) `Flux` ถ้าไม่มีข้อมูลถูกปล่อยออกมา ทำงานเหมือน `Mono.switchIfEmpty`
 ```java
 @Slf4j
@@ -1185,6 +1203,13 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.concat
+> Concatenate all sources provided as a vararg, forwarding elements emitted by the
+> sources downstream.  
+> Concatenation is achieved by sequentially subscribing to the first source then
+> waiting for it to complete before subscribing to the next, and so on until the
+> last source completes. Any error interrupts the sequence immediately and is
+> forwarded downstream.
+  
 สำหรับ concat หรือ ต่อ Publisher ต่าง ๆ ให้เป็น Flux เดียว 
 - example 1
 ```java
@@ -1251,6 +1276,10 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.create
+> Programmatically create a `Flux` with the capability of emitting multiple
+> elements in a synchronous or asynchronous manner through the `FluxSink` API.  
+> This includes emitting elements from multiple threads.
+   
 การสร้าง Flux แบบ Asynchronous เหมือน `Mono.create`  
 ```java
 @Slf4j
@@ -1290,6 +1319,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.generate
+> Programmatically create a `Flux` by generating signals one-by-one via a
+> consumer callback and some state. The `stateSupplier` may return `null`.
+   
 สำหรับปล่อยข้อมูลออกมาเรื่อย ๆ จนกว่าจะสั่งหยุด หรือเรียก complete 
 
 ```java
@@ -1335,6 +1367,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.count
+> Counts the number of values in this `Flux`.  
+> The count will be emitted when onComplete is observed.
+  
 การนับจำนวน elements 
 ```java 
 @Slf4j
@@ -1359,6 +1394,10 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.repeat 
+> Repeatedly subscribe to the source `numRepeat` times. This results in
+> `numRepeat + 1` total subscriptions to the original source. As a consequence,
+> using 0 plays the original sequence once.
+  
 การทำซ้ำ
 ```java
 @Slf4j
@@ -1388,6 +1427,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.collectList 
+> Collect all elements emitted by this `Flux` into a `List` that is
+> emitted by the resulting `Mono` when this sequence completes.
+  
 การแปลงจาก `Flux<?>` ไปเป็น `Mono<List<?>>`   
 ```java 
 @Slf4j
@@ -1414,7 +1456,12 @@ output
 
 
 ### Flux.collectMap  
-
+> Collect all elements emitted by this `Flux` into a hashed `Map` that is
+> emitted by the resulting `Mono` when this sequence completes.
+> The key is extracted from each element by applying the `keyExtractor`
+> `Function`. In case several elements map to the same key, the associated value
+> will be the most recently emitted element.
+  
 การเก็บลง map
 
 ```java 
@@ -1464,6 +1511,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.skip
+> Skip the specified number of elements from the beginning of this `Flux` then
+> emit the remaining elements.
+  
 สำหรับกระโดดข้ามข้อมูลตามจำนวนที่กำหนด    
 ```java
 @Slf4j
@@ -1492,6 +1542,11 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)  
 
 ### Flux.take
+> Take only the first N values from this `Flux`, if available.
+>  
+> If N is zero, the resulting `Flux` completes as soon as this `Flux`
+> signals its first value (which is not not relayed, though).
+  
 สำหรับเลือกข้อมูลตามจำนวนที่กำหนด   
 ```java 
 @Slf4j
@@ -1519,6 +1574,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.all
+> Emit a single boolean true if all values of this sequence match
+> the `Predicate`.
+>  
+> The implementation uses short-circuit logic and completes with false if
+> the predicate doesn't match a value.
+  
 สำหรับเช็คว่าข้อมูล `ทั้งหมด` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
 ```java
 @Slf4j
@@ -1551,6 +1612,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.any
+> Emit a single boolean true if any of the values of this `Flux` sequence match
+> the predicate.
+>  
+> The implementation uses short-circuit logic and completes with false if any value
+> doesn't match the predicate.
+  
 สำหรับเช็คว่าข้อมูล `บางตัว` match กับเงื่อนไขที่ตั้งไว้หรือไม่ 
 ```java
 @Slf4j
@@ -1583,6 +1650,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Flux.filter
+> Evaluate each source value against the given `Predicate`. If the predicate test succeeds, the value is
+> emitted. If the predicate test fails, the value is ignored and a request of 1 is made upstream.
+  
 ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Mono.filter` 
 
 ```java
@@ -1609,6 +1679,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)  
 
 ### Flux.map 
+> Transform the items emitted by this `Flux` by applying a synchronous function
+> to each item.
+  
 ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา เหมือน `Mono.map`   
 ```java
 @Slf4j
@@ -1637,6 +1710,10 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
 ### Flux.buffer
+> Collect incoming values into multiple `List` buffers that will be emitted
+> by the returned `Flux` each time the given max size is reached or once this
+> Flux completes.
+  
 เก็บข้อมูลลง buffer ตามจำนวนที่กำหนด แล้วค่อยปล่อยออกมาเป็นชุด  
 ```java
 @Slf4j
@@ -1675,6 +1752,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
 ### Flux.sample
+> Sample this `Flux` by periodically emitting an item corresponding to that
+> `Flux` latest emitted value within the periodical time window.
+> Note that if some elements are emitted quicker than the timespan just before source
+> completion, the last of these elements will be emitted along with the onComplete
+> signal.
+  
 สำหรับชะลอการรับข้อมูลตามเวลาที่กำหนด (บางครั้งข้อมูลปล่อยออกมาเร็วเกินไป)
 - เช่น การพิมพ์ keyboard 
 ```java
@@ -1717,6 +1800,14 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)  
 
 ### Flux.distinct
+> For each `Subscriber`, track elements from this `Flux` that have been
+> seen and filter out duplicates.
+  
+> The values themselves are recorded into a `HashSet` for distinct detection.
+> Use `distinct(Object::hashcode)` if you want a more lightweight approach that
+> doesn't retain all the objects, but is more susceptible to falsely considering two
+> elements as distinct due to a hashcode collision.
+  
 การจำแนกข้อมูลที่แตกต่างกัน
 
 ```java
@@ -1745,6 +1836,13 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)  
  
 ### Flux.sort 
+> Sort elements from this `Flux` using a `Comparator` function, by
+> collecting and sorting elements in the background then emitting the sorted sequence
+> once this sequence completes.
+  
+> **Note** that calling `sort` with long, non-terminating or infinite sources
+> might cause `OutOfMemoryError`  
+  
 สำหรับจัดเรียงข้อมูล
 ```java
 @Slf4j
@@ -1790,6 +1888,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)  
  
 ### Flux.zip  
+> Zip two sources together, that is to say wait for all the sources to emit one
+> element and combine these elements once into a `Tuple2`.  
+> The operator will continue doing so until any of the sources completes.  
+> Errors will immediately be forwarded.  
+> This "Step-Merge" processing is especially useful in Scatter-Gather scenarios.  
+  
 เป็นการผสาน/รวม ข้อมูลแต่ละกลุ่มหรือคู่ flux เข้าด้วยกัน  
 - example 1
 ```java
@@ -1888,6 +1992,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
 ### Flux.zipWith
+> Zip this `Flux` with another `Publisher` source, that is to say wait
+> for both to emit one element and combine these elements once into a `Tuple2`.  
+> The operator will continue doing so until any of the sources completes.  
+> Errors will immediately be forwarded.  
+> This "Step-Merge" processing is especially useful in Scatter-Gather scenarios.  
+  
 เป็นการผสาน/รวม ข้อมูลแต่ละคู่ flux เข้าด้วยกัน คล้าย ๆ `Flux.zip`  
 ```java
 @Slf4j
@@ -1914,7 +2024,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)  
 
 ### Flux.concatWithValues
-
+> Concatenates the values to the end of the `Flux`  
+  
 สำหรับเชื่อมต่อข้อมูลต่าง ๆ เข้าไปใน `Flux`
 
 ```java
@@ -1945,7 +2056,11 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
 ### Flux.groupBy
-
+> Divide this sequence into dynamically created `Flux` (or groups) for each
+> unique key, as produced by the provided keyMapper `Function`. Note that
+> groupBy works best with a low cardinality of groups, so chose your keyMapper
+> function accordingly.
+  
 สำหรับจัดกลุ่มข้อมูลเข้าด้วยกัน 
 
 ```java
@@ -1976,7 +2091,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
 ### Flux.hasElement
-
+> Emit a single boolean true if any of the elements of this `Flux` sequence is
+> equal to the provided value.
+>  
+> The implementation uses short-circuit logic and completes with true if
+> an element matches the value.
+  
 เช็คว่ามีข้อมูลนี้อยู่หรือไม่ 
 
 - example 1 
@@ -2017,13 +2137,25 @@ public class FluxHasElementExample2 {
 ```
 output
 ```
-- message => false
+- message => false 
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)    
 
 ### Flux.flatMap
-
+> Transform the elements emitted by this `Flux` asynchronously into Publishers,
+> then flatten these inner publishers into a single `Flux` through merging,
+> which allow them to interleave.
+>  
+> There are three dimensions to this operator that can be compared with
+> `#flatMapSequential(Function) flatMapSequential` and `#concatMap(Function) concatMap`:  
+> - **Generation of inners and subscription**: this operator is eagerly
+> subscribing to its inners.  
+> - **Ordering of the flattened values**: this operator does not necessarily preserve
+> original ordering, as inner element are flattened as they arrive.  
+> - **Interleaving**: this operator lets values from different inners interleave
+> (similar to merging the inner sequences).  
+  
 คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous  
 
 ```java
