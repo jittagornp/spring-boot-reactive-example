@@ -485,6 +485,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
  
 ### Mono.defer
+> Create a `Mono` provider that will `Supplier#get supply` a target `Mono` to subscribe to for each `Subscriber` downstream.
+       
 การสร้าง Mono แบบ Lazy Load 
 
 ```java 
@@ -509,6 +511,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.create
+> Creates a deferred emitter that can be used with callback-based APIs to signal at most one value, a complete or an error signal.
+  
 การสร้าง Mono แบบ Asynchronous
 ```java
 @Slf4j
@@ -541,6 +545,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.flatMap
+> Transform the item emitted by this `Mono` asynchronously, returning the value emitted by another `Mono` (possibly changing the value type).
+  
 คล้าย ๆ map คือ ทำการแปลง (Transform) ข้อมูลก่อนส่งออกมา แต่เป็นแบบ Asyncronous
 ```java
 @Slf4j
@@ -576,6 +582,11 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.zip
+> Merge given monos into a new `Mono` that will be fulfilled when all of the given `Monos`
+> have produced an item, aggregating their values into a `Tuple2`.
+> An error or **empty** completion of any source will cause other sources
+> to be cancelled and the resulting Mono to immediately error or complete, respectively.
+  
 เป็นการรวม response จาก Mono ต่าง ๆ
 - Sequencial 
 ```java
@@ -690,6 +701,11 @@ output (ใช้เวลาทำงานมากที่สุดคือ
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.block
+> Subscribe to this `Mono` and **block indefinitely** until a next signal is
+> received. Returns that value, or null if the Mono completes empty. In case the Mono
+> errors, the original exception is thrown (wrapped in a `RuntimeException` if
+> it was a checked exception).
+  
 การทำงานแบบ Blocking I/O หรือ Synchronous
 ```java
 @Slf4j
@@ -710,6 +726,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.cache
+> Turn this `Mono` into a hot source and cache last emitted signals for further
+> `Subscriber`, with an expiry timeout.
+  
 สำหรับ Cache ข้อมูล ตามเวลาที่กำหนด  
 - กรณีไม่ cache 
 ```java
@@ -774,6 +793,8 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.flux
+> Convert this `Mono` to a `Flux`  
+  
 การแปลงจาก Mono -> Flux 
 ```java 
 @Slf4j
@@ -799,6 +820,12 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.then
+> Let this `Mono` complete then play another Mono.
+>   
+> In other words ignore element from this `Mono` and transform its completion signal into the
+> emission and completion signal of a provided `Mono<V>`. Error signal is
+> replayed in the resulting `Mono<V>`.
+  
 การทำงานตามลำดับด้วย `then`
 ```java
 @Slf4j
@@ -848,6 +875,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.concatWith
+> Concatenate emissions of this `Mono` with the provided `Publisher`
+> (no interleave).
+  
 เป็นการเชื่อม Mono 2 อันเข้าด้วยกัน กลายเป็น Flux 
 ```java
 @Slf4j
@@ -889,6 +919,9 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.timeout
+> Propagate a `TimeoutException` in case no item arrives within the given
+> `Duration`.
+  
 ใช้สำหรับจำกัดเวลาในการตอบสนอง เช่น ถ้าไม่ตอบสนองภายใน 3 วินาที จะเกิด `java.util.concurrent.TimeoutException`  
 ```java
 @Slf4j
@@ -923,6 +956,14 @@ output
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
 ### Mono.filterWhen
+> If this `Mono` is valued, test the value asynchronously using a generated
+> `Publisher<Boolean>` test. The value from the Mono is replayed if the
+> first item emitted by the test is `true`. It is dropped if the test is
+> either empty or its first emitted value is `false`.
+>  
+> Note that only the first value of the test publisher is considered, and unless it
+> is a `Mono`, test will be cancelled after receiving that first value.
+  
 ทำการกรอง (filter) ข้อมูลตามเงื่อนไขที่กำหนด เหมือน `Mono.filter` แต่ทำงานแบบ Asynchronous 
 ```java
 @Slf4j
@@ -971,7 +1012,7 @@ output
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
 
-# Flux
+# Flux 
 ตัวอย่างการใช้ Flux
 ### Flux.just 
 การสร้าง Flux จากข้อมูลที่มีอยู่แล้ว (ข้อมูลต้องพร้อมแล้ว)
