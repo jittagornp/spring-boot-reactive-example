@@ -118,6 +118,7 @@ output
 
 # Table of Content 
 - [Mono](#mono)
+  - [Mono.never](#mononever)
   - [Mono.empty](#monoempty)
   - [Mono.just](#monojust)
   - [Mono.log](#monolog)
@@ -172,6 +173,27 @@ output
 
 # Mono
 ตัวอย่างการใช้ Mono 
+
+### Mono.never 
+> Return a `Mono` that will never signal any data, error or completion signal, essentially running indefinitely.  
+  
+จะไม่มีการปล่อยข้อมูลออกมา 
+```java
+@Slf4j
+public class MonoNeverExample {
+
+    public static void main(String[] args) {
+        Mono.never()
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+- ไม่มีข้อมูล 
 
 ### Mono.empty
 เป็นการสร้าง empty mono ซึ่งจะไม่มีข้อมูลปล่อยออกมา 
