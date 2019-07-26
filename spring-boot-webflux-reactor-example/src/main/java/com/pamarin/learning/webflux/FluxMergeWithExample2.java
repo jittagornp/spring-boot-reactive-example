@@ -5,18 +5,19 @@ package com.pamarin.learning.webflux;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  *
  * @author jitta
  */
 @Slf4j
-public class FluxMergeWithExample {
+public class FluxMergeWithExample2 {
     
     public static void main(String[] args) {
-        Flux<String> flux1 = Flux.just("1", "2", "3");
-        Flux<String> flux2 = Flux.just("A", "B", "C", "D");
-        flux1.mergeWith(flux2)
+        Flux<String> flux = Flux.just("1", "2", "3");
+        Mono<String> mono = Mono.just("A");
+        flux.mergeWith(mono)
                 .doOnNext(message -> {
                     log.debug("message => {}", message);
                 })
