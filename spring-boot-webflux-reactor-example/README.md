@@ -174,6 +174,7 @@ output
   - [Flux.groupBy](#fluxgroupby)
   - [Flux.hasElement](#fluxhaselement)
   - [Flux.flatMap](#fluxflatmap)
+  - [Flux.mergeWith](#fluxmergewith)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -2198,5 +2199,65 @@ output
 - message => 50  
 ```
 
+[กลับไปข้างบน &#x2191;](#table-of-content)   
+
+### Flux.mergeWith
+> Merge data from this `Flux` and a `Publisher` into an interleaved merged
+> sequence. Unlike `#concatWith(Publisher) concat`, inner sources are subscribed
+> to eagerly.
+  
+ทำการ merge 2 `Publisher` (ได้ทั้ง `Flux` และ `Mono`) เข้าด้วยกัน 
+
+- example 1 
+```java
+@Slf4j
+public class FluxMergeWithExample1 {
+    
+    public static void main(String[] args) {
+        Flux<String> flux1 = Flux.just("1", "2", "3");
+        Flux<String> flux2 = Flux.just("A", "B", "C", "D");
+        flux1.mergeWith(flux2)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => A  
+- message => B  
+- message => C  
+- message => D  
+```
+- example 2
+```java
+@Slf4j
+public class FluxMergeWithExample2 {
+    
+    public static void main(String[] args) {
+        Flux<String> flux = Flux.just("1", "2", "3");
+        Mono<String> mono = Mono.just("A");
+        flux.mergeWith(mono)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => A 
+```
 [กลับไปข้างบน &#x2191;](#table-of-content)   
 
