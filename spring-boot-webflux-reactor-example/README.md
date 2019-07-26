@@ -174,6 +174,7 @@ output
   - [Flux.groupBy](#fluxgroupby)
   - [Flux.hasElement](#fluxhaselement)
   - [Flux.flatMap](#fluxflatmap)
+  - [Flux.mergeWith](#fluxmergewith)
 
 # Mono
 ตัวอย่างการใช้ Mono 
@@ -2199,4 +2200,38 @@ output
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)   
+
+### Flux.mergeWith
+> Merge data from this `Flux` and a `Publisher` into an interleaved merged
+> sequence. Unlike `#concatWith(Publisher) concat`, inner sources are subscribed
+> to eagerly.
+  
+ทำการ merge 2 `Flux` เข้าด้วยกัน 
+
+```java
+@Slf4j
+public class FluxMergeWithExample {
+    
+    public static void main(String[] args) {
+        Flux<String> flux1 = Flux.just("1", "2", "3");
+        Flux<String> flux2 = Flux.just("A", "B", "C", "D");
+        flux1.mergeWith(flux2)
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => 1  
+- message => 2  
+- message => 3  
+- message => A  
+- message => B  
+- message => C  
+- message => D  
+```
 
