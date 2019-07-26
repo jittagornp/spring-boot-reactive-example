@@ -35,3 +35,5 @@ $ mvn javadoc:javadoc
 # 4. ดูผลลัพธ์ 
 
 ไฟล์ java doc จะเป็น /target/site/apidocs/index.html 
+
+![javadoc.png](javadoc.png) 
