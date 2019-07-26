@@ -1,64 +1,36 @@
-# spring-boot-webflux-helloworld
-ตัวอย่างการเขียน Spring-boot WebFlux Hello World
+# spring-boot-webflux-javadoc
+ตัวอย่างการเขียน Spring-boot WebFlux Java Document 
 
-# 1. เพิ่ม Dependencies
+# 1. Config Plugin
 
 pom.xml 
 ``` xml
-...
-<parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.5.RELEASE</version>
-</parent>
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-webflux</artifactId>
-    </dependency>
-</dependencies>
-
-...
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.1.1</version>
+            <configuration>
+                <stylesheetfile>src/main/javadoc/stylesheet.css</stylesheetfile>
+            </configuration>
+        </plugin>
+        ...
+        ...
+    </plugins>
+</build>
 ```
 
-# 2. เขียน Main Class 
+# 2. custom stylesheet.css 
 
-``` java
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.pamarin"}) 
-public class AppStarter {
+วางไฟล์ไว้ที่ `src/main/javadoc/stylesheet.css`  
 
-    public static void main(String[] args) {
-        SpringApplication.run(AppStarter.class, args);
-    }
+# 3. Generate Java Doc
 
-}
+```shell
+$ mvn javadoc:javadoc 
 ```
 
-# 3. เขียน Controller
-``` java
-@RestController
-public class HomeController {
+# 4. ดูผลลัพธ์ 
 
-    @GetMapping({"", "/"})
-    public Mono<String> hello() {
-        return Mono.just("Hello world.");
-    }
-}
-```
-
-# 4. Build
-cd ไปที่ root ของ project จากนั้น  
-``` shell 
-$ mvn clean install
-```
-
-# 5. Run 
-``` shell 
-$ mvn spring-boot:run
-```
-
-# 6. เข้าใช้งาน
-
-เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+ไฟล์จะอยู่ที่ /target/site/apidocs/index.html 
