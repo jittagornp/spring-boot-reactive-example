@@ -21,16 +21,17 @@ pom.xml
 </build>
 ```
 
-# 2. custom stylesheet.css 
+# 2. Custom stylesheet.css 
 
 วางไฟล์ไว้ที่ `src/main/javadoc/stylesheet.css`  
 
-# 3. Generate Java Doc
+# 3. Generate Java Document 
 
+ไปที่ root ของ project แล้ว run คำสั่ง  
 ```shell
 $ mvn javadoc:javadoc 
 ```
 
 # 4. ดูผลลัพธ์ 
 
-ไฟล์จะอยู่ที่ /target/site/apidocs/index.html 
+ไฟล์ java doc จะเป็น /target/site/apidocs/index.html 
