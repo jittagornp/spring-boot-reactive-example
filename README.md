@@ -41,7 +41,6 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
 - [spring-boot-webflux-helloworld](spring-boot-webflux-helloworld) - Hello World!
-- [spring-boot-webflux-javadoc](spring-boot-webflux-javadoc) - การ Generate Java Document API 
 - [spring-boot-webflux-dockerfile](spring-boot-webflux-dockerfile) - การสร้าง Dockerfile การ Build Image และการ Run Container Spring-boot 
 - [spring-boot-webflux-logging](spring-boot-webflux-logging) - การ Config และใช้งาน Logging  
 - [spring-boot-webflux-controller](spring-boot-webflux-controller)  - การเขียน Controller 
@@ -75,6 +74,9 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-redis](spring-boot-webflux-redis) - การเชื่อมต่อ Redis (Key/Value NoSQL) 
 
 > ผมจะค่อย ๆ add module ต่าง ๆ เข้าไปเรื่อย ๆ น่ะครับ  อาจจะได้วันละ 2-3 modules แล้วแต่เวลาว่าง + ความยากง่ายของ module นั้น ๆ ครับ
+
+# Other
+- [spring-boot-webflux-javadoc](spring-boot-webflux-javadoc) - การ Generate Java Document API 
 
 # บทความอื่น ๆ เกี่ยวกับ WebFlux
 - [Spring WebFlux Tutorial](https://howtodoinjava.com/spring-webflux/spring-webflux-tutorial/)
