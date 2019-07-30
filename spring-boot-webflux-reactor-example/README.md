@@ -152,6 +152,7 @@ output
   - [Flux.range](#fluxrange)
   - [Flux.defaultIfEmpty](#fluxdefaultifempty)
   - [Flux.switchIfEmpty](#fluxswitchifempty)
+  - [Flux.error](#fluxerror)
   - [Flux.concat](#fluxconcat)
   - [Flux.create](#fluxcreate)
   - [Flux.generate](#fluxgenerate)
@@ -1266,6 +1267,37 @@ output
 - message => 1  
 - message => 2  
 - message => 3  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Flux.error 
+> Create a `Flux` that terminates with the specified error immediately after
+> being subscribed to.
+
+สำหรับปล่อยข้อมูล error หรือ Exception ออกมา เหมือน `Mono.error`
+
+```java
+@Slf4j
+public class FluxErrorExample {
+    
+    public static void main(String[] args) {
+        Flux.empty()
+                .switchIfEmpty(Flux.error(new RuntimeException("Not found data")))
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .doOnError(e -> {
+                    log.debug("error => {}", e.getMessage());
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- error => Not found data  
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
