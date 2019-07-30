@@ -1069,12 +1069,13 @@ public class MonoOnErrorResumeExample {
     }
 
 }
-``
+```
 output
 - result 1
 ```
 - username => jittagornp  
 ```
+
 - result 2 (เข้า `onErrorResume`) 
 ```
 - error => Not found user
