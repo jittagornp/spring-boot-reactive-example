@@ -1022,7 +1022,7 @@ output
 > Subscribe to a fallback publisher when an error matching the given type
 > occurs, using a function to choose the fallback depending on the error.
 
-สำหรับดักจับ error หรือ exception ที่เกิิดขึ้น (อารมณ์เหมือน try/catch)
+สำหรับดักจับ error หรือ exception ที่เกิดขึ้น (อารมณ์เหมือน try/catch)
 ```java
 @Slf4j
 public class MonoOnErrorResumeExample {
