@@ -144,6 +144,7 @@ output
   - [Mono.concatWith](#monoconcatwith)
   - [Mono.timeout](#monotimeout)
   - [Mono.filterWhen](#monofilterwhen)
+  - [Mono.onErrorResume](#monoonerrorresume)
 - [Flux](#flux)
   - [Flux.just](#fluxjust)
   - [Flux.fromIterable](#fluxfromiterable)
@@ -1013,6 +1014,71 @@ output
 - wait 3 seconds... at 2019-07-23T15:35:41.460  
 - message => 46  
 - success at 2019-07-23T15:35:44.462  
+```
+
+[กลับไปข้างบน &#x2191;](#table-of-content)
+
+### Mono.onErrorResume
+> Subscribe to a fallback publisher when an error matching the given type
+> occurs, using a function to choose the fallback depending on the error.
+
+สำหรับดักจับ error หรือ exception ที่เกิิดขึ้น (อารมณ์เหมือน try/catch)
+```java
+@Slf4j
+public class MonoOnErrorResumeExample {
+
+    private static class NotFoundException extends RuntimeException {
+
+        public NotFoundException(String message) {
+            super(message);
+        }
+
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class User {
+
+        private String username;
+    }
+
+    private static Mono<User> getUser() {
+        return Mono.create((MonoSink<User> callbback) -> {
+            final int randomNumber = (int) (Math.random() * 100);
+            if (randomNumber % 2 == 0) {
+                callbback.success(User.builder().username("jittagornp").build());
+            } else {
+                callbback.error(new NotFoundException("Not found user"));
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        getUser()
+                .onErrorResume(NotFoundException.class, e -> {
+                    log.debug("error => {}", e.getMessage());
+                    return Mono.just(User.builder().username("anonymous").build());
+                })
+                .doOnNext(user -> {
+                    log.debug("username => {}", user.getUsername());
+                })
+                .subscribe();
+    }
+
+}
+``
+output
+- result 1
+```
+- username => jittagornp  
+```
+- result 2 (เข้า `onErrorResume`) 
+```
+- error => Not found user
+- username => anonymous
 ```
 
 [กลับไปข้างบน &#x2191;](#table-of-content)
