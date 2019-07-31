@@ -2467,3 +2467,40 @@ java.lang.RuntimeException: something error
 ```
 
 [กลับไปข้างบน &#x2191;](#ตัวอย่างการเขียน-reactor)  
+
+### ข้อควรระวังในการใช้ `Flux.create` 
+
+หลังจากที่ปล่อยข้อมูลด้วย `.next()` เสร็จแล้ว ให้เรียก `.complete()` ปิดท้ายด้วยเสมอ (ย้ำว่าเสมอ) **** เพื่อให้ unsubscribe และป้องกัน `Memory Leak`  
+```java
+@Slf4j
+public class FluxCreateWarningExample {
+    
+    public static void main(String[] args) {
+        Flux.create(callback -> {
+            for (int i = 1; i <= 3; i++) {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException ex) {
+                   
+                }
+                callback.next("task " + i + " at " + LocalDateTime.now());
+            }
+            callback.complete();
+            
+        })
+                .doOnNext(message -> {
+                    log.debug("message => {}", message);
+                })
+                .subscribe();
+    }
+    
+}
+```
+output
+```
+- message => task 1 at 2019-07-31T12:22:54.985  
+- message => task 2 at 2019-07-31T12:22:55.988  
+- message => task 3 at 2019-07-31T12:22:56.989  
+```
+
+[กลับไปข้างบน &#x2191;](#ตัวอย่างการเขียน-reactor)    
