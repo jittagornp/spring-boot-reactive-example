@@ -2366,31 +2366,35 @@ output
 # ข้อควรระวัง (Warning)  
 
 ### 1. การใช้ `Mono<Void>`
-หากมีการเรียก `.map()` หรือ `.flatMap()` หรือ `.doOnNext()` ต่อจาก `Mono<Void>` คำสั่งนั้น ๆ จะไม่ทำงาน 
+หากมีการเรียก `.map()` หรือ `.flatMap()` หรือ `.doOnNext()` ต่อจาก `Mono<Void>` คำสั่งนั้น ๆ จะไม่ทำงาน   
+ให้ใช้ `.then()` หรือ `.doOnSuccess()` แทน  
 ```java
 @Slf4j
 public class MonoVoidWarningExample {
-    
-    private static Mono<Void> doSomething(){
-        return Mono.fromRunnable(()-> {
-           log.debug("do something...");
+
+    private static Mono<Void> doSomething() {
+        return Mono.fromRunnable(() -> {
+            log.debug("do something...");
         });
     }
 
     public static void main(String[] args) {
-       doSomething()
-               .flatMap(value -> {
-                   log.debug("flatMap :: value => {}", value);
-                   return Mono.just(value);
-               })
-               .map(value -> {
-                   log.debug("map :: value => {}", value);
-                   return value;
-               })
+        doSomething()
+                .flatMap(value -> {
+                    log.debug("flatMap :: value => {}", value);
+                    return Mono.just(value);
+                })
+                .map(value -> {
+                    log.debug("map :: value => {}", value);
+                    return value;
+                })
                 .doOnNext(value -> {
                     log.debug("doOnNext :: value => {}", value);
                 })
-               .doOnSuccess(value -> {
+                .then(Mono.fromRunnable(() -> {
+                    log.debug("then do something ...");
+                }))
+                .doOnSuccess(value -> {
                     log.debug("doOnSuccess :: value => {}", value);
                 })
                 .subscribe();
@@ -2401,6 +2405,7 @@ public class MonoVoidWarningExample {
 output
 ```
 - do something...  
+- then do something ...  
 - doOnSuccess :: value => null  
 ```
 
