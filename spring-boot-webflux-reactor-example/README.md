@@ -2415,10 +2415,9 @@ output
 
 ถ้างาน (task) ก่อนหน้าเกิด error หรือ exception   
 task ต่อ ๆ ไปจะไม่ทำงานต่อ  
-- example 1 
 ```java
 @Slf4j
-public class MonoThenWarningExample1 {
+public class MonoThenWarningExample {
 
     public static void main(String[] args) {
         Mono<String> task1 = Mono.fromCallable(() -> {
@@ -2431,6 +2430,7 @@ public class MonoThenWarningExample1 {
         });
         Mono<String> task3 = Mono.defer(() -> {
             log.debug("do task 3");
+            //จะ Throw exception ออกไปเลย หรือ Mono.error(Exception) ก็ output แบบเดียวกัน 
             return Mono.error(new RuntimeException("something error"));
         });
         Mono<String> task4 = Mono.fromCallable(() -> {
