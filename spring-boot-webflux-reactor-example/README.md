@@ -1,7 +1,9 @@
 # ตัวอย่างการเขียน Reactor 
 
-> [https://projectreactor.io](https://projectreactor.io)  
+> [https://projectreactor.io](https://projectreactor.io)    
 
+![Reactor](./reactor.png) 
+  
 # API
 
 > [https://projectreactor.io/docs/core/release/api/](https://projectreactor.io/docs/core/release/api/)
@@ -19,6 +21,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 - [https://projectreactor.io/learn](https://projectreactor.io/learn)
 - [Reactive systems using Reactor](https://musigma.blog/2016/11/21/reactor.html)
 - [Reactor by Example](https://www.infoq.com/articles/reactor-by-example/) 
+- [ข้อควรระวังในการใช้งาน](#ข้อควรระวัง-warning)
 
 # Flow
 
@@ -2360,3 +2363,50 @@ output
 ```
 [กลับไปข้างบน &#x2191;](#table-of-content)   
 
+# ข้อควรระวัง (Warning)  
+
+### 1. การใช้ `Mono<Void>`
+หากมีการเรียก `.map()` หรือ `.flatMap()` หรือ `.doOnNext()` ต่อจาก `Mono<Void>` คำสั่งนั้น ๆ จะไม่ทำงาน   
+ให้ใช้ `.then()` หรือ `.doOnSuccess()` แทน  
+```java
+@Slf4j
+public class MonoVoidWarningExample {
+
+    private static Mono<Void> doSomething() {
+        return Mono.fromRunnable(() -> {
+            log.debug("do something...");
+        });
+    }
+
+    public static void main(String[] args) {
+        doSomething()
+                .flatMap(value -> {
+                    log.debug("flatMap :: value => {}", value);
+                    return Mono.just(value);
+                })
+                .map(value -> {
+                    log.debug("map :: value => {}", value);
+                    return value;
+                })
+                .doOnNext(value -> {
+                    log.debug("doOnNext :: value => {}", value);
+                })
+                .then(Mono.fromRunnable(() -> {
+                    log.debug("then do something ...");
+                }))
+                .doOnSuccess(value -> {
+                    log.debug("doOnSuccess :: value => {}", value);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- do something...  
+- then do something ...  
+- doOnSuccess :: value => null  
+```
+
+[กลับไปข้างบน &#x2191;](#ตัวอย่างการเขียน-reactor)
