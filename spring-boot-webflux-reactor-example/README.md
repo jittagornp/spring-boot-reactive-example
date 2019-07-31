@@ -21,6 +21,7 @@ Reactor เป็น library สำหรับเขียน Reactive เห�
 - [https://projectreactor.io/learn](https://projectreactor.io/learn)
 - [Reactive systems using Reactor](https://musigma.blog/2016/11/21/reactor.html)
 - [Reactor by Example](https://www.infoq.com/articles/reactor-by-example/) 
+- [ข้อควรระวังในการใช้งาน](#ข้อควรระวัง-warning)
 
 # Flow
 
@@ -2402,3 +2403,5 @@ output
 - do something...  
 - doOnSuccess :: value => null  
 ```
+
+[กลับไปข้างบน &#x2191;](#ตัวอย่างการเขียน-reactor)
