@@ -2410,3 +2410,60 @@ output
 ```
 
 [กลับไปข้างบน &#x2191;](#ตัวอย่างการเขียน-reactor)
+
+### 2. การใช้ `.then()`
+
+ถ้างาน (task) ก่อนหน้าเกิด error หรือ exception   
+task ต่อ ๆ ไปจะไม่ทำงานต่อ  
+- example 1 
+```java
+@Slf4j
+public class MonoThenWarningExample1 {
+
+    public static void main(String[] args) {
+        Mono<String> task1 = Mono.fromCallable(() -> {
+            log.debug("do task 1");
+            return "task 1";
+        });
+        Mono<String> task2 = Mono.fromCallable(() -> {
+            log.debug("do task 2");
+            return "task 2";
+        });
+        Mono<String> task3 = Mono.defer(() -> {
+            log.debug("do task 3");
+            return Mono.error(new RuntimeException("something error"));
+        });
+        Mono<String> task4 = Mono.fromCallable(() -> {
+            log.debug("do task 4");
+            return "task 4";
+        });
+        Mono<String> task5 = Mono.fromCallable(() -> {
+            log.debug("do task 5");
+            return "task 5";
+        });
+
+        task1
+                .doOnNext(value -> log.debug("value => {}", value))
+                .then(task2)
+                .doOnNext(value -> log.debug("value => {}", value))
+                .then(task3)
+                .doOnNext(value -> log.debug("value => {}", value))
+                .then(task4)
+                .doOnNext(value -> log.debug("value => {}", value))
+                .then(task5)
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- do task 1  
+- value => task 1  
+- do task 2  
+- value => task 2  
+- do task 3  
+java.lang.RuntimeException: something error   
+```
+
+[กลับไปข้างบน &#x2191;](#ตัวอย่างการเขียน-reactor)  
