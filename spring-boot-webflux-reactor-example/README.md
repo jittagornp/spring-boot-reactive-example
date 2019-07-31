@@ -2362,3 +2362,43 @@ output
 ```
 [กลับไปข้างบน &#x2191;](#table-of-content)   
 
+# ข้อควรระวัง
+
+### 1. การใช้ `Mono<Void>`
+หากมีการเรียก `.map()` หรือ `.flatMap()` หรือ `.doOnNext()` ต่อจาก `Mono<Void>` คำสั่งนั้น ๆ จะไม่ทำงาน 
+```java
+@Slf4j
+public class MonoVoidWarningExample {
+    
+    private static Mono<Void> doSomething(){
+        return Mono.fromRunnable(()-> {
+           log.debug("do something...");
+        });
+    }
+
+    public static void main(String[] args) {
+       doSomething()
+               .flatMap(value -> {
+                   log.debug("flatMap :: value => {}", value);
+                   return Mono.just(value);
+               })
+               .map(value -> {
+                   log.debug("map :: value => {}", value);
+                   return value;
+               })
+                .doOnNext(value -> {
+                    log.debug("doOnNext :: value => {}", value);
+                })
+               .doOnSuccess(value -> {
+                    log.debug("doOnSuccess :: value => {}", value);
+                })
+                .subscribe();
+    }
+
+}
+```
+output
+```
+- do something...  
+- doOnSuccess :: value => null  
+```
