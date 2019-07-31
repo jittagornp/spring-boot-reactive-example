@@ -5,7 +5,7 @@
 - [javadoc - The Java API Documentation Generator](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html)
 - [Apache Maven Javadoc Plugin](https://maven.apache.org/plugins/maven-javadoc-plugin/index.html)
 
-ขั้นตอนสั้น ๆ เลย ให้
+# 1. Simple 
 
 # 1.1 Generate Java Document 
 
@@ -13,6 +13,8 @@
 ```shell
 $ mvn javadoc:javadoc 
 ```
+
+# 2. Custom Style Sheet (CSS) 
 
 แต่ถ้าต้องการ custom stylesheet (css) ด้วย ให้ทำดังนี้ 
 
