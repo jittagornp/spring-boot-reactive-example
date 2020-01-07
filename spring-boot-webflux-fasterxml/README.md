@@ -1,5 +1,5 @@
-# spring-boot-webflux-helloworld
-ตัวอย่างการเขียน Spring-boot WebFlux Hello World
+# spring-boot-webflux-fasterxml
+ตัวอย่างการเขียน Spring-boot WebFlux Faster XML 
 
 # 1. เพิ่ม Dependencies
 
@@ -9,13 +9,25 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.5.RELEASE</version>
+    <version>2.2.2.RELEASE</version>
 </parent>
 
 <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformat-xml</artifactId>
+        <version>2.10.1</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
     </dependency>
 </dependencies>
 
@@ -38,13 +50,51 @@ public class AppStarter {
 
 # 3. เขียน Controller
 ``` java
-@RestController
-public class HomeController {
+@Slf4j
+@Controller
+@RequestMapping("/users")
+public class UserController {
 
-    @GetMapping({"", "/"})
-    public Mono<String> hello() {
-        return Mono.just("Hello world.");
+    private final XmlMapper xmlMapper = new XmlMapper();
+
+    @ResponseBody
+    @GetMapping("/toXml")
+    public Mono<String> findById() throws JsonProcessingException {
+        User user = new User();
+        user.setId(1L);
+        user.setFirstName("jittagorn");
+        user.setLastName("pitakmetagoon");
+        xmlMapper.writeValueAsString(user);
+        return Mono.just(xmlMapper.writeValueAsString(user));
     }
+
+    @ResponseBody
+    @GetMapping("/toUser")
+    public Mono<User> update() throws JsonProcessingException {
+        final String xml = "<xml>"
+                + "<id>1</id>"
+                + "<first_name>jittagorn</first_name>"
+                + "<last_name>pitakmetagoon</last_name>"
+                + "</xml>";
+        final User user = xmlMapper.readValue(xml, User.class);
+        log.debug("user => {}", user);
+        return Mono.just(user);
+    }
+
+    @Data
+    @JacksonXmlRootElement(localName = "xml")
+    public static class User {
+
+        private Long id;
+
+        @JacksonXmlProperty(localName = "first_name")
+        private String firstName;
+
+        @JacksonXmlProperty(localName = "last_name")
+        private String lastName;
+
+    }
+
 }
 ```
 
