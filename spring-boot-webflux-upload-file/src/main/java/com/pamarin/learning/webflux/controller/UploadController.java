@@ -7,13 +7,16 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
@@ -32,7 +35,14 @@ public class UploadController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Mono<Map> upload(@RequestPart("file") Mono<FilePart> filePart) {
+    public Mono<Map> upload(
+            @RequestPart("file") Mono<FilePart> filePart,
+            final FormData formData
+    
+    ) {
+        
+        log.debug("formData => {}", formData);
+        
         return filePart
                 .map((FilePart fp) -> {
 
@@ -47,5 +57,12 @@ public class UploadController {
                     map.put("size", file.length());
                     return map;
                 });
+    }
+    
+    @Data
+    public static class FormData {
+        
+        private String description;
+        
     }
 }
