@@ -58,7 +58,12 @@ public class UploadController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Mono<Map> upload(@RequestPart("file") Mono<FilePart> filePart) {
+    public Mono<Map> upload(
+            @RequestPart("file") Mono<FilePart> filePart,
+            final FormData formData
+    
+    ) {
+        log.debug("formData => {}", formData);
         return filePart
                 .map((FilePart fp) -> {
 
@@ -73,6 +78,13 @@ public class UploadController {
                     map.put("size", file.length());
                     return map;
                 });
+    }
+    
+    @Data
+    public static class FormData {
+        
+        private String description;
+        
     }
 }
 ```
