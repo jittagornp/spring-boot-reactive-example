@@ -89,7 +89,7 @@ $ mvn clean install
 
 # 6. Build Image จาก Dockerfile  
 ``` shell 
-$ docker build -t hello-world -f ./Dockerfile .
+$ docker build -t hello-world -f Dockerfile .
 ```
 - `docker build` เป็นการใช้คำสั่งเพื่อ build image 
 - `-t hello-world` เป็นการกำหนด ชื่อ + tag สำหรับ image
