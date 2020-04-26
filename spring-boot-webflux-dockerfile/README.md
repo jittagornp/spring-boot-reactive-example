@@ -93,7 +93,7 @@ $ docker build -t hello-world -f Dockerfile .
 ```
 - `docker build` เป็นการใช้คำสั่งเพื่อ build image 
 - `-t hello-world` เป็นการกำหนด ชื่อ + tag สำหรับ image
-- `-f ./Dockerfile` เป็นการระบุว่าให้อ้างอิงไปที่ Dockerfile ไหน  (ถ้าไม่ระบุ default จะเป็นจาก path ปัจจุบัน)  
+- `-f Dockerfile` เป็นการระบุว่าให้อ้างอิงไปที่ Dockerfile ไหน  (ถ้าไม่ระบุ default จะเป็น Dockerfile จาก path ปัจจุบัน)  
 - `.` คือ สัมพันธ์ หรือให้ Dockerfile อิงกับ path ปัจจบัน  
 
 # 7. Run Container 
