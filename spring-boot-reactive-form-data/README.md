@@ -1,6 +1,6 @@
-# spring-boot-reactive-x-www-form
+# spring-boot-reactive-form-data
 
-> ตัวอย่างการเขียน Spring-boot Reactive X-WWW-Form
+> ตัวอย่างการเขียน Spring-boot Reactive Form Data
 
 # 1. เพิ่ม Dependencies และ Plugins
 
@@ -69,6 +69,9 @@ public class AppStarter {
 # 3. เขียน Model หรือ DTO
 ```java
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterForm {
 
     private String firstName;
@@ -90,8 +93,25 @@ public class RegisterFormController {
         return Mono.just("Hello world.");
     }
 
-    @PostMapping(value = "/register", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public Mono<RegisterForm> register(final RegisterForm form) {
+    @PostMapping(value = "/register1", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public Mono<RegisterForm> register1(final RegisterForm form) {
+        return Mono.just(form);
+    }
+
+    @PostMapping(value = "/register2", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public Mono<RegisterForm> register2(final ServerWebExchange exchange) {
+        return exchange.getFormData()
+                .map(formData -> {
+                    return RegisterForm.builder()
+                            .firstName(formData.getFirst("firstName"))
+                            .lastName(formData.getFirst("lastName"))
+                            .email(formData.getFirst("email"))
+                            .build();
+                });
+    }
+
+    @PostMapping(value = "/register3", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Mono<RegisterForm> register3(final RegisterForm form) {
         return Mono.just(form);
     }
 }
@@ -114,6 +134,16 @@ $ mvn spring-boot:run
 
 # ทดสอบ
 
- ลองยิง postman POST ไปยัง `/register` ดังนี้ 
+ลองยิง postman POST ไปยัง 
  
- ![](x-www-form.png)
+- `/register1` (Content-Type : application/x-www-form-urlencoded)
+
+ ![](result-register1.png)
+
+ - `/register2` (Content-Type : application/x-www-form-urlencoded)
+
+ ![](result-register2.png)
+
+ - `/register3` (Content-Type : multipart/form-data; boundary=...)
+
+ ![](result-register3.png)

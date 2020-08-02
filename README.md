@@ -47,7 +47,7 @@
 - [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
 - [spring-boot-reactive-logging](spring-boot-reactive-logging) - การ Config และใช้งาน Logging  
 - [spring-boot-reactive-controller](spring-boot-reactive-controller) - การเขียน Controller 
-- [spring-boot-reactive-x-www-form](spring-boot-reactive-x-www-form) - การรับค่าจาก Html Form แบบ x-www-form-urlencoded
+- [spring-boot-reactive-form-data](spring-boot-reactive-form-data) - การรับค่าจาก Html Form
 
 ### รอการปรับ Code เป็น Java 11
 
