@@ -70,7 +70,7 @@ public class HomeController {
 }
 ```
 
-# 4. Build
+# 4. Build Code
 cd ไปที่ root ของ project จากนั้น  
 ``` sh
 $ mvn clean package

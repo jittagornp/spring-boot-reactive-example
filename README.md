@@ -1,8 +1,8 @@
 # spring-boot-reactive-example
 
-ตัวอย่างการเขียน Java Spring-boot Reactive (WebFlux) ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O หรือ Asynchronous 
+> ตัวอย่างการเขียน Java Spring-boot Reactive (WebFlux) ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O หรือ Asynchronous 
 
-![Reactive Spring](reactive_spring.png)
+![Reactive Spring](spring-reactive.png)
 
 # ปัญหา / ข้อเสนอแนะ 
 หากพบปัญหา หรือ ต้องการให้ทำอะไรเพิ่ม รบกวนช่วยเปิด issue ให้ด้วยน่ะครับ  
@@ -21,9 +21,9 @@
 - [Spring Boot performance battle: blocking vs non-blocking vs reactive](https://medium.com/@filia.aleks/microservice-performance-battle-spring-mvc-vs-webflux-80d39fd81bf0)
 - [https://blog.ippon.tech/spring-5-webflux-performance-tests/](https://blog.ippon.tech/spring-5-webflux-performance-tests/)
 
-# Pre Require 
-สิ่งที่ต้องรู้ก่อนเขียน Spring-boot Webflux
-- java 8+
+# Prerequisites
+สิ่งที่ต้องรู้ก่อนเขียน Spring-boot Reactive 
+- java 11+ ตอนนี้ผมใช้ OpenJdk 11
 - [Apache Maven](https://www.jittagornp.me/blog/what-is-apache-maven/)
 - Reactive Programming ลองอ่านนี่ดูได้ครับ [RxJava series - part 1 - ตอน อะไรเอ่ย ReactiveX?](https://medium.com/@nutron/what-is-reactivex-38293abb81cb)  ขอบคุณสำหรับบทความครับ    
 Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวนึง มีความคล้ายกันกับ ReactiveX สามารถอ่านแทนกันได้ครับ Concept เหมือนกัน  
@@ -40,9 +40,13 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 
 ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
+### ปรับ Code เป็น Java 11 แล้ว
 - [spring-boot-reactive-helloworld](spring-boot-reactive-helloworld) - Hello World!
 - [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
-- [spring-boot-webflux-logging](spring-boot-webflux-logging) - การ Config และใช้งาน Logging  
+- [spring-boot-reactive-logging](spring-boot-reactive-logging) - การ Config และใช้งาน Logging  
+
+### รอการปรับ Code เป็น Java 11
+
 - [spring-boot-webflux-controller](spring-boot-webflux-controller)  - การเขียน Controller 
 - [spring-boot-webflux-form-data](spring-boot-webflux-form-data) - การรับค่าจาก Html Form 
 - [spring-boot-webflux-download-file](spring-boot-webflux-download-file) - การ Download File 
@@ -78,12 +82,3 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 
 # Other
 - [spring-boot-webflux-javadoc](spring-boot-webflux-javadoc) - การ Generate Java Document API 
-
-# บทความอื่น ๆ เกี่ยวกับ WebFlux
-- [Spring WebFlux Tutorial](https://howtodoinjava.com/spring-webflux/spring-webflux-tutorial/)
-- [สร้าง Reactive RESTful Web Service ด้วย Spring WebFlux](https://medium.com/@phayao/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-reactive-restful-web-service-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-spring-webflux-c42094a3424e)
-- [สร้าง Reactive RESTful API ด้วย Spring WebFlux และ MongoDB](https://developers.ascendcorp.com/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-reactive-restful-api-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-spring-webflux-%E0%B9%81%E0%B8%A5%E0%B8%B0-mongodb-868d645dd9f6)
-- [Build Criteria Queries with JPA Specification](https://github.com/wenhao/jpa-spec)
-- [Spring Reactive Sample](https://github.com/hantsy/spring-reactive-sample)
-
-ขอบคุณสำหรับเจ้าของบทความครับ (Thank you for Article and Reference.)

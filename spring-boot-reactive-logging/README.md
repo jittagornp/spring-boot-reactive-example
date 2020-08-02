@@ -1,13 +1,6 @@
-# spring-boot-reactive-dockerfile 
+# spring-boot-reactive-logging
 
-> ตัวอย่างการเขียน Spring-boot Reactive + Dockerfile 
-
-# Prerequisites 
-
-- มีความรู้เรื่อง Docker 
-    - ถ้ายังไม่แม่น สามารถอ่านเพิ่มเติมได้ที่ [พื้นฐาน Docker](https://docs.google.com/presentation/d/1NXArkIDFIJMmcvXY63cc5z7jIsbx8SDZqt76RqeuGwU/edit?usp=sharing)
-- ในเครื่องมีการติดตั้ง Docker แล้ว 
-    - สำหรับ Ubuntu Server สามารถทำตามนี้ได้ [ติดตั้ง Docker บน Ubuntu 18.04](https://www.jittagornp.me/blog/install-docker-on-ubuntu-18.04/)
+> ตัวอย่างการเขียน Spring-boot Reactive Logging 
 
 # 1. เพิ่ม Dependencies และ Plugins
 
@@ -24,6 +17,12 @@ pom.xml
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
     </dependency>
 </dependencies>
 
@@ -51,6 +50,9 @@ pom.xml
 ...
 ```
 
+lombox เป็น dependency ที่ใช้สำหรับ generate code จาก annotation ต่าง ๆ   
+เอกสาร [https://projectlombok.org/](https://projectlombok.org/)  
+
 # 2. เขียน Main Class 
 
 ``` java
@@ -67,40 +69,45 @@ public class AppStarter {
 
 # 3. เขียน Controller
 ``` java
+@Slf4j
 @RestController
 public class HomeController {
 
     @GetMapping({"", "/"})
     public Mono<String> hello() {
+        log.debug("call hello method");
         return Mono.just("Hello world.");
     }
 }
 ```
-# 4. เขียน Dockerfile 
-ไว้ที่ root ของ project /Dockerfile 
-```dockerfile 
-FROM openjdk:11-jre-slim
-EXPOSE 8080
-ADD target/*.jar /app.jar
-ENTRYPOINT java $JAVA_OPTS -jar /app.jar
-```
 
-# 5. Build Code
+`@Slf4j` เป็นการใช้ annotation ของ lombox เพื่อ generate Log4J Code (logging)   
+ทำให้เราไม่ต้องเขียน new instance ของ log4j เอง  
+การทำงานของ lombox เป็นการ inject code at compile time  
+
+# 4. Config Logging
+
+classpath:application.properties 
+``` properties 
+logging.level.org.springframework=DEBUG
+logging.level.me.jittagornp=DEBUG
+logging.file=/log/app.log
+```
+# 5. Build Code 
 cd ไปที่ root ของ project จากนั้น  
 ``` sh
-$ mvn clean package
+$ mvn clean package 
 ```
 
-# 6. Build Docker Image จาก Dockerfile  
-``` sh
-$ docker build -t hello-world .
-``` 
-
-# 7. Run Container 
-``` sh
-$ docker run -d -p 8080:8080 --name hello-world hello-world 
+# 6. Run 
+``` sh 
+$ mvn spring-boot:run
 ```
 
-# 8. เข้าใช้งาน
+# 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+
+# เอกสารเพิ่มเติม 
+- [https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html)  
