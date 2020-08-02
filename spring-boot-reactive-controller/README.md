@@ -112,7 +112,7 @@ public class UserController {
 }
 ```
 
-### คำอธบาย
+### คำอธิบาย
 
 - `@RestController` เป็นการระบุว่า class นี้เป็น Controller แบบที่เป็น RESTFul
 - `@RequestMapping("/users")` เป็นการกำหนด Path สำหรับทุก ๆ Method ใน Controller นี้ ว่าให้ขึ้นต้นด้วยคำว่า `/users`
