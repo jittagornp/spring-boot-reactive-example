@@ -49,10 +49,10 @@
 - [spring-boot-reactive-controller](spring-boot-reactive-controller) - การเขียน Controller 
 - [spring-boot-reactive-form-data](spring-boot-reactive-form-data) - การรับค่าจาก Html Form
 - [spring-boot-reactive-download-file](spring-boot-reactive-download-file) - การ Download File 
+- [spring-boot-reactive-upload-file](spring-boot-reactive-upload-file) - การ Upload File  
 
 ### รอการปรับ Code เป็น Java 11
 
-- [spring-boot-webflux-upload-file](spring-boot-webflux-upload-file) - การ Upload File  
 - [spring-boot-webflux-session](spring-boot-webflux-session) - พื้นฐานการใช้ Session 
 - [spring-boot-webflux-cookie](spring-boot-webflux-cookie) - พื้นฐานการใช้ Cookie 
 - [spring-boot-webflux-configuration-properties](spring-boot-webflux-configuration-properties) - การอ่าน Config จาก application.properties 
