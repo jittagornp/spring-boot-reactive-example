@@ -1,7 +1,8 @@
-# spring-boot-webflux-helloworld
-ตัวอย่างการเขียน Spring-boot WebFlux Hello World
+# spring-boot-reactive-helloworld
 
-# 1. เพิ่ม Dependencies
+> ตัวอย่างการเขียน Spring-boot Reactive Hello World
+
+# 1. เพิ่ม Dependencies และ Plugins 
 
 pom.xml 
 ``` xml
@@ -9,7 +10,7 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.5.RELEASE</version>
+    <version>2.3.2.RELEASE</version>
 </parent>
 
 <dependencies>
@@ -19,6 +20,27 @@ pom.xml
     </dependency>
 </dependencies>
 
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>        
+                <execution>            
+                    <id>build-info</id>            
+                    <goals>                
+                        <goal>build-info</goal>            
+                    </goals>        
+                    <configuration>                
+                        <additionalProperties>                    
+                            <java.version>${java.version}</java.version>                                   
+                        </additionalProperties>            
+                    </configuration>        
+                </execution>    
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ...
 ```
 
@@ -26,7 +48,7 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.pamarin"}) 
+@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -50,12 +72,12 @@ public class HomeController {
 
 # 4. Build
 cd ไปที่ root ของ project จากนั้น  
-``` shell 
-$ mvn clean install
+``` sh
+$ mvn clean package
 ```
 
 # 5. Run 
-``` shell 
+``` sh 
 $ mvn spring-boot:run
 ```
 
