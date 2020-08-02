@@ -90,12 +90,12 @@ public class UserController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<User> create(@RequestBody @Validated final User user){
+    public Mono<User> create(@RequestBody final User user){
         ...
     }
     
     @PutMapping("/{id}")
-    public Mono<User> update(@PathVariable("id") final String id, @RequestBody @Validated final User user){
+    public Mono<User> update(@PathVariable("id") final String id, @RequestBody final User user){
         ...
     }
 

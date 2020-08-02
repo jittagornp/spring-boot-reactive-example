@@ -7,7 +7,6 @@ import me.jittagornp.example.reactive.model.User;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,13 +56,13 @@ public class UserController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<User> create(@RequestBody @Validated final User user){
+    public Mono<User> create(@RequestBody final User user){
         log.debug("insert data to database...");
         return Mono.just(user);
     }
     
     @PutMapping("/{id}")
-    public Mono<User> update(@PathVariable("id") final String id, @RequestBody @Validated final User user){
+    public Mono<User> update(@PathVariable("id") final String id, @RequestBody final User user){
         log.debug("update data in database...");
         return Mono.just(user);
     }
