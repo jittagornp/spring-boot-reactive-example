@@ -1,6 +1,6 @@
-# spring-boot-webflux-example
+# spring-boot-reactive-example
 
-ตัวอย่างการเขียน Java Spring-boot WebFlux ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O หรือ Asynchronous 
+ตัวอย่างการเขียน Java Spring-boot Reactive (WebFlux) ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O หรือ Asynchronous 
 
 ![Reactive Spring](reactive_spring.png)
 
@@ -41,7 +41,7 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
 - [spring-boot-reactive-helloworld](spring-boot-reactive-helloworld) - Hello World!
-- [spring-boot-webflux-dockerfile](spring-boot-webflux-dockerfile) - การสร้าง Dockerfile การ Build Image และการ Run Container Spring-boot 
+- [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
 - [spring-boot-webflux-logging](spring-boot-webflux-logging) - การ Config และใช้งาน Logging  
 - [spring-boot-webflux-controller](spring-boot-webflux-controller)  - การเขียน Controller 
 - [spring-boot-webflux-form-data](spring-boot-webflux-form-data) - การรับค่าจาก Html Form 
