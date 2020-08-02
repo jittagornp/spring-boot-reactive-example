@@ -112,7 +112,7 @@ public class UserController {
 }
 ```
 
-### คำอธิบาย
+### คำอธิบาย 
 
 - `@RestController` เป็นการระบุว่า class นี้เป็น Controller แบบที่เป็น RESTFul
 - `@RequestMapping("/users")` เป็นการกำหนด Path สำหรับทุก ๆ Method ใน Controller นี้ ว่าให้ขึ้นต้นด้วยคำว่า `/users`
@@ -120,7 +120,7 @@ public class UserController {
 - `@PathVariable("id")` เป็นการอ้างถึงค่าตัวแปรใน Path เช่น
     - `/users/{id}` => `/users/1` ดังนั้น id จึงเท่ากับ 1
 - `@RequestBody` เป็นการแปลงและรับค่า request body จาก JSON => Java Object     
-- `@ResponseStatus` หลังจากประมวลผลเสร็จแล้ว จะให้ Http Response Status เป็นอะไร เช่น 
+- `@ResponseStatus` หลังจากประมวลผลเสร็จแล้ว ถ้า Success จะให้ Http Response Status เป็นอะไร เช่น 
    - 201 : CRATED
    - 204 : NO_CONTENT เป็นต้น 
    - ซึ่งถ้าไม่ใส่ default จะเป็น 200 : OK 
