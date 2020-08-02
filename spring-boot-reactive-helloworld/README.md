@@ -84,3 +84,5 @@ $ mvn spring-boot:run
 # 6. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
+
+![](./result.png)
