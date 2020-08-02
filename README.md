@@ -24,9 +24,11 @@
 # Prerequisites
 สิ่งที่ต้องรู้ก่อนเขียน Spring-boot Reactive 
 - java 11+ ตอนนี้ผมใช้ OpenJdk 11
-- [Apache Maven](https://www.jittagornp.me/blog/what-is-apache-maven/)
+- Apache Maven
+  - [รู้จักกับ Apache Maven](https://www.jittagornp.me/blog/what-is-apache-maven/)    
+  - [พื้นฐานการใช้ Maven Command Line](https://www.jittagornp.me/blog/basic-maven-command-line/)
 - Reactive Programming ลองอ่านนี่ดูได้ครับ [RxJava series - part 1 - ตอน อะไรเอ่ย ReactiveX?](https://medium.com/@nutron/what-is-reactivex-38293abb81cb)  ขอบคุณสำหรับบทความครับ 
-Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวนึง มีความคล้ายกันกับ ReactiveX สามารถอ่านแทนกันได้ครับ Concept เหมือนกัน  
+  - Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวนึง มีความคล้ายกันกับ ReactiveX สามารถอ่านทฤษฎีแทนกันได้ Concept เหมือนกัน  
 - Event Loop
   - [ทำความเข้าใจ Node.js กันอีกรอบ ก่อนย้ายบ้านไป Golang](https://medium.com/@goangle/%E0%B8%97%E0%B8%B3%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B9%83%E0%B8%88-event-loop-%E0%B9%83%E0%B8%99-node-js-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%AD%E0%B8%B5%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A-d80930ef081d)
   - [รู้ลึกการทำงานแบบ Asynchronous กับ Event Loop](https://www.babelcoder.com/blog/posts/asynchronous-javascript-and-event-loop) 
@@ -77,8 +79,4 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-webflux-mongo-operations](spring-boot-webflux-mongo-operations) - การเขียน Query ผ่าน Mogo Operations 
 - [spring-boot-webflux-redis](spring-boot-webflux-redis) - การเชื่อมต่อ Redis (Key/Value NoSQL) 
 - [spring-boot-webflux-nuxtjs](https://github.com/jittagornp/spring-boot-webflux-nuxtjs) - การเขียน Spring-boot Reactive + Nuxt.js 
-
-# Other
 - [spring-boot-webflux-javadoc](spring-boot-webflux-javadoc) - การ Generate Java Document API 
-
-> ผมจะค่อย ๆ add module ต่าง ๆ เข้าไปเรื่อย ๆ น่ะครับ  อาจจะได้วันละ 2-3 modules แล้วแต่เวลาว่าง + ความยากง่ายของ module นั้น ๆ ครับ
