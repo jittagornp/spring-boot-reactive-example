@@ -44,10 +44,10 @@ Spring-boot ใช้ Reactor ซึ่งเป็น lib reactive ตัวน
 - [spring-boot-reactive-helloworld](spring-boot-reactive-helloworld) - Hello World!
 - [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
 - [spring-boot-reactive-logging](spring-boot-reactive-logging) - การ Config และใช้งาน Logging  
+- [spring-boot-reactive-controller](spring-boot-reactive-controller)  - การเขียน Controller 
 
 ### รอการปรับ Code เป็น Java 11
 
-- [spring-boot-webflux-controller](spring-boot-webflux-controller)  - การเขียน Controller 
 - [spring-boot-webflux-form-data](spring-boot-webflux-form-data) - การรับค่าจาก Html Form 
 - [spring-boot-webflux-download-file](spring-boot-webflux-download-file) - การ Download File 
 - [spring-boot-webflux-upload-file](spring-boot-webflux-upload-file) - การ Upload File  
