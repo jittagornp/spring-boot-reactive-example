@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *
  * @author jitta
  */
 @Data
