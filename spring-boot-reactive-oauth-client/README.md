@@ -1,6 +1,6 @@
-# spring-boot-reactive-helloworld
+# spring-boot-reactive-oauth-client
 
-> ตัวอย่างการเขียน Spring-boot Reactive Hello World
+> ตัวอย่างการเขียน Spring-boot Reactive OAuth Client 
 
 # 1. เพิ่ม Dependencies และ Plugins 
 
@@ -17,6 +17,12 @@ pom.xml
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
     </dependency>
 </dependencies>
 
@@ -61,28 +67,105 @@ public class AppStarter {
 # 3. เขียน Controller
 ``` java
 @RestController
-public class HomeController {
+public class IndexController {
 
     @GetMapping({"", "/"})
     public Mono<String> hello() {
-        return Mono.just("Hello world.");
+        return Mono.just("OAuth Client.");
     }
 }
 ```
 
-# 4. Build Code
+# 4. เขียน Code สำหรับเชื่อมต่อ OAuth 
+```java
+@Slf4j
+public abstract class OAuthControllerAdapter {
+
+    protected abstract OAuthClient getOAuthClient();
+
+    protected abstract String getAuthorizationCodeEndpoint();
+
+    protected abstract String getAccessTokenEndpoint();
+
+    protected abstract String getUserInfoEndpoint();
+
+    protected abstract OAuthUserInfo mapUserInfo(final Map<String, Object> userInfo);
+    
+    ...
+    ...
+}
+
+@Slf4j
+@RestController
+@RequestMapping("/google/oauth")
+public class GoogleOAuthController extends OAuthControllerAdapter {
+
+    @Override
+    protected OAuthClient getOAuthClient() {
+        return OAuthClient.builder()
+                .clientId("3355xxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com")
+                .clientSecret("D9pnYkQxxxxxxxxxxxxxxxxxx")
+                .scope("profile email")
+                .build();
+    }
+    ...
+}
+
+@Slf4j
+@RestController
+@RequestMapping("/facebook/oauth")
+public class FacebookOAuthController extends OAuthControllerAdapter {
+
+    @Override
+    protected OAuthClient getOAuthClient() {
+        return OAuthClient.builder()
+                .clientId("314846xxxxxxxxxxxxxxxxxx")
+                .clientSecret("647a877e6d5d9xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .scope("email")
+                .build();
+    }
+    ...
+}    
+```
+
+### หมายเหตุ 
+
+อย่าลืมแก้ค่า `clientId` กับ `clientSecret` ก่อน Run Code 
+
+# 5. Build Code
 cd ไปที่ root ของ project จากนั้น  
 ``` sh
 $ mvn clean package
 ```
 
-# 5. Run 
+# 6. Run 
 ``` sh 
 $ mvn spring-boot:run
 ```
 
-# 6. เข้าใช้งาน
+# 7. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
-![](./result.png)
+# 8. ทดสอบ
+
+
+### Google 
+
+ให้ไปที่ url นี้
+
+- [http://localhost:8080/google/oauth/authorize?redirect_uri=http://localhost:8080/google/oauth/authorize/callback](http://localhost:8080/google/oauth/authorize?redirect_uri=http://localhost:8080/google/oauth/authorize/callback)
+
+เมื่อได้ authorization code มาแล้วให้ นำ code มาขอ access_token ที่ url นี้ 
+
+![](oauth-google.png)
+
+### Facebook
+
+ให้ไปที่ URL นี้ 
+- [http://localhost:8080/facebook/oauth/authorize?redirect_uri=http://localhost:8080/facebook/oauth/authorize/callback](http://localhost:8080/facebook/oauth/authorize?redirect_uri=http://localhost:8080/facebook/oauth/authorize/callback)
+
+เมื่อได้ authorization code มาแล้วให้ นำ code มาขอ access_token ที่ url นี้ 
+
+![](oauth-facebook.png)
+
