@@ -52,6 +52,7 @@
 - [spring-boot-reactive-upload-file](spring-boot-reactive-upload-file) - การ Upload File  
 - [spring-boot-reactive-session](spring-boot-reactive-session) - พื้นฐานการใช้ Session 
 - [spring-boot-reactive-cookie](spring-boot-reactive-cookie) - พื้นฐานการใช้ Cookie 
+- [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
 
 ### รอการปรับ Code เป็น Java 11
 
