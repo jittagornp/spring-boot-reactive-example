@@ -2,6 +2,11 @@
 
 > ตัวอย่างการเขียน Spring-boot Reactive OAuth Client 
 
+# Prerequisites
+
+- มีความรู้เรื่อง OAuth 2.0 
+    - ถ้ายังไม่แม่น สามารถอ่านเพิ่มเติมได้ที่ [OAuth 2.0 คืออะไร ทำงานยังไง แบบ Step by Step](https://docs.google.com/presentation/d/1GefptamJEHczcnkNo1Gjsv2DFO2ctFjGvc7AYEf35Gg/edit?usp=sharing)
+
 # 1. เพิ่ม Dependencies และ Plugins 
 
 pom.xml 
