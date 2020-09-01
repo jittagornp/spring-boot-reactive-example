@@ -6,6 +6,8 @@
 
 - มีความรู้เรื่อง OAuth 2.0 
     - ถ้ายังไม่แม่น สามารถอ่านเพิ่มเติมได้ที่ [OAuth 2.0 คืออะไร ทำงานยังไง แบบ Step by Step](https://docs.google.com/presentation/d/1GefptamJEHczcnkNo1Gjsv2DFO2ctFjGvc7AYEf35Gg/edit?usp=sharing)
+- ลงทะเบียน Apps ของ Facebook และ Config OAuth ที่หน้า Facebook Developer
+- สร้าง Google Project ที่หน้า Console พร้อมทั้ง Config ค่าต่าง ๆ สำหรับ OAuth 
 
 # 1. เพิ่ม Dependencies และ Plugins 
 
