@@ -34,10 +34,6 @@ public abstract class OAuthControllerAdapter {
 
     protected abstract OAuthUserInfo mapUserInfo(final Map<String, Object> userInfo);
 
-    private URI buildRedirectURI(final String redirectUri) {
-        return URI.create(getAuthorizationCodeEndpoint() + buildAuthorizationCodeQueryString(redirectUri));
-    }
-
     @GetMapping("/authorize")
     public Mono<Void> authorize(
             @RequestParam("redirect_uri") final String redirectUri,
@@ -78,6 +74,9 @@ public abstract class OAuthControllerAdapter {
                 .map(this::mapUserInfo);
     }
 
+    private URI buildRedirectURI(final String redirectUri) {
+        return URI.create(getAuthorizationCodeEndpoint() + buildAuthorizationCodeQueryString(redirectUri));
+    }
 
     private String buildAuthorizationCodeQueryString(final String redirectUri) {
         final OAuthClient oauthClient = getOAuthClient();
