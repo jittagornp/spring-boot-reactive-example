@@ -7,3 +7,10 @@
 /spring-boot-reactive-upload-file/target/
 /spring-boot-reactive-session/target/
 /spring-boot-reactive-cookie/target/
+/spring-boot-reactive-oauth-client/target/
+
+.DS_Store
+*/.DS_Store
+*/.idea/
+*/*.iml
+
