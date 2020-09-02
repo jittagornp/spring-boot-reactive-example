@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 public class IndexController {
 
     @GetMapping({"", "/"})
-    public Mono<String> hello(Model model) {
+    public Mono<String> hello(final Model model) {
         model.addAttribute("name", "Jittagorn");
         return Mono.just("index");
     }
