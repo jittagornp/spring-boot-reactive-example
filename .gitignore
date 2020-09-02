@@ -9,6 +9,7 @@
 /spring-boot-reactive-cookie/target/
 /spring-boot-reactive-configuration-properties/target/
 /spring-boot-reactive-thymleaf/target/
+/spring-boot-reactive-web-filter/target/
 /spring-boot-reactive-oauth-client/target/
 
 .DS_Store
