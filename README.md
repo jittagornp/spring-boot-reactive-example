@@ -53,11 +53,11 @@
 - [spring-boot-reactive-session](spring-boot-reactive-session) - พื้นฐานการใช้ Session 
 - [spring-boot-reactive-cookie](spring-boot-reactive-cookie) - พื้นฐานการใช้ Cookie 
 - [spring-boot-reactive-configuration-properties](spring-boot-reactive-configuration-properties) - การอ่าน Config จาก application.properties 
+- [spring-boot-reactive-thymleaf](spring-boot-reactive-thymleaf)  - การใช้ Thymleaf ทำ View (Server Site) Rendering (HTML)  
 - [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
 
 ### รอการปรับ Code เป็น Java 11
-
-- [spring-boot-webflux-thymleaf](spring-boot-webflux-thymleaf)  - การใช้ Thymleaf ทำ View (Server Site) Rendering (HTML)    
+  
 - [spring-boot-webflux-filter](spring-boot-webflux-filter) - การเขียน Filter  
 - [spring-boot-webflux-error-handler](spring-boot-webflux-error-handler) - การจัดการ Exception หรือ Error
 - [spring-boot-webflux-custom-error-handler](spring-boot-webflux-custom-error-handler) - การ Custom ตัวจัดการ Exception หรือ Error 
