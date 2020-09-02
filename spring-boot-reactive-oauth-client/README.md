@@ -100,7 +100,6 @@ public abstract class OAuthControllerAdapter {
     protected abstract OAuthUserInfo mapUserInfo(final Map<String, Object> userInfo);
     
     ...
-    ...
 }
 
 @Slf4j
