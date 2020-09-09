@@ -56,11 +56,11 @@
 - [spring-boot-reactive-thymleaf](spring-boot-reactive-thymleaf)  - การใช้ Thymleaf ทำ View (Server Site) Rendering (HTML)  
 - [spring-boot-reactive-web-filter](spring-boot-reactive-web-filter) - การเขียน Web Filter  
 - [spring-boot-reactive-error-handler](spring-boot-reactive-error-handler) - การจัดการ Exception หรือ Error
+- [spring-boot-reactive-custom-error-handler](spring-boot-reactive-custom-error-handler) - การ Custom ตัวจัดการ Exception หรือ Error 
 - [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
 
 ### รอการปรับ Code เป็น Java 11
   
-- [spring-boot-webflux-custom-error-handler](spring-boot-webflux-custom-error-handler) - การ Custom ตัวจัดการ Exception หรือ Error 
 - [spring-boot-webflux-validation](spring-boot-webflux-validation) - การ Validate ข้อมูล
 - [spring-boot-webflux-manual-validation](spring-boot-webflux-manual-validation) - การ Validate ข้อมูลแบบ Manual  
 - [spring-boot-webflux-custom-validator](spring-boot-webflux-custom-validator) - การ custom validator  
