@@ -150,7 +150,7 @@ public interface ErrorResponseExceptionHandler<E extends Throwable> {
 ```java
 public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> implements ErrorResponseExceptionHandler<E> {
 
-    protected abstract Mono<ErrorResponse> buildError(ServerWebExchange exchange, E e);
+    protected abstract Mono<ErrorResponse> buildError(final ServerWebExchange exchange, final E e);
 
     private String getErrorTraceId(final ServerWebExchange exchange) {
         return UUID.randomUUID().toString()
@@ -161,8 +161,8 @@ public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> 
 
     private Mono<ErrorResponse> additional(final ErrorResponse err, final ServerWebExchange exchange, final E e) {
         return Mono.fromCallable(() -> {
-            ServerHttpRequest httpReq = exchange.getRequest();
-            ServerHttpResponse httpResp = exchange.getResponse();
+            final ServerHttpRequest httpReq = exchange.getRequest();
+            final ServerHttpResponse httpResp = exchange.getResponse();
             err.setState(httpReq.getQueryParams().getFirst("state"));
             err.setErrorAt(now());
             if(!hasText(err.getErrorTraceId())){
