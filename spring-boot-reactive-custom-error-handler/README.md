@@ -289,6 +289,57 @@ public class DefaultErrorResponseExceptionHandlerResolver implements ErrorRespon
 }
 ```
 
+# 7. เขียน ErrorResponseProducer 
+
+เพื่อใช้สำหรับแปลง/พ่น Error ตาม Format ที่เราต้องการ เช่น Json, Xml, Html เป็นต้น 
+
+ประกาศ interface
+```java
+public interface ErrorResponseProducer {
+
+    Mono<Void> produce(final ErrorResponse err, final ServerWebExchange exchange);
+
+}
+```
+
+implement interface  
+  
+สมมติเราใช้ format เป็น Json (ถ้ามี format อื่น ๆ หรือเงื่อนไขอื่น ๆ ก็ implement ได้ตามต้องการ)
+```java
+@Component
+@RequiredArgsConstructor
+public class JsonErrorResponseProducer implements ErrorResponseProducer {
+
+    private final ObjectMapper objectMapper;
+
+    private void setHeaders(final ErrorResponse err, final ServerHttpResponse response){
+        final HttpHeaders headers = response.getHeaders();
+        response.setStatusCode(HttpStatus.valueOf(err.getErrorStatus()));
+        try {
+            headers.put(HttpHeaders.CONTENT_TYPE, Collections.singletonList(MediaType.APPLICATION_JSON_VALUE));
+        } catch (UnsupportedOperationException e) {
+
+        }
+    }
+
+    @Override
+    public Mono<Void> produce(final ErrorResponse err, final ServerWebExchange exchange) {
+        return Mono.defer(() -> {
+            try {
+                final ServerHttpResponse response = exchange.getResponse();
+                setHeaders(err, response);
+                final String json = objectMapper.writeValueAsString(err);
+                final DataBuffer buffer = response.bufferFactory().wrap(json.getBytes(Charset.forName("utf-8")));
+                return response.writeWith(Mono.just(buffer))
+                        .doOnError(e -> DataBufferUtils.release(buffer));
+            } catch (final Exception e) {
+                return Mono.error(e);
+            }
+        });
+    }
+}
+```
+
 # 7. เขียน WebExceptionHandler  
 เป็นตัวจัดการ Global Exception ทุกประเภท ซึ่ง WebFlux จะโยน Exception เข้ามาที่นี่ 
 ```java
@@ -298,7 +349,7 @@ public class DefaultErrorResponseExceptionHandlerResolver implements ErrorRespon
 @RequiredArgsConstructor
 public class ServerWebExceptionHandler implements WebExceptionHandler {
 
-    private final ObjectMapper objectMapper;
+    private final ErrorResponseProducer producer;
 
     private final ErrorResponseExceptionHandlerResolver resolver;
 
@@ -307,36 +358,7 @@ public class ServerWebExceptionHandler implements WebExceptionHandler {
         log.warn("error => ", e);
         return resolver.resolve(e)
                 .flatMap(handler -> (Mono<ErrorResponse>)handler.handle(exchange, e))
-                .flatMap(err -> {
-                    return jsonResponse(
-                            exchange,
-                            err
-                    );
-                });
-    }
-
-    private Mono<Void> jsonResponse(final ServerWebExchange exchange, final ErrorResponse err) {
-        final ServerHttpResponse response = exchange.getResponse();
-        final HttpHeaders headers = response.getHeaders();
-        response.setStatusCode(HttpStatus.valueOf(err.getErrorStatus()));
-        try {
-            headers.put(HttpHeaders.CONTENT_TYPE, Collections.singletonList(MediaType.APPLICATION_JSON_VALUE));
-        } catch (UnsupportedOperationException e) {
-
-        }
-        return Mono.create((final MonoSink<String> callback) -> {
-            try {
-                final String json = objectMapper.writeValueAsString(err);
-                callback.success(json);
-            } catch (final Exception e) {
-                callback.error(e);
-            }
-        })
-                .flatMap(json -> {
-                    final DataBuffer buffer = response.bufferFactory().wrap(json.getBytes(Charset.forName("utf-8")));
-                    return response.writeWith(Mono.just(buffer))
-                            .doOnError(e -> DataBufferUtils.release(buffer));
-                });
+                .flatMap(err -> producer.produce(err, exchange));
     }
 }
 ```
