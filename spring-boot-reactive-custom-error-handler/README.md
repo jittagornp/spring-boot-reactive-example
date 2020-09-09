@@ -233,7 +233,7 @@ public class ErrorResponseInvalidUsernamePasswordExceptionHandler extends ErrorR
 # 6. เขียน Resolver 
 สำหรับ resolve error แต่ละประเภท   
   
-ประกาศ interface
+### ประกาศ interface
 ```java 
 public interface ErrorResponseExceptionHandlerResolver {
 
@@ -242,7 +242,7 @@ public interface ErrorResponseExceptionHandlerResolver {
 }
 ```
 
-implement interface  
+### implement interface  
 ```java 
 @Slf4j
 @Component
@@ -293,7 +293,7 @@ public class DefaultErrorResponseExceptionHandlerResolver implements ErrorRespon
 
 เพื่อใช้สำหรับแปลง/พ่น Error ตาม Format ที่เราต้องการ เช่น Json, Xml, Html เป็นต้น 
 
-ประกาศ interface
+### ประกาศ interface
 ```java
 public interface ErrorResponseProducer {
 
@@ -302,8 +302,7 @@ public interface ErrorResponseProducer {
 }
 ```
 
-implement interface  
-  
+### implement interface  
 สมมติเราใช้ format เป็น Json (ถ้ามี format อื่น ๆ หรือเงื่อนไขอื่น ๆ ก็ implement ได้ตามต้องการ)
 ```java
 @Component
