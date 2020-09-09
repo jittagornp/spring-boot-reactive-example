@@ -340,7 +340,7 @@ public class JsonErrorResponseProducer implements ErrorResponseProducer {
 }
 ```
 
-# 7. เขียน WebExceptionHandler  
+# 8. เขียน WebExceptionHandler  
 เป็นตัวจัดการ Global Exception ทุกประเภท ซึ่ง WebFlux จะโยน Exception เข้ามาที่นี่ 
 ```java
 @Slf4j
@@ -363,18 +363,18 @@ public class ServerWebExceptionHandler implements WebExceptionHandler {
 }
 ```
 
-# 8. Build
+# 9. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean package
 ```
 
-# 9. Run 
+# 10. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 10. เข้าใช้งาน
+# 11. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
