@@ -114,6 +114,8 @@ public class HomeController {
 - เราสามารถ throw Exception ประเภทอื่น ๆ ตามที่เราต้องการได้ 
 
 # 4. เขียน Error Model 
+
+เพื่อใช้เป็น Error Response 
 ``` java 
 @Getter
 @Setter
