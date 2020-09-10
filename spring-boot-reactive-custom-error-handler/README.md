@@ -82,7 +82,7 @@ public class HomeController {
 
 }
 ```
-- ลอง throw RuntimeException และ InvalidUsernamePasswordException ดู 
+- ลอง throw InvalidUsernamePasswordException และ RuntimeException ดู 
 - เราสามารถ throw Exception ประเภทอื่น ๆ ตามที่เราต้องการได้ 
 
 # 4. เขียน Error Model 
