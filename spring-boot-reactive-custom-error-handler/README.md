@@ -72,6 +72,11 @@ public class HomeController {
 
     @GetMapping({"", "/"})
     public Mono<String> hello() {
+        throw new AuthenticationException();
+    }
+
+    @GetMapping("/invalidUsernamePassword")
+    public Mono<String> invalidUsernamePassword() {
         throw new InvalidUsernamePasswordException();
     }
 
@@ -82,7 +87,7 @@ public class HomeController {
 
 }
 ```
-- ลอง throw InvalidUsernamePasswordException และ RuntimeException ดู 
+- ลอง throw AuthenticationException, InvalidUsernamePasswordException และ RuntimeException ดู 
 - เราสามารถ throw Exception ประเภทอื่น ๆ ตามที่เราต้องการได้ 
 
 # 4. เขียน Error Model 
@@ -205,6 +210,24 @@ public class ErrorResponseRootExceptionHandler extends ErrorResponseExceptionHan
     protected Mono<ErrorResponse> buildError(final ServerWebExchange exchange, final Exception e) {
         return Mono.fromCallable(() -> {
             return ErrorResponse.serverError();
+        });
+    }
+}
+```
+ตัวจัดการ AuthenticationException 
+```java
+@Component
+public class ErrorResponseAuthenticationExceptionHandler extends ErrorResponseExceptionHandlerAdapter<AuthenticationException> {
+
+    @Override
+    public Class<AuthenticationException> getTypeClass() {
+        return AuthenticationException.class;
+    }
+
+    @Override
+    protected Mono<ErrorResponse> buildError(final ServerWebExchange exchange, final AuthenticationException e) {
+        return Mono.fromCallable(() -> {
+            return ErrorResponse.unauthorized();
         });
     }
 }
@@ -383,6 +406,23 @@ $ mvn spring-boot:run
 # ผลลัพธ์ที่ได้
 ```json
 {
+    "error": "unauthorized",
+    "error_status": 401,
+    "error_description": "Please login",
+    "error_at": "2020-09-10T10:02:36.591176",
+    "error_trace_id": "1463A078",
+    "error_uri": "https://developer.pamarin.com/document/error/",
+    "error_on": "0",
+    "error_fields": [ ],
+    "error_data": { },
+    "state": null
+}
+```
+
+ลองทดสอบอีกตัวอย่าง [http://localhost:8080/invalidUsernamePassword](http://localhost:8080/invalidUsernamePassword)
+
+```json
+{
     "error": "invalid_username_password",
     "error_status": 400,
     "error_description": "invalid username or password",
@@ -402,7 +442,7 @@ $ mvn spring-boot:run
 {
     "error": "server_error",
     "error_status": 500,
-    "error_description": "System error",
+    "error_description": "Unknown error",
     "error_at": "2020-09-09T22:35:23.914991",
     "error_trace_id": "5056E04D",
     "error_uri": "https://developer.pamarin.com/document/error/",

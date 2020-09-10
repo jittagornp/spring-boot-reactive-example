@@ -152,7 +152,7 @@ public class ErrorResponse {
     }
 
     public static ErrorResponse serverError() {
-        return serverError("System error");
+        return serverError("Unknown error");
     }
 
     private static String protectSensitiveErrorDescription(final String description) {
@@ -162,7 +162,7 @@ public class ErrorResponse {
                     || desc.contains("springframework")
                     || desc.contains("sql")
                     || desc.contains("mongo")) {
-                return "System error";
+                return "Unknown error";
             }
         }
         return description;
