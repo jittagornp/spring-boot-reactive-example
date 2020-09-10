@@ -25,6 +25,10 @@
   
 เลยคิดว่าน่าจะเป็นประโยชน์ต่อคนอื่น เลยพยายามทำเป็นตัวอย่างเก็บไว้ครับ
 
+# การออกแบบ Error Format 
+
+> Error Format นี้ Design ตาม OAuth 2.0 (RFC6749) เนื่องจาก Code Authen บางตัวเราใช้ OAuth เป็น Core เราเลยทำ Error ให้เหมือนกับที่ OAuth ใช้ 
+
 # 1. เพิ่ม Dependencies และ Plugins
 
 pom.xml 
