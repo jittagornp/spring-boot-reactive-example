@@ -147,14 +147,10 @@ public class ServerWebExceptionHandler implements WebExceptionHandler {
         err.setErrorAt(LocalDateTime.now());
         err.setErrorTraceId(UUID.randomUUID().toString());
         err.setErrorUri("https://developer.pamarin.com/document/error/");
-        return jsonResponse(
-                exchange,
-                err
-        );
+        return produceJson(err, exchange);
     }
 
-    private Mono<Void> jsonResponse(final ServerWebExchange exchange, final ErrorResponse err) {
-        final ServerHttpResponse response = exchange.getResponse();
+    private void setHeaders(final ErrorResponse err, final ServerHttpResponse response){
         final HttpHeaders headers = response.getHeaders();
         response.setStatusCode(HttpStatus.valueOf(err.getErrorStatus()));
         try {
@@ -162,20 +158,23 @@ public class ServerWebExceptionHandler implements WebExceptionHandler {
         } catch (UnsupportedOperationException e) {
 
         }
-        return Mono.create((final MonoSink<String> callback) -> {
-            try {
-                final String json = objectMapper.writeValueAsString(err);
-                callback.success(json);
-            } catch (final Exception e) {
-                callback.error(e);
-            }
-        })
-                .flatMap(json -> {
-                    final DataBuffer buffer = response.bufferFactory().wrap(json.getBytes(Charset.forName("utf-8")));
-                    return response.writeWith(Mono.just(buffer))
-                            .doOnError(e -> DataBufferUtils.release(buffer));
-                });
     }
+
+    public Mono<Void> produceJson(final ErrorResponse err, final ServerWebExchange exchange) {
+        return Mono.defer(() -> {
+            try {
+                final ServerHttpResponse response = exchange.getResponse();
+                setHeaders(err, response);
+                final String json = objectMapper.writeValueAsString(err);
+                final DataBuffer buffer = response.bufferFactory().wrap(json.getBytes(Charset.forName("utf-8")));
+                return response.writeWith(Mono.just(buffer))
+                        .doOnError(e -> DataBufferUtils.release(buffer));
+            } catch (final Exception e) {
+                return Mono.error(e);
+            }
+        });
+    }
+
 }
 ```
 
