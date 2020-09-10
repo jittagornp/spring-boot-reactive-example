@@ -66,7 +66,7 @@ pom.xml
 
 ### หมายเหตุ
 
-- `spring-boot-starter-validation` เป็น Dependency สำหรับการทำ Validation
+- `spring-boot-starter-validation` เป็น Dependency สำหรับการทำ Validation (ตั้งแต่ Spring-boot 2.3 RELEASE เป็นต้นไป มีการตัด Validation `javax.validation.*` ออก ต้อง Add Dependencies เข้าไปเอง อ้างอิงจาก [Spring Boot 2.3 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.3-Release-Notes#validation-starter-no-longer-included-in-web-starters))
 - `com.google.guava` เป็น Dependency Utilities Codes ของ Google ชื่อ Guava
 
 # 2. เขียน Main Class 
