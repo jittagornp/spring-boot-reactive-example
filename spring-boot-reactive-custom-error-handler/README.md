@@ -153,10 +153,17 @@ public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> 
     protected abstract Mono<ErrorResponse> buildError(final ServerWebExchange exchange, final E e);
 
     private String getErrorTraceId(final ServerWebExchange exchange) {
-        return UUID.randomUUID().toString()
+        return UUID.randomUUID()
+                .toString()
                 .replace("-", "")
                 .substring(0, 8)
                 .toUpperCase();
+    }
+    
+    private HttpStatus toHttpStatus(final int statusCode){
+        return (statusCode == 0)
+                ? HttpStatus.INTERNAL_SERVER_ERROR
+                : HttpStatus.valueOf(statusCode);
     }
 
     private Mono<ErrorResponse> additional(final ErrorResponse err, final ServerWebExchange exchange, final E e) {
@@ -165,16 +172,12 @@ public abstract class ErrorResponseExceptionHandlerAdapter<E extends Throwable> 
             final ServerHttpResponse httpResp = exchange.getResponse();
             err.setState(httpReq.getQueryParams().getFirst("state"));
             err.setErrorAt(now());
-            if(!hasText(err.getErrorTraceId())){
+            if (!hasText(err.getErrorTraceId())) {
                 err.setErrorTraceId(getErrorTraceId(exchange));
             }
             err.setErrorOn("0");
-            httpResp.setStatusCode(
-                    err.getErrorStatus() == 0
-                            ? HttpStatus.INTERNAL_SERVER_ERROR
-                            : HttpStatus.valueOf(err.getErrorStatus())
-            );
             err.setErrorUri("https://developer.pamarin.com/document/error/");
+            httpResp.setStatusCode(toHttpStatus(err.getErrorStatus()));
             return err;
         });
     }
