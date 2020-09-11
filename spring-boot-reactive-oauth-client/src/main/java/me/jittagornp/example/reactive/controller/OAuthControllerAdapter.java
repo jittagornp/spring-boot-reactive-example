@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.controller;
 
 import com.auth0.jwt.JWT;
@@ -29,6 +32,9 @@ import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.hasText;
 
+/**
+ * @author jitta
+ */
 @Slf4j
 public abstract class OAuthControllerAdapter {
 

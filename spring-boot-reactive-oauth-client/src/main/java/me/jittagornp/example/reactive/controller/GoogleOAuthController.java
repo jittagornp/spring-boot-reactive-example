@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.controller;
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * https://developers.google.com/identity/protocols/oauth2/web-server
+ *
+ * @author jitta
+ */
 @Slf4j
 @RestController
 @RequestMapping("/google/oauth")

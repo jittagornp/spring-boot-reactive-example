@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.controller;
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * https://developers.line.biz/en/docs/line-login/integrate-line-login/
+ *
+ * @author jitta
+ */
 @Slf4j
 @RestController
 @RequestMapping("/line/oauth")

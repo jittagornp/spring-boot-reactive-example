@@ -1,8 +1,14 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+/**
+ * @author jitta
+ */
 @Data
 public class OAuthAccessToken {
 
