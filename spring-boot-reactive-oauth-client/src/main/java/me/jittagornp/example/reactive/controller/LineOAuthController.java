@@ -12,41 +12,42 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/google/oauth")
-public class GoogleOAuthController extends OAuthControllerAdapter {
+@RequestMapping("/line/oauth")
+public class LineOAuthController extends OAuthControllerAdapter {
 
     @Override
     protected OAuthClient getOAuthClient() {
         return OAuthClient.builder()
-                .clientId("3355xxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com")
-                .clientSecret("D9pnYkQxxxxxxxxxxxxxxxxxx")
-                .scope("profile email")
+                .clientId("16549xxxxxxx")
+                .clientSecret("c5d28ca4axxxxxxxxxxxxxxxxxx")
+                .scope("profile openid email")
                 .build();
     }
 
     @Override
     protected String getAuthorizationCodeEndpoint() {
-        return "https://accounts.google.com/o/oauth2/v2/auth";
+        return "https://access.line.me/oauth2/v2.1/authorize";
     }
 
     @Override
     protected String getAccessTokenEndpoint() {
-        return "https://oauth2.googleapis.com/token";
+        return "https://api.line.me/oauth2/v2.1/token";
     }
 
     @Override
     protected String getUserInfoEndpoint() {
-        return "https://www.googleapis.com/oauth2/v2/userinfo?alt=json";
+        return null;
     }
 
     @Override
     protected OAuthUserInfo mapUserInfo(final Map<String, Object> userInfo) {
+        final String userId = (String) userInfo.get("sub");
         return OAuthUserInfo.builder()
-                .id((String) userInfo.get("id"))
+                .id(userId)
                 .email((String) userInfo.get("email"))
                 .name((String) userInfo.get("name"))
-                .picture((String) userInfo.get("picture"))
-                .providerType(OAuthProviderType.GOOGLE)
+                .picture((String)userInfo.get("picture"))
+                .providerType(OAuthProviderType.LINE)
                 .build();
     }
 
@@ -54,5 +55,4 @@ public class GoogleOAuthController extends OAuthControllerAdapter {
     protected OAuthException parseErrorMessage(final Map<String, Object> error) {
         return new OAuthException((String) error.get("error_description"));
     }
-
 }

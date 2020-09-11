@@ -1,8 +1,9 @@
 package me.jittagornp.example.reactive.enums;
 
-public enum SocialMediaType {
+public enum OAuthProviderType {
 
     GOOGLE,
-    FACEBOOK
+    FACEBOOK,
+    LINE
 
 }

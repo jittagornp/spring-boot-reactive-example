@@ -1,7 +1,8 @@
 package me.jittagornp.example.reactive.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import me.jittagornp.example.reactive.enums.SocialMediaType;
+import me.jittagornp.example.reactive.enums.OAuthProviderType;
+import me.jittagornp.example.reactive.exception.OAuthException;
 import me.jittagornp.example.reactive.model.OAuthClient;
 import me.jittagornp.example.reactive.model.OAuthUserInfo;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,14 @@ public class FacebookOAuthController extends OAuthControllerAdapter {
                 .email((String) userInfo.get("email"))
                 .name((String) userInfo.get("name"))
                 .picture("https://graph.facebook.com/{userId}/picture?type=large".replace("{userId}", userId))
-                .socialMediaType(SocialMediaType.FACEBOOK)
+                .providerType(OAuthProviderType.FACEBOOK)
                 .build();
     }
+
+    @Override
+    protected OAuthException parseErrorMessage(final Map<String, Object> error) {
+        final Map map = (Map) error.get("error");
+        return new OAuthException((String) map.get("message"));
+    }
+
 }

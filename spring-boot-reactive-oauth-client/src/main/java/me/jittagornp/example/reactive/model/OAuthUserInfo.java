@@ -1,7 +1,7 @@
 package me.jittagornp.example.reactive.model;
 
 import lombok.Builder;
-import me.jittagornp.example.reactive.enums.SocialMediaType;
+import me.jittagornp.example.reactive.enums.OAuthProviderType;
 
 import lombok.Data;
 
@@ -17,7 +17,7 @@ public class OAuthUserInfo {
 
     private String picture;
 
-    private SocialMediaType socialMediaType;
+    private OAuthProviderType providerType;
 
 
 }
