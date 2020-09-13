@@ -33,12 +33,12 @@ public @interface PasswordEqualsConfirmPassword {
         private PasswordEqualsConfirmPassword annotation;
 
         @Override
-        public void initialize(PasswordEqualsConfirmPassword annotation) {
+        public void initialize(final PasswordEqualsConfirmPassword annotation) {
             this.annotation = annotation;
         }
 
         @Override
-        public boolean isValid(Model model, ConstraintValidatorContext context) {
+        public boolean isValid(final Model model, final ConstraintValidatorContext context) {
             String password = model.getPassword();
             String confirmPassword = model.getConfirmPassword();
             if (password == null) {
@@ -51,10 +51,6 @@ public @interface PasswordEqualsConfirmPassword {
                     .withMessage(annotation.message())
                     .changeTo("confirmPassword")
                     .valid(password.equals(confirmPassword));
-        }
-
-        public boolean isValid(Model model) {
-            return isValid(model, null);
         }
 
     }

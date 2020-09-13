@@ -34,14 +34,14 @@ public @interface PasswordNotEqualsEmail {
         private PasswordNotEqualsEmail annotation;
 
         @Override
-        public void initialize(PasswordNotEqualsEmail annotation) {
+        public void initialize(final PasswordNotEqualsEmail annotation) {
             this.annotation = annotation;
         }
 
         @Override
-        public boolean isValid(PasswordNotEqualsEmail.Model model, ConstraintValidatorContext context) {
-            String email = model.getEmail();
-            String password = model.getPassword();
+        public boolean isValid(final PasswordNotEqualsEmail.Model model, final ConstraintValidatorContext context) {
+            final String email = model.getEmail();
+            final String password = model.getPassword();
             if (!(hasText(email) && hasText(password))) {
                 return true;
             }
@@ -49,10 +49,6 @@ public @interface PasswordNotEqualsEmail {
                     .withMessage(annotation.message())
                     .changeTo("password")
                     .valid(!email.equals(password));
-        }
-
-        public boolean isValid(PasswordNotEqualsEmail.Model model) {
-            return isValid(model, null);
         }
 
     }

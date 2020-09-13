@@ -33,7 +33,7 @@ public @interface Email {
     @Component
     public class Validator implements ConstraintValidator<Email, String> {
 
-        private static final String REGX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        private static final String REGEXP = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
         @Override
         public void initialize(Email annotation) {
@@ -41,20 +41,16 @@ public @interface Email {
         }
 
         @Override
-        public boolean isValid(String email, ConstraintValidatorContext context) {
+        public boolean isValid(final String email, final ConstraintValidatorContext context) {
             if (!hasText(email)) {
                 return true;
             }
 
-            return Pattern.compile(REGX).matcher(email).matches();
-        }
-
-        public boolean isValid(String email) {
-            return isValid(email, null);
+            return Pattern.compile(REGEXP).matcher(email).matches();
         }
 
         public static String getEmailRegExp() {
-            return REGX;
+            return REGEXP;
         }
     }
 }

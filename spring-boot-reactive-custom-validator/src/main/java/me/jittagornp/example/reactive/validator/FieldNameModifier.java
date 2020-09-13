@@ -16,25 +16,25 @@ public class FieldNameModifier {
 
     private String message;
 
-    private FieldNameModifier(ConstraintValidatorContext context) {
+    private FieldNameModifier(final ConstraintValidatorContext context) {
         this.context = context;
     }
 
-    public static FieldNameModifier of(ConstraintValidatorContext context) {
+    public static FieldNameModifier of(final ConstraintValidatorContext context) {
         return new FieldNameModifier(context);
     }
 
-    public FieldNameModifier changeTo(String fieldName) {
+    public FieldNameModifier changeTo(final String fieldName) {
         this.fieldName = fieldName;
         return this;
     }
 
-    public FieldNameModifier withMessage(String message) {
+    public FieldNameModifier withMessage(final String message) {
         this.message = message;
         return this;
     }
 
-    public boolean valid(boolean isValid) {
+    public boolean valid(final boolean isValid) {
         if (isValid) {
             return true;
         }

@@ -81,17 +81,17 @@ public @interface AtLeastPassword {
         }
 
         @Override
-        public void initialize(AtLeastPassword a) {
+        public void initialize(final AtLeastPassword a) {
             //Not used
         }
 
-        private boolean matches(String str, String regExp) {
-            Pattern pattern = Pattern.compile(".*" + regExp + ".*");
+        private boolean matches(final String str, final String regExp) {
+            final Pattern pattern = Pattern.compile(".*" + regExp + ".*");
             return pattern.matcher(str).matches();
         }
 
         @Override
-        public boolean isValid(String password, ConstraintValidatorContext context) {
+        public boolean isValid(final String password, final ConstraintValidatorContext context) {
             if (!hasText(password)) {
                 return true;
             }
@@ -101,10 +101,6 @@ public @interface AtLeastPassword {
             }
 
             return matches(password, specialCharactersRegExp);
-        }
-
-        public boolean isValid(String password) {
-            return isValid(password, null);
         }
 
         public static final List<String> getSpecialCharacters() {
