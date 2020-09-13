@@ -181,7 +181,7 @@ public class LoginController {
 
 # 6. เขียน exception handler
 
-เหมือนหัวข้อ [spring-boot-reactive-validation](spring-boot-reactive-validation)
+เหมือนหัวข้อ [spring-boot-reactive-validation](../spring-boot-reactive-validation)
 
 # 7. Build
 cd ไปที่ root ของ project จากนั้น  
