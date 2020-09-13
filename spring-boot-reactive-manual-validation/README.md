@@ -179,75 +179,26 @@ public class LoginController {
 }
 ```
 
-# 6. เขียน error handler
+# 6. เขียน exception handler
 
-ตัวจัดการ Error ให้เรียนรู้จากหัวข้อ [spring-boot-reactive-custom-error-handler](../spring-boot-reactive-custom-error-handler)
+เหมือนหัวข้อ [spring-boot-reactive-validation](spring-boot-reactive-validation)
 
-# 7. เพิ่มตัวจัดการ Error สำหรับ WebExchangeBindException
-```java 
-@Component
-public class ErrorResponseWebExchangeBindExceptionHandler extends ErrorResponseExceptionHandlerAdapter<WebExchangeBindException> {
-
-    private final List<String> standardCodes = Arrays.asList("not_null", "not_blank");
-
-    @Override
-    public Class<WebExchangeBindException> getTypeClass() {
-        return WebExchangeBindException.class;
-    }
-
-    @Override
-    protected Mono<ErrorResponse> buildError(final ServerWebExchange exchange, final WebExchangeBindException ex) {
-        return Mono.fromCallable(() -> {
-            return ErrorResponse.builder()
-                    .error("invalid_request")
-                    .errorDescription("Validate fail")
-                    .errorStatus(HttpStatus.BAD_REQUEST.value())
-                    .errorFields(
-                            ex.getFieldErrors()
-                                    .stream()
-                                    .map(f -> {
-                                        return ErrorResponse.Field.builder()
-                                                .name(f.getField())
-                                                .code(replace(f.getCode()))
-                                                .description(f.getDefaultMessage())
-                                                .build();
-                                    })
-                                    .collect(toList())
-                    )
-                    .build();
-        });
-    }
-
-    private String replace(final String code) {
-        final String underscoreCode = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, code);
-        for (String standardCode : standardCodes) {
-            if (!underscoreCode.equals(standardCode) && underscoreCode.endsWith(standardCode)) {
-                final int index = underscoreCode.indexOf(standardCode);
-                return underscoreCode.substring(index);
-            }
-        }
-        return underscoreCode;
-    }
-
-}
-```
-
-# 8. Build
+# 7. Build
 cd ไปที่ root ของ project จากนั้น  
 ``` shell 
 $ mvn clean package
 ```
 
-# 9. Run 
+# 8. Run 
 ``` shell 
 $ mvn spring-boot:run
 ```
 
-# 10. เข้าใช้งาน
+# 9. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
-# 11. ลองยิง request ทดสอบผ่าน postman
+# 10. ลองยิง request ทดสอบผ่าน postman
 > POST : http://localhost:8080/login  
   
 ได้ผลลัพธ์
