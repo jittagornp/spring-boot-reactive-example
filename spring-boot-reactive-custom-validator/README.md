@@ -2,7 +2,7 @@
 
 > ตัวอย่างการเขียน Spring-boot WebFlux Custom Validator 
 
-# 1. เพิ่ม Dependencies
+# 1. เพิ่ม Dependencies และ Plugins
 
 pom.xml 
 ``` xml
