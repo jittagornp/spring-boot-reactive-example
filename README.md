@@ -60,7 +60,7 @@
 - [spring-boot-reactive-validation](spring-boot-reactive-validation) - การ Validate ข้อมูล 
 - [spring-boot-reactive-manual-validation](spring-boot-reactive-manual-validation) - การ Validate ข้อมูลแบบ Manual  
 - [spring-boot-reactive-custom-validator](spring-boot-reactive-custom-validator) - การ custom validator  
-- [spring-boot-reactive-scheduling](spring-boot-reactive-scheduling) - การ Run Task แบบ Scheduling
+- [spring-boot-reactive-scheduling](spring-boot-reactive-scheduling) - การ Run Job/Task แบบ Scheduling
 - [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
 
 ### รอการปรับ Code เป็น Java 11
