@@ -2,14 +2,21 @@
 
 > ตัวอย่างการเขียน Spring-boot Reactive OAuth Client 
 
+ตอนนี้ตัวอย่างสำหรับ
+
+- Facebook
+- Google 
+- Line 
+
 # Prerequisites
 
 - มีความรู้เรื่อง OAuth 2.0 
     - ถ้ายังไม่แม่น สามารถอ่านเพิ่มเติมได้ที่ [OAuth 2.0 คืออะไร ทำงานยังไง แบบ Step by Step](https://docs.google.com/presentation/d/1GefptamJEHczcnkNo1Gjsv2DFO2ctFjGvc7AYEf35Gg/edit?usp=sharing)
 - ลงทะเบียน Apps ของ Facebook และ Config OAuth ที่หน้า Facebook Developer
 - สร้าง Google Project ที่หน้า Console พร้อมทั้ง Config ค่าต่าง ๆ สำหรับ OAuth
+- สร้าง Line Channel ที่หน้า Line Developer พร้อมทั้ง Config ค่าต่าง ๆ สำหรับ OAuth 
 - เมื่อได้ `clientId` และ `clientSecret` มาแล้ว ก็สามารถทดสอบการเขียน Code / ใช้งานได้ 
-- หมายเหตุ **โต ๆ** อย่าลืม set Redirect URIs ของ Google, Facebook ให้ตรงกับที่เราจะ redirect
+- หมายเหตุ **โต ๆ** อย่าลืม set Redirect URIs ของ Google, Facebook, Line ฯลฯ ให้ตรงกับที่เราจะ redirect กลับ 
 
 # 1. เพิ่ม Dependencies และ Plugins 
 
@@ -32,6 +39,12 @@ pom.xml
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.auth0</groupId>
+        <artifactId>java-jwt</artifactId>
+        <version>3.10.0</version>
     </dependency>
 </dependencies>
 
@@ -58,6 +71,10 @@ pom.xml
 </build>
 ...
 ```
+
+### หมายเหตุ
+
+- Dependency `java-jwt` ใช้สำหรับกรณีที่ OAuth Provider นั้นรองรับ OIDC (`OpenID Connect`) แล้วมีการ return `id_token` กลับมาให้ด้วย เราก็จะใช้ dependency นี้ในการ decode `id_token`  ออกมาเป็นข้อมูล User เช่น อย่างกรณีของ Line เป็นต้น 
 
 # 2. เขียน Main Class 
 
