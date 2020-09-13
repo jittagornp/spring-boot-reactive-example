@@ -60,11 +60,11 @@
 - [spring-boot-reactive-validation](spring-boot-reactive-validation) - การ Validate ข้อมูล 
 - [spring-boot-reactive-manual-validation](spring-boot-reactive-manual-validation) - การ Validate ข้อมูลแบบ Manual  
 - [spring-boot-reactive-custom-validator](spring-boot-reactive-custom-validator) - การ custom validator  
+- [spring-boot-reactive-scheduling](spring-boot-reactive-scheduling) - การ Run Task แบบ Scheduling
 - [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
 
 ### รอการปรับ Code เป็น Java 11
   
-- [spring-boot-webflux-scheduling](spring-boot-webflux-scheduling) - การ Run Task แบบ Scheduling
 - [spring-boot-webflux-unit-test](spring-boot-webflux-unit-test) - การเขียน Unit Test  
 - [spring-boot-webflux-unit-test-mockito](spring-boot-webflux-unit-test-mockito) - การเขียน Unit Test + Mockito  
 - [spring-boot-webflux-test-coverage](spring-boot-webflux-test-coverage) - Test Coverage ด้วย JaCoCo 
