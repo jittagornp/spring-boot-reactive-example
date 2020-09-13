@@ -2,7 +2,7 @@
 
 > ตัวอย่างการเขียน Spring-boot Reactive OAuth Client 
 
-ตอนนี้ตัวอย่างสำหรับ
+ตอนนี้มีตัวอย่างสำหรับ
 
 - Facebook
 - Google 
@@ -74,7 +74,7 @@ pom.xml
 
 ### หมายเหตุ
 
-- Dependency `java-jwt` ใช้สำหรับกรณีที่ OAuth Provider นั้นรองรับ OIDC (`OpenID Connect`) แล้วมีการ return `id_token` กลับมาให้ด้วย เราก็จะใช้ dependency นี้ในการ decode `id_token`  ออกมาเป็นข้อมูล User เช่น อย่างกรณีของ Line เป็นต้น 
+- Dependency `java-jwt` ใช้สำหรับกรณีที่ OAuth Provider นั้นรองรับ OIDC (`OpenID Connect`) แล้วมีการ return `id_token` กลับมาให้ด้วย ซึ่ง token นี้เป็น jwt เราก็จะใช้ dependency นี้ในการ decode `id_token`  ออกมาเป็นข้อมูล User เช่น อย่างกรณีของ Line เป็นต้น 
 
 # 2. เขียน Main Class 
 
