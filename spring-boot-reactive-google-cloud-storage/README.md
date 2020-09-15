@@ -262,9 +262,9 @@ $ mvn spring-boot:run
 
 ### หมายเหตุ
 
-ที่เราสามารถเข้าถึงไฟล์แบบ Public ได้ เพราะตอน Upload File เรา Set Permission หรือ Access Control List (ACL) เป็น allUsers can READ 
+ที่เราสามารถเข้าถึง File แบบ Public ได้ เพราะตอน Upload File เรา Set Permission หรือ Access Control List (ACL) เป็น allUsers can READ 
 
-ลอง List ไฟล์ทั้งหมดที่เคย Upload ไว้ดู
+ลอง List File ทั้งหมดที่เคย Upload ไว้ดู
 
 ![](./list-all.png)
 
