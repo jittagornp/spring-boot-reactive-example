@@ -189,7 +189,8 @@ public class FileServiceImpl implements FileService {
                     .setContentType(URLConnection.guessContentTypeFromName(fileName))
                     .setContentDisposition("inline; filename=\"" + fileName + "\"")
                     .build();
-            return mapResponse(storage.create(blobInfo, bytes), fileName);
+            final Blob blob = storage.create(blobInfo, bytes);
+            return mapResponse(blob, fileName);
         }).subscribeOn(Schedulers.elastic());
     }
 
