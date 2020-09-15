@@ -202,7 +202,7 @@ public class FileServiceImpl implements FileService {
 - Object `storage` เราสามารถ Inject เข้ามาใช้งานได้เลย โดยไม่ต้องสร้างขึ้นมาเอง เนื่องจาก Spring ได้สร้างไว้ให้แล้ว
 - ตอน Upload File อย่าลืมกำหนด ACL (Access Control List) สำหรับแต่ละ File ด้วย 
 
-# 4. เขียน Controller
+# 5. เขียน Controller
 
 เพื่อเรียกใช้งาน Service 
 
@@ -229,18 +229,18 @@ public class FileController {
 }
 ```
 
-# 5. Build Code
+# 6. Build Code
 cd ไปที่ root ของ project จากนั้น  
 ``` sh
 $ mvn clean package
 ```
 
-# 6. Run 
+# 7. Run 
 ``` sh 
 $ mvn spring-boot:run
 ```
 
-# 7. เข้าใช้งาน
+# 8. เข้าใช้งาน
 
 เปิด browser แล้วเข้า [http://localhost:8080](http://localhost:8080)
 
