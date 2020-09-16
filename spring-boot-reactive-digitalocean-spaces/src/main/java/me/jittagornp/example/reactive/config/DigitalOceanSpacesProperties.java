@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class DigitalOceanSpacesProperties {
 
-    private String key = "NZMIT6TTDET2YBAX3GOT";
+    private String key = "E74A6FBDxxxxxxxxxx";
 
-    private String secret = "GI7ZXBZBw7XUmTbnxRtTHHrHqYSrMyZBc9x6SESbHcs";
+    private String secret = "NjkqulQURJ3TAHLxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     private String endpoint = "sgp1.digitaloceanspaces.com";
 
