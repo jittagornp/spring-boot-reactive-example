@@ -65,11 +65,11 @@ public class FileServiceImpl implements FileService {
                 .fileSize(result.getMetadata().getContentLength())
                 .message("OK upload file \"" + key + "\" to DigitalOcean Spaces success")
                 .path("/" + key)
-                .url(parseUrl(key))
+                .url(buildAccessUrl(key))
                 .build();
     }
 
-    private String parseUrl(final String key) {
+    private String buildAccessUrl(final String key) {
         return new StringBuilder()
                 .append("https://")
                 .append(properties.getBucketName())
