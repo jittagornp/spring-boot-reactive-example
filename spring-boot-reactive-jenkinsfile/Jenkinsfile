@@ -3,70 +3,71 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'registry.jittagornp.me/hello-world:${env.BUILD_NUMBER}'
-        REGISTRY_URL = 'https://registry.jittagornp.me'
-        REGISTRY_USERNAME = 'foo'
-        REGISTRY_PASSWORD = 'bar'
+        IMAGE_NAME = "registry.jittagornp.me/hello-world:${env.BUILD_NUMBER}"
+        REGISTRY_URL = "https://registry.jittagornp.me"
+        REGISTRY_USERNAME = "foo"
+        REGISTRY_PASSWORD = "bar"
     }
 
     stages {
 
-        stage('Init') {
+        stage("Init") {
             steps {
-                echo 'Init'
-                echo '******************************'
-                echo 'IMAGE_NAME = ${env.IMAGE_NAME}'
-                echo 'REGISTRY_URL = ${env.REGISTRY_URL}'
+                echo "Init"
+                echo "******************************"
+                echo "BUILD_NUMBER = ${env.BUILD_NUMBER}"
+                echo "IMAGE_NAME = ${env.IMAGE_NAME}"
+                echo "REGISTRY_URL = ${env.REGISTRY_URL}"
             }
         }
 
-        stage('Mvn Install') {
+        stage("Mvn Install") {
             steps {
-                echo 'Mvn Install'
-                echo '******************************'
+                echo "Mvn Install"
+                echo "******************************"
                 sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.6.2-jdk-11 mvn -DskipTests=true clean package -f /app/pom.xml'
             }
         }
 
-        stage('Mvn Test') {
+        stage("Mvn Test") {
             steps {
-                echo 'Mvn Test'
-                echo '******************************'
+                echo "Mvn Test"
+                echo "******************************"
                 sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.6.2-jdk-11 mvn test -f /app/pom.xml'
             }
         }
 
-        stage('Docker Build Image') {
+        stage("Docker Build Image") {
             steps {
-                echo 'Docker Build Image'
-                echo '******************************'
-                sh 'docker build -t ${env.IMAGE_NAME} .'
+                echo "Docker Build Image"
+                echo "******************************"
+                sh "docker build -t ${env.IMAGE_NAME} ."
             }
         }
 
-        stage('Docker Push') {
+        stage("Docker Push") {
             steps {
-                echo 'Docker Push'
-                echo '******************************'
-                sh 'docker login -u ${env.REGISTRY_USERNAME} -p ${env.REGISTRY_PASSWORD} ${env.REGISTRY_URL}'
-                sh 'docker push ${env.IMAGE_NAME}'
-                sh 'docker logout ${env.REGISTRY_URL}'
+                echo "Docker Push"
+                echo "******************************"
+                sh "docker login -u ${env.REGISTRY_USERNAME} -p ${env.REGISTRY_PASSWORD} ${env.REGISTRY_URL}"
+                sh "docker push ${env.IMAGE_NAME}"
+                sh "docker logout ${env.REGISTRY_URL}"
             }
         }
 
-        stage('Docker Remove Image') {
+        stage("Docker Remove Image") {
             steps {
-                echo 'Docker Remove Image'
-                echo '******************************'
-                sh 'docker rmi ${env.IMAGE_NAME}'
+                echo "Docker Remove Image"
+                echo "******************************"
+                sh "docker rmi ${env.IMAGE_NAME}"
             }
         }
 
-        stage('Deploy') {
+        stage("Deploy") {
             steps{
-                echo 'Deploy'
-                echo '******************************'
-                echo 'TODO...'
+                echo "Deploy"
+                echo "******************************"
+                echo "TODO..."
             }
         }
     }
