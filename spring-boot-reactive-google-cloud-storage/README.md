@@ -175,7 +175,7 @@ public class FileServiceImpl implements FileService {
             ...  
 
             return output;
-        }).subscribeOn(Schedulers.elastic());
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
@@ -191,7 +191,7 @@ public class FileServiceImpl implements FileService {
                     .build();
             final Blob blob = storage.create(blobInfo, bytes);
             return mapResponse(blob, fileName);
-        }).subscribeOn(Schedulers.elastic());
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     ...
@@ -202,6 +202,7 @@ public class FileServiceImpl implements FileService {
 
 - Object `storage` เราสามารถ Inject เข้ามาใช้งานได้เลย โดยไม่ต้องสร้างขึ้นมาเอง เนื่องจาก Spring ได้สร้างไว้ให้แล้ว
 - ตอน Upload File อย่าลืมกำหนด ACL (Access Control List) สำหรับแต่ละ File ด้วย 
+- ตรง subscribeOn ทำไม Scheduler ถึงใช้เป็นแบบ `boundedElastic` ลองอ่านจากลิงค์นี้ดูครับ [https://projectreactor.io/docs/core/release/reference/#faq.wrap-blocking](https://projectreactor.io/docs/core/release/reference/#faq.wrap-blocking)
 
 # 5. เขียน Controller
 
