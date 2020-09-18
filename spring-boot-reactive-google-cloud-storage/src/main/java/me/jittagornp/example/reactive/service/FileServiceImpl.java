@@ -51,7 +51,7 @@ public class FileServiceImpl implements FileService {
                 page = page.getNextPage();
             }
             return output;
-        }).subscribeOn(Schedulers.elastic());
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class FileServiceImpl implements FileService {
                     .build();
             final Blob blob = storage.create(blobInfo, bytes);
             return mapResponse(blob, fileName);
-        }).subscribeOn(Schedulers.elastic());
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     private UploadResponse mapResponse(final Blob blob, final String fileName) {
