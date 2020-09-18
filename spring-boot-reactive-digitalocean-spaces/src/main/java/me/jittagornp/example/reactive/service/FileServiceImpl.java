@@ -37,7 +37,7 @@ public class FileServiceImpl implements FileService {
                     .map(S3ObjectSummary::getKey)
                     .collect(toList());
         })
-                .subscribeOn(Schedulers.elastic());
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class FileServiceImpl implements FileService {
             } finally {
                 inputStream.close();
             }
-        }).subscribeOn(Schedulers.elastic());
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     private UploadResponse mapResponse(final PutObjectResult result, final String key) {
@@ -85,6 +85,6 @@ public class FileServiceImpl implements FileService {
         return Mono.fromRunnable(() -> {
             final DeleteObjectRequest request = new DeleteObjectRequest(properties.getBucketName(), pathFile);
             amazonS3.deleteObject(request);
-        }).subscribeOn(Schedulers.elastic()).then();
+        }).subscribeOn(Schedulers.boundedElastic()).then();
     }
 }

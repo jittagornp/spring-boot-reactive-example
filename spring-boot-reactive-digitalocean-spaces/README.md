@@ -197,7 +197,7 @@ public class FileServiceImpl implements FileService {
                     .map(S3ObjectSummary::getKey)
                     .collect(toList());
         })
-                .subscribeOn(Schedulers.elastic());
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
@@ -215,7 +215,7 @@ public class FileServiceImpl implements FileService {
             } finally {
                 inputStream.close();
             }
-        }).subscribeOn(Schedulers.elastic());
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     private UploadResponse mapResponse(final PutObjectResult result, final String key) {
@@ -245,12 +245,13 @@ public class FileServiceImpl implements FileService {
         return Mono.fromRunnable(() -> {
             final DeleteObjectRequest request = new DeleteObjectRequest(properties.getBucketName(), pathFile);
             amazonS3.deleteObject(request);
-        }).subscribeOn(Schedulers.elastic()).then();
+        }).subscribeOn(Schedulers.boundedElastic()).then();
     }
 }
 ```
 
-Inject Bean `DigitalOceanSpacesProperties` และ `AmazonS3` มาใช้งาน
+- Inject Bean `DigitalOceanSpacesProperties` และ `AmazonS3` มาใช้งาน
+- ตรง subscribeOn ทำไม Scheduler ถึงใช้เป็นแบบ boundedElastic ลองอ่านจากลิงค์นี้ดูครับ [https://projectreactor.io/docs/core/release/reference/#faq.wrap-blocking](https://projectreactor.io/docs/core/release/reference/#faq.wrap-blocking)
 
 # 5. เขียน Controller 
 
