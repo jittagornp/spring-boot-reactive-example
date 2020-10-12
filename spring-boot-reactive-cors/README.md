@@ -131,7 +131,6 @@ public class CorsConfig {
                 HttpMethod.HEAD.name()
         ));
         config.setAllowedHeaders(Arrays.asList(
-                HttpHeaders.ORIGIN,
                 HttpHeaders.CONTENT_TYPE,
                 HttpHeaders.ACCEPT,
                 HttpHeaders.AUTHORIZATION,
