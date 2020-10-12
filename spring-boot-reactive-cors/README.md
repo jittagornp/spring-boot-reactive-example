@@ -2,6 +2,10 @@
 
 > ตัวอย่างการเขียน Spring-boot Reactive Cors (Cross-origin resource sharing)
 
+# Prerequisites
+
+- ทำความเข้าใจเรื่อง Cors ได้จาก [https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+
 # 1. เพิ่ม Dependencies และ Plugins
 
 pom.xml 
