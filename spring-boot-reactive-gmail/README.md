@@ -104,7 +104,7 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 
 **หมายเหตุ**
 
-- อย่าลืมเปลี่ยนค่าตรง `<YOUR_GMAIL>` และ `<YOUR_GMAIL_PASSWORD>`
+- อย่าลืมเปลี่ยนค่าตรง `<YOUR_GMAIL>` และ `<YOUR_GMAIL_PASSWORD>` เป็น gmail และรหัสผ่านตัวเอง 
 
 # 4. เขียน Service 
 
