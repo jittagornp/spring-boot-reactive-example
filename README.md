@@ -66,7 +66,7 @@
 - [spring-boot-reactive-unit-test-junit5](spring-boot-reactive-unit-test-junit5) - การเขียน Unit Test ด้วย JUnit 5  
 - [spring-boot-reactive-gmail](spring-boot-reactive-gmail) - การส่ง email ด้วย Gmail  
 - [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
-- [spring-boot-reactive-google-cloud-storage](spring-boot-reactive-google-cloud-storage) - การเขียน Code เพื่อเชื่อมต่อกับ Google Cloud 
+- [spring-boot-reactive-google-cloud-storage](spring-boot-reactive-google-cloud-storage) - การเขียน Code เพื่อเชื่อมต่อกับ Google Cloud Storage  
 - [spring-boot-reactive-digitalocean-spaces](spring-boot-reactive-digitalocean-spaces) - การเขียน Code เพื่อเชื่อมต่อกับ DigitalOcean Spaces
 
 ### รอการปรับ Code เป็น Java 11
