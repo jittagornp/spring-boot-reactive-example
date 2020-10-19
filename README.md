@@ -67,7 +67,7 @@
 - [spring-boot-reactive-r2dbc-postgresql](spring-boot-reactive-r2dbc-postgresql) - การเขียน Code เชื่อมต่อ Database PosgreSQL ด้วย R2DBC 
 - [spring-boot-reactive-gmail](spring-boot-reactive-gmail) - การส่ง email ด้วย Gmail  
 - [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
-- [spring-boot-reactive-google-cloud-storage](spring-boot-reactive-google-cloud-storage) - การเขียน Code เพื่อเชื่อมต่อกับ Google Cloud 
+- [spring-boot-reactive-google-cloud-storage](spring-boot-reactive-google-cloud-storage) - การเขียน Code เพื่อเชื่อมต่อกับ Google Cloud Storage  
 - [spring-boot-reactive-digitalocean-spaces](spring-boot-reactive-digitalocean-spaces) - การเขียน Code เพื่อเชื่อมต่อกับ DigitalOcean Spaces
 
 ### รอการปรับ Code เป็น Java 11
