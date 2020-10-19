@@ -4,7 +4,7 @@
 
 # Prerequisites
 
-ให้ตั้งค่าบัญชีผู้ใช้ เพื่อเปิดให้ Apps ที่มีความปลอดภัยน้อยสามารถ Login ด้วย Gmail และ Password ได้ดังนี้ 
+ให้ตั้งค่าบัญชีผู้ใช้ (Gmail ที่จะเอามาส่ง mail) เพื่อเปิดให้ Apps ที่มีความปลอดภัยน้อย (ซึ่งก็คือ App เรา) สามารถ Login ด้วย Gmail และ Password ได้ดังนี้ 
 
 ![](./allow-less-secure-apps.png)
 
