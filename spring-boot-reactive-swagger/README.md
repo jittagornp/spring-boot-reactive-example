@@ -17,7 +17,7 @@ pom.xml
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.3.2.RELEASE</version>
-</parent>
+</parent> 
 
 <dependencies>
     <dependency>
@@ -133,8 +133,39 @@ public class SwaggerConfig {
 
 ```java
 @Data
+@ApiModel(description = "คำขอเข้าสู่ระบบ")
+public class LoginRequest {
+
+    @ApiModelProperty(value = "บัญชีผู้ใช้", required = true, position = 0)
+    private String username;
+
+    @ApiModelProperty(value = "รหัสผ่าน", required = true, position = 1)
+    private String password;
+
+}
+
+@Data
 @Builder
-@ApiModel(value = "User", description = "ผู้ใช้งาน")
+public class LoginResponse {
+
+    @ApiModelProperty(value = "โทเค็น")
+    @JsonProperty("access_token")
+    private String accessToken;
+
+    @ApiModelProperty(value = "ประเภทโทเค็น")
+    private String type;
+
+    @ApiModelProperty(value = "หมดอายุภายใน (วินาที)")
+    @JsonProperty("expires_in")
+    private Long expiresIn;
+
+    //TODO
+}
+
+
+@Data
+@Builder
+@ApiModel(description = "ผู้ใช้งาน")
 public class User {
 
     @ApiModelProperty(value = "id ผู้ใช้งาน", position = 0)
@@ -159,6 +190,26 @@ public class User {
 
 # 5. เขียน Controller
 ``` java
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/auth")
+@Api(tags = {"Authentication"}, description = "ยืนยันตัวตน")
+public class AuthController {
+
+    @PostMapping("/login")
+    @ApiOperation(value = "เข้าสู่ระบบ")
+    public Mono<LoginResponse> login(final @RequestBody @Validated LoginRequest request) {
+        return Mono.just(
+                LoginResponse.builder()
+                        .accessToken(UUID.randomUUID().toString())
+                        .type("bearer")
+                        .expiresIn(60 * 60L) // 1Hr
+                        .build()
+        );
+    }
+
+}
+
 @Slf4j
 @RestController
 @RequestMapping("/users")

@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-@ApiModel(value = "User", description = "ผู้ใช้งาน")
+@ApiModel(description = "ผู้ใช้งาน")
 public class User {
 
     @ApiModelProperty(value = "id ผู้ใช้งาน", position = 0)
