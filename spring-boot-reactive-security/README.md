@@ -122,7 +122,7 @@ public class HomeController {
 
 **หมายเหตุ**
 
-- `Authentication` คืิอ ข้อมูลคน Login 
+- `Authentication` คือ ข้อมูลคน Login 
 
 # 5. Build Code 
 cd ไปที่ root ของ project จากนั้น  
