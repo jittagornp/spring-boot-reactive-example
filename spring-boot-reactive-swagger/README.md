@@ -4,7 +4,7 @@
 
 ![](./swagger_logo.svg)
 
-Swagger เป็นเครื่องมือ (Tool) ตัวนึงที่เอามาใช้สำหรับสร้าง API Document 
+Swagger เป็นเครื่องมือ (Tool) ตัวนึงที่เอามาใช้สำหรับสร้าง API Document เพื่อให้ทาง Front-end ใช้ Document นี้ในการเป็น Spec เพื่อใช้ Develop 
   
 Spring-boot มีความสามารถในการเอา Swagger มาใช้สร้าง Document แบบอัตโนมัติจากการ Scan Annotation ต่าง ๆ ที่เจอใน Project
 
@@ -152,6 +152,11 @@ public class User {
 }
 ```
 
+**คำอธิบาย**
+
+- Annotation `@ApiModel` ใช้สำหรับตั้งชื่อ อธิบาย Model ที่ใช้
+- Annotatopn `@ApiModelProperty` ใช้สำหรับอธิบาย ขยายความ และกำหนดค่าต่าง ๆ ให้กับแต่ละ Model Properties / Attributes 
+
 # 5. เขียน Controller
 ``` java
 @Slf4j
@@ -200,6 +205,10 @@ public class UserController {
 }
 ```
 
+**คำอธิบาย**
+
+- Annotation `@Api` ใช้สำหรับตั้งชื่อ อธิบาย ภาพรวมของ API  
+- Annotation `@ApiOperation` ใช้สำหรับอธิบาย ขยายความของ API / Method แต่ละอัน 
 
 # 6. Build Code
 cd ไปที่ root ของ project จากนั้น  
@@ -219,3 +228,5 @@ $ mvn spring-boot:run
 - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ![](./result.png)
+
+API ที่มีรูปกุญแจ คือ API ที่ต้องทำการ Login ก่อน โดยการแนบ Http Header `Authorization` : `Bearer $TOKEN` ไปกับ Http Request ด้วย  
