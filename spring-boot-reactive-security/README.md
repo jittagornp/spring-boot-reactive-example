@@ -2,7 +2,7 @@
 
 > ตัวอย่างการเขียน Spring-boot Reactive Security 
 
-# 1. เพิ่ม Dependencies
+# 1. เพิ่ม Dependencies และ Plugins
 
 pom.xml 
 ``` xml
