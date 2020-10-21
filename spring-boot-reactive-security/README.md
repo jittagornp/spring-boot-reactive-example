@@ -2,6 +2,8 @@
 
 > ตัวอย่างการเขียน Spring-boot Reactive Security 
 
+![](./spring-security.png)
+
 # 1. เพิ่ม Dependencies และ Plugins
 
 pom.xml 
