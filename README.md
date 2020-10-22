@@ -77,7 +77,6 @@
   
 - [spring-boot-webflux-unit-test-mockito](spring-boot-webflux-unit-test-mockito) - การเขียน Unit Test + Mockito  
 - [spring-boot-webflux-test-coverage](spring-boot-webflux-test-coverage) - Test Coverage ด้วย JaCoCo 
-- [spring-boot-webflux-custom-login-page](spring-boot-webflux-custom-login-page) - การ custom หน้า login 
 - [spring-boot-webflux-security-authority](spring-boot-webflux-security-authority) - การกำหนดสิทธิ์การเข้าถึง  
 - [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql) - การเชื่อมต่อ Postgresql (Relational Database) 
 - [spring-boot-webflux-pagination](spring-boot-webflux-pagination) - การทำ Pagination 
