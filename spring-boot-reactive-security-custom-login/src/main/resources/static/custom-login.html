@@ -7,9 +7,11 @@
     </head>
     <body>
         <h1>Custom Login Page</h1>
-        <form method="post">
-            <input name="username" type="text" />
+        <form method="post" action="/login">
+            <label>Username</label>
+            <input name="username" type="text"/>
             <br/>
+            <label>Password</label>
             <input name="password" type="password" />
             <br/>
             <button type="submit">Login</button>
