@@ -315,7 +315,11 @@ Logout url
 
 ![](./user_test.png)
 
-ลอง Reset รหัสผ่าน ปรากฏว่า `Access Denied`
+ดูสิทธิ์การใช้งาน ([http://localhost:8080/users/authorities](http://localhost:8080/users/authorities))
+
+![](./user_test_authorities.png)
+
+ลอง Reset รหัสผ่าน ([http://localhost:8080/users/1/reset-password](http://localhost:8080/users/1/reset-password)) ปรากฏว่า `Access Denied`
 
 ![](./user_test_reset_password.png)
 
@@ -325,6 +329,10 @@ Logout url
 
 ![](./user_admin.png)
 
-ลอง Reset รหัสผ่าน ปรากฏว่าทำได้เพราะมีสิทธิ์ `RESET_USER_PASSWORD`
+ดูสิทธิ์การใช้งาน ([http://localhost:8080/users/authorities](http://localhost:8080/users/authorities))
+
+![](./user_admin_authorities.png)
+
+ลอง Reset รหัสผ่าน ([http://localhost:8080/users/1/reset-password](http://localhost:8080/users/1/reset-password)) ปรากฏว่าทำได้ เพราะมีสิทธิ์ `RESET_USER_PASSWORD`
 
 ![](./user_admin-reset_password.png)
