@@ -69,6 +69,7 @@
 - [spring-boot-reactive-security-authority](spring-boot-reactive-security-authority) - การกำหนดสิทธิ์การเข้าถึง   
 - [spring-boot-reactive-swagger](spring-boot-reactive-swagger) - การทำ API Document ด้วย Swagger  
 - [spring-boot-reactive-r2dbc-postgresql](spring-boot-reactive-r2dbc-postgresql) - การเขียน Code เชื่อมต่อ Database PosgreSQL ด้วย R2DBC 
+- [spring-boot-reactive-r2dbc-pool-postgresql](spring-boot-reactive-r2dbc-pool-postgresql) - การเขียน Code เชื่อมต่อ Database PosgreSQL ด้วย R2DBC + การทำ Connection Pool  
 - [spring-boot-reactive-gmail](spring-boot-reactive-gmail) - การส่ง email ด้วย Gmail  
 - [spring-boot-reactive-oauth-client](spring-boot-reactive-oauth-client) - การเขียน Code เพื่อ Login ผ่าน OAuth ของ Google, Facebook 
 - [spring-boot-reactive-google-cloud-storage](spring-boot-reactive-google-cloud-storage) - การเขียน Code เพื่อเชื่อมต่อกับ Google Cloud Storage  
