@@ -283,6 +283,10 @@ Get all Users
 
 ![](get_all_users.png)
 
+ตัวอย่าง Console Log ที่ใช้ Pool
+
+![](./console.png)
+
 Select Users from table 
 
 ![](./select_user.png)
