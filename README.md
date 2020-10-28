@@ -80,6 +80,7 @@
 - [spring-boot-reactive-google-cloud-storage](spring-boot-reactive-google-cloud-storage) - การเขียน Code เพื่อเชื่อมต่อกับ Google Cloud Storage  
 - [spring-boot-reactive-digitalocean-spaces](spring-boot-reactive-digitalocean-spaces) - การเขียน Code เพื่อเชื่อมต่อกับ DigitalOcean Spaces
 - [spring-boot-reactive-neo4j](https://github.com/jittagornp/spring-boot-reactive-neo4j-example) - การเขียน Code เชื่อมต่อ Graph Database Neo4j 
+- [spring-boot-reactive-redis-pubsub](https://github.com/jittagornp/spring-boot-reactive-redis-pubsub-example) - การเขียน Code เชื่อมต่อ Redis แบบ Pub/Sub 
 
 ### รอการปรับ Code เป็น Java 11
   
