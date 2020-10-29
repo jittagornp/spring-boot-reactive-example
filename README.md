@@ -52,6 +52,7 @@
 - [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
 - [spring-boot-reactive-jenkinsfile](spring-boot-reactive-jenkinsfile) - การเขียน Jenkinsfile 
 - [spring-boot-reactive-logging](spring-boot-reactive-logging) - การ Config และใช้งาน Logging  
+- [spring-boot-reactive-default-timezone](spring-boot-reactive-default-timezone) - การตั้งค่า Default Time Zone 
 - [spring-boot-reactive-controller](spring-boot-reactive-controller) - การเขียน Controller 
 - [spring-boot-reactive-cors](spring-boot-reactive-cors) - การ config Cors (Cross-origin resource sharing)
 - [spring-boot-reactive-form-data](spring-boot-reactive-form-data) - การรับค่าจาก Html Form
