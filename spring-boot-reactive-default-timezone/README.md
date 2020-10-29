@@ -117,6 +117,38 @@ public class TimeZoneController {
         return Mono.just(TimeZone.getDefault());
     }
 
+    @GetMapping("/current-datetime")
+    public Mono<DTO> currentDateTime(){
+        return Mono.just(
+                DTO.builder()
+                        .instant(Instant.now())
+                        .localDate(LocalDate.now())
+                        .localDateTime(LocalDateTime.now())
+                        .offsetDateTime(OffsetDateTime.now())
+                        .offsetTime(OffsetTime.now())
+                        .zonedDateTime(ZonedDateTime.now())
+                        .build()
+        );
+    }
+
+    @Data
+    @Builder
+    public static class DTO {
+
+        private Instant instant;
+
+        private LocalDate localDate;
+
+        private LocalDateTime localDateTime;
+
+        private OffsetDateTime offsetDateTime;
+
+        private OffsetTime offsetTime;
+
+        private ZonedDateTime zonedDateTime;
+
+    }
+
 }
 ```
 
@@ -142,3 +174,47 @@ $ mvn spring-boot:run
 Default Time Zone
 
 ![](./default-timezone.png)
+
+
+# ตัวอย่าง Current Date Time
+
+> GET [http://localhost:8080/time-zones/current-datetime](http://localhost:8080/time-zones/current-datetime)
+
+Time Zone = `UTC`
+
+```json
+{
+    "instant": "2020-10-29T07:06:21.179857Z",
+    "localDate": "2020-10-29",
+    "localDateTime": "2020-10-29T07:06:21.179935",
+    "offsetDateTime": "2020-10-29T07:06:21.179983Z",
+    "offsetTime": "07:06:21.180089Z",
+    "zonedDateTime": "2020-10-29T07:06:21.180115Z"
+}
+```
+
+Time Zone = `Asia/Bangkok` (UTC+7)
+
+```json
+{
+    "instant": "2020-10-29T07:03:07.954985Z",
+    "localDate": "2020-10-29",
+    "localDateTime": "2020-10-29T14:03:07.957173",
+    "offsetDateTime": "2020-10-29T14:03:07.957225+07:00",
+    "offsetTime": "14:03:07.957357+07:00",
+    "zonedDateTime": "2020-10-29T14:03:07.957389+07:00"
+}
+```
+
+Time Zone = `Asia/Singapore` (UTC+8)
+
+```json
+{
+    "instant": "2020-10-29T07:09:33.056406Z",
+    "localDate": "2020-10-29",
+    "localDateTime": "2020-10-29T15:09:33.058546",
+    "offsetDateTime": "2020-10-29T15:09:33.058584+08:00",
+    "offsetTime": "15:09:33.058701+08:00",
+    "zonedDateTime": "2020-10-29T15:09:33.058729+08:00"
+}
+```
