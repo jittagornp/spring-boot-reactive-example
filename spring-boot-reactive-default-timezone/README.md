@@ -2,6 +2,8 @@
 
 > ตัวอย่างการเขียน Spring-boot Reactive Default Time Zone 
 
+![](./zone-clock-analog-photo-gallery.png)
+
 # Prerequisites
 
 - มีความเข้าใจเรื่อง Time Zone 
