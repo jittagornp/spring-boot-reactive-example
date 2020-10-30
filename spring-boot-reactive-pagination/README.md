@@ -7,6 +7,7 @@
 # Prerequisites
 
 - การทำ Pagination ในตัวอย่างนี้ ทำเพื่อ Support Spring-data เป็นหลัก ออกแบบเอง โดยยึดการออกแบบตามเอกสารฉบับนี้ [https://developers.pamarin.com/docs/v1/pagination](https://developers.pamarin.com/docs/v1/pagination) แนะนำให้อ่านเอกสารก่อน แล้วจะเข้าใจว่าทำไมถึงเขียน Code แบบนี้ 
+- เหตุผลว่าทำไมออกแบบ แบบนี้ อยู่ล่างสุดครับ  
 
 # 1. เพิ่ม Dependencies และ Plugins
 
