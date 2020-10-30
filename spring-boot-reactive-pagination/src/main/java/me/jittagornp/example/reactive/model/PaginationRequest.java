@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.model;
 
 import lombok.Builder;
@@ -6,6 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+/**
+ * @author jitta
+ */
 @Data
 @Builder
 public class PaginationRequest {

@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.config;
 
 import com.fasterxml.jackson.core.JsonGenerator;

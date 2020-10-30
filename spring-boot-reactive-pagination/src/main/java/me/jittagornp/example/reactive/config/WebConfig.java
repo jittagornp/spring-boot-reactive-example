@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.config;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +16,9 @@ import org.springframework.web.reactive.result.method.annotation.ArgumentResolve
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+/**
+ * @author jitta
+ */
 @Slf4j
 @Configuration
 public class WebConfig implements WebFluxConfigurer {

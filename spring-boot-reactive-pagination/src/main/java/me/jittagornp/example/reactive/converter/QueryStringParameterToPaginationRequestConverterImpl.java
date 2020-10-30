@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.converter;
 
 import lombok.Builder;
@@ -12,6 +15,9 @@ import java.util.stream.Stream;
 import static org.springframework.util.StringUtils.hasText;
 import static java.util.stream.Collectors.toList;
 
+/**
+ * @author jitta
+ */
 @Slf4j
 @Component
 public class QueryStringParameterToPaginationRequestConverterImpl implements QueryStringParameterToPaginationRequestConverter {
