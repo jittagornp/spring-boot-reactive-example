@@ -321,6 +321,10 @@ $ mvn spring-boot:run
 
 ![](./slice.png)
 
+- [http://localhost:8080/users?offset=0&limit=3](http://localhost:8080/users?offset=0&limit=3)
+
+![](./slice2.png)
+
 ### Page
 
 - [http://localhost:8080/users?page=1&size=3](http://localhost:8080/users?page=1&size=3)
