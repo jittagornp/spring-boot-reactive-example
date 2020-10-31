@@ -56,6 +56,15 @@ Spring-boot มี 2 แบบ คือ
 หากพบปัญหา หรือ ต้องการให้ทำอะไรเพิ่ม รบกวนช่วยเปิด issue หรือ fork/pull request ให้ด้วยน่ะครับ  
 ขอบคุณครับ :)  
 
+# Spring-boot Reactive
+
+สามารถเขียนได้ 2 แบบ คือ
+
+1. แบบ Annotated Controllers 
+2. แบบ Functional Endpoints   
+
+จากตัวอย่าง โดยส่วนมากจะใช้เป็นแบบ Annotated Controllers 
+
 # เอกสาร Spring-boot Reactive  
 
 - [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
