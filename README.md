@@ -26,8 +26,8 @@ Spring-boot เป็น Subset ของ Spring Framework เป็นการ
 
 Spring-boot มี 2 แบบ คือ
 
-1. Servlet Stack 
-2. Reactive Stack 
+1. แบบ Servlet Stack 
+2. แบบ Reactive Stack 
 
 ### Servlet Stack 
 
