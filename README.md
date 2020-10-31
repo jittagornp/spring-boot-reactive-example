@@ -11,6 +11,10 @@
 Spring เป็น Framework ฝั่งภาษา Java สำหรับใช้เขียน Web และ Back-end Application ที่ได้รับความนิยมอย่างมากในปัจจุบัน     
 มีระบบนิเวศ หรือ Ecosystem ต่าง ๆ มากมาย ทำให้สามารถนำ Spring ไปใช้สร้างสรรค์ผลงานต่าง ๆ ได้อย่างรวดเร็ว   
   
+# Spring-boot
+
+> https://spring.io/projects/spring-boot 
+  
 Spring-boot เป็น Subset ของ Spring Framework เป็นการเอา Ecosystem ต่าง ๆ ของ Spring ที่มีอยู่ มาประกอบร่างรวมกัน เพื่อให้ Spring นั้นใช้งานได้ง่ายขึ้นไปอีก โดยมีจุดเด่นดังนี้
 1. สามารถทำ Stand Alone หรือ Micro Service Application ได้
 2. มี Embeded Application Server ภายในตัว สามารถ Start ตัวเองได้ โดยไม่ต้องพึ่งพา Application Server จากภายนอก 
