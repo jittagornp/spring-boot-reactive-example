@@ -1,4 +1,4 @@
-# spring-boot-reactive-example
+# Spring-boot Reactive Example
 
 > ตัวอย่างการเขียน Java Spring-boot Reactive (WebFlux) ซึ่งเป็นการเขียน Spring-boot แบบ Non-Blocking I/O หรือ Asynchronous 
 
@@ -51,7 +51,7 @@ Spring-boot มี 2 แบบ คือ
 หากพบปัญหา หรือ ต้องการให้ทำอะไรเพิ่ม รบกวนช่วยเปิด issue หรือ fork/pull request ให้ด้วยน่ะครับ  
 ขอบคุณครับ :)  
 
-# เอกสาร Spring 
+# เอกสาร Spring-boot Reactive  
 
 - [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
 
