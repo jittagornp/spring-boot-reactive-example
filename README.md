@@ -18,6 +18,28 @@ Spring-boot เป็น Subset ของ Spring Framework เป็นการ
 6. Deploy ง่าย
 7. อื่น ๆ
 
+Spring-boot มี 2 แบบ คือ
+
+1. Servlet Stack 
+2. Reactive Stack 
+
+### Servlet Stack 
+
+- เป็นการเขียน Code แบบ Blocking I/O 
+- ใช้ Web MVC เป็น Base 
+- เขียนง่าย ตรงไปตรงมา 
+- Application Server จะใช้เทคนิคในการจัดการ Request/Response ด้วย Thread Pool Connection 
+
+### Reactive Stack 
+
+- เป็นการเขียน Code แบบ Non-Blocking I/O
+- เขียน Code แบบ Reactive (Functional Programming รูปแบบหนึ่ง)
+- ใช้ WebFlux เป็น Base 
+- เขียน/เข้าใจ ยากกว่าแบบ Servlet Stack 
+- Application Server จะใช้เทคนิคในการจัดการ Request/Response ด้วย Event Loop 
+- กิน Resources (CPU, RAM) น้อยกว่าแบบ Servlet Stack 
+- รองรับ Concurrent ได้มากกว่าแบบ Servlet Stack 
+
 # เชิญชวน
 อยากเชิญชวน คนที่มีความรู้ด้านใดด้านหนึ่งตามที่ตัวเองถนัด ทำตัวอย่างอะไรทำนองนี้ไว้  
 ตัวผมเองก็ใช้อันนี้สอนน้อง ๆ สอนเด็กฝึกงานที่บริษัท อีกทั้งเอาไว้ทบทวนตัวเองด้วย   
