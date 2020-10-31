@@ -8,8 +8,7 @@
 
 > [https://spring.io](https://spring.io)
 
-Spring เป็น Framework ฝั่งภาษา Java สำหรับใช้เขียน Web และ Back-end Application ที่ได้รับความนิยมอย่างมากในปัจจุบัน     
-มีระบบนิเวศ หรือ Ecosystem ต่าง ๆ มากมาย ทำให้สามารถนำ Spring ไปใช้สร้างสรรค์ผลงานต่าง ๆ ได้อย่างรวดเร็ว   
+Spring เป็น Framework ฝั่งภาษา Java สำหรับใช้เขียน Web และ Back-end Application ที่ได้รับความนิยมอย่างมากในปัจจุบัน มีระบบนิเวศ หรือ Ecosystem ต่าง ๆ มากมาย ทำให้สามารถนำ Spring ไปใช้สร้างสรรค์ผลงานต่าง ๆ ได้อย่างรวดเร็ว   
   
 # Spring-boot
 
