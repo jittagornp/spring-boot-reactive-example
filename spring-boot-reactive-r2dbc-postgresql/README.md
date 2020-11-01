@@ -168,6 +168,12 @@ public interface UserRepository extends ReactiveCrudRepository<UserEntity, UUID>
 }
 ```
 
+**หมายเหตุ**
+
+- Extend `ReactiveCrudRepository<T, S>` เพื่อให้ Spring ทำ Default CRUD สำหรับ Repository นี้ให้ 
+  - Type Parameter `T` คือ Entity Type ในที่นี้เป็น UserEntity 
+  - Type Parameter `S` คือ Id Type ของ Entity ซึ่งในที่นี้เราใช้ UUID 
+
 # 6. เขียน Controller
 ``` java
 @RestController
