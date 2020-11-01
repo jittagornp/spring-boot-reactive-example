@@ -47,7 +47,7 @@ Spring-boot มี 2 แบบ คือ
 ### Reactive Stack 
 
 - เป็นการเขียน Code แบบ Non-Blocking I/O
-- เขียน Code แบบ Reactive (Functional Programming รูปแบบหนึ่ง)
+- เขียน Code แบบ Reactive (เป็นการเขียนโปรแกรมรูปแบบหนึ่ง ที่ตอบสนองต่อเหตุการณ์ที่เกิดขึ้น)
 - ใช้ WebFlux เป็น Base 
 - เขียน/เข้าใจ ยากกว่าแบบ Servlet Stack 
 - Application Server จะใช้เทคนิคในการจัดการ Request/Response ด้วย Event Loop 
