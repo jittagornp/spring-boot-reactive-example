@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.repository;
 
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,9 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 import static org.springframework.data.relational.core.query.Criteria.where;
 
+/**
+ * @author jitta
+ */
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {

@@ -1,3 +1,6 @@
+/*
+ * Copyright 2019-Current jittagornp.me
+ */
 package me.jittagornp.example.reactive.repository;
 
 import me.jittagornp.example.reactive.entity.UserEntity;
@@ -6,6 +9,9 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
+/**
+ * @author jitta
+ */
 public interface UserRepository {
 
     Flux<UserEntity> findAll();
