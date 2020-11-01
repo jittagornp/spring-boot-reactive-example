@@ -225,7 +225,8 @@ public class UserRepositoryImpl implements UserRepository {
 
 **หมายเหตุ**
 
-จากตัวอย่างด้านบน จะเห็นว่าเราใช้ `DatabaseClient` Manual Query เองทั้งหมดเลย 
+- จากตัวอย่างด้านบน จะเห็นว่าเราใช้ `DatabaseClient` Manual Query เองทั้งหมดเลย 
+- บนหัว implmentation (class) แปะด้วย `@Repository` เพื่อบอกว่าอันนี้เป็น repository น่ะ 
 
 # 6. เขียน Controller
 ``` java
