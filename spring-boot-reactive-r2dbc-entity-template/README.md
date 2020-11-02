@@ -131,6 +131,7 @@ spring.r2dbc.password=<DATABASE_PASSWORD>
 
 # 4. เขียน Config
 
+เพื่อให้สามารถใช้ `R2dbcEntityTemplate` ได้ 
 ```java
 @Slf4j
 @Configuration
