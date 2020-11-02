@@ -116,6 +116,7 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-default-timezone](spring-boot-reactive-default-timezone) - การตั้งค่า Default Time Zone 
 - [spring-boot-reactive-static-resources](spring-boot-reactive-static-resources) - การดึง Static Resources 
 - [spring-boot-reactive-static-resources-custom-path](spring-boot-reactive-static-resources-custom-path) - การ Custom Path เพื่อดึง Static Resources 
+- [spring-boot-reactive-static-resources-http-caching](spring-boot-reactive-static-resources-http-caching) - การกำหนด Http Caching ให้ Static Resources 
 - [spring-boot-reactive-controller](spring-boot-reactive-controller) - การเขียน Controller 
 - [spring-boot-reactive-cors](spring-boot-reactive-cors) - การ config Cors (Cross-origin resource sharing)
 - [spring-boot-reactive-form-data](spring-boot-reactive-form-data) - การรับค่าจาก Html Form
