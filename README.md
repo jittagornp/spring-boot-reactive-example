@@ -77,6 +77,7 @@ Spring-boot มี 2 แบบ คือ
 # เอกสาร Spring-boot Reactive  
 
 - [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
+- [Common Application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html)
 
 # ข้อแตกต่าง 
 
