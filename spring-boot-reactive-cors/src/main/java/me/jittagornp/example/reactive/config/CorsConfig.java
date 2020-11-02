@@ -23,7 +23,7 @@ public class CorsConfig {
     public CorsWebFilter corsWebFilter() {
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList("*"));
-        config.setMaxAge(Duration.ofHours(1));
+        config.setMaxAge(Duration.ofMinutes(1));
         config.setAllowedMethods(Arrays.asList(
                 HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
@@ -35,11 +35,19 @@ public class CorsConfig {
         ));
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.CONTENT_TYPE,
-                HttpHeaders.ACCEPT,
                 HttpHeaders.AUTHORIZATION,
-                HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
-                HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
+                HttpHeaders.IF_MATCH,
+                HttpHeaders.IF_MODIFIED_SINCE,
+                HttpHeaders.IF_NONE_MATCH,
+                HttpHeaders.IF_UNMODIFIED_SINCE,
                 "X-Requested-With"
+        ));
+        config.setExposedHeaders(Arrays.asList(
+                HttpHeaders.ETAG,
+                HttpHeaders.LINK,
+                "X-RateLimit-Limit",
+                "X-RateLimit-Remaining",
+                "X-RateLimit-Reset"
         ));
 
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
