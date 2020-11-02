@@ -255,7 +255,7 @@ public class ProvinceController {
 
     @GetMapping("/slice")
     public Flux<ProvinceEntity> findAllAsSlice() {
-        final Pageable pageable = PageRequest.of(
+        final Pageable pageable = SliceRequest.of(
                 0,
                 5,
                 Sort.by(Sort.Order.by("name").with(Sort.Direction.ASC))
@@ -273,6 +273,7 @@ public class ProvinceController {
         return provinceRepository.findAllAsPage(Query.empty(), pageable);
     }
 
+    ...
 }
 ```
 
