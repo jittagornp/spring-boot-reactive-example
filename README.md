@@ -77,6 +77,8 @@ Spring-boot มี 2 แบบ คือ
 # เอกสาร Spring-boot Reactive  
 
 - [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
+
+สำหรับคนที่เขียน Spring-boot ใหม่ ๆ แล้วสงสัยว่า เราจะรู้ได้ยังไงว่าเราสามารถ Config Application Properties อะไรได้บ้าง ให้ดูจากหน้านี้
 - [Common Application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html)
 
 # ข้อแตกต่าง 
