@@ -72,7 +72,7 @@ public class HomeController {
 
 # 4. วาง Static Resource
 
-เอา Static Resources ที่ต้องการไปวางไว้ใน Folder `/src/main/resources/static` เช่น 
+เอา Static Resources ที่ต้องการไปวางไว้ใน Folder `/src/main/resources/static` (ถ้าไม่มีให้สร้างขึ้นมาเอง) เช่น 
 
 ```
 /src/main/resources/static/images/spring-reactive.png
