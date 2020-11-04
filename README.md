@@ -101,7 +101,8 @@ Spring-boot มี 2 แบบ คือ
 - Event Loop
   - [ทำความเข้าใจ Node.js กันอีกรอบ ก่อนย้ายบ้านไป Golang](https://medium.com/@goangle/%E0%B8%97%E0%B8%B3%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B9%83%E0%B8%88-event-loop-%E0%B9%83%E0%B8%99-node-js-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%AD%E0%B8%B5%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A-d80930ef081d)
   - [รู้ลึกการทำงานแบบ Asynchronous กับ Event Loop](https://www.babelcoder.com/blog/posts/asynchronous-javascript-and-event-loop) 
-
+- พื้นฐาน Spring Framework เช่น
+  - ทฤษฏี IoC (Inversion of Control) และ (DI) Dependency Injection 
 # ตัวอย่างการเขียน Reactor 
 - [Reactor Example](./spring-boot-webflux-reactor-example)
 
