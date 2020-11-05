@@ -101,7 +101,8 @@ Spring-boot มี 2 แบบ คือ
 - Event Loop
   - [ทำความเข้าใจ Node.js กันอีกรอบ ก่อนย้ายบ้านไป Golang](https://medium.com/@goangle/%E0%B8%97%E0%B8%B3%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B9%83%E0%B8%88-event-loop-%E0%B9%83%E0%B8%99-node-js-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%AD%E0%B8%B5%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A-d80930ef081d)
   - [รู้ลึกการทำงานแบบ Asynchronous กับ Event Loop](https://www.babelcoder.com/blog/posts/asynchronous-javascript-and-event-loop) 
-
+- พื้นฐาน Spring Framework เช่น
+  - ทฤษฏี IoC (Inversion of Control) และ (DI) Dependency Injection 
 # ตัวอย่างการเขียน Reactor 
 - [Reactor Example](./spring-boot-webflux-reactor-example)
 
@@ -113,7 +114,7 @@ Spring-boot มี 2 แบบ คือ
 
 ### ปรับ Code เป็น Java 11 แล้ว
 - [spring-boot-reactive-helloworld](spring-boot-reactive-helloworld) - Hello World!
-- [spring-boot-reactive-change-server-port](spring-boot-reactive-change-server-port) - การกำหนด Server Port 
+- [spring-boot-reactive-change-server-port](spring-boot-reactive-change-server-port) - การเปลี่ยน Server Port 
 - [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
 - [spring-boot-reactive-jenkinsfile](spring-boot-reactive-jenkinsfile) - การเขียน Jenkinsfile 
 - [spring-boot-reactive-logging](spring-boot-reactive-logging) - การ Config และใช้งาน Logging  
