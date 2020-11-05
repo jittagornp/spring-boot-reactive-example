@@ -41,7 +41,8 @@ public class SecurityConfig {
 
     @Bean
     public AuthTokenService authTokenService() {
-        return new SecretKeyAuthTokenService(Algorithm.HMAC256(AUTH_TOKEN_SECRET_KEY), AUTH_TOKEN_EXPIRES_MINUTES);
+        final Algorithm algorithm = Algorithm.HMAC256(AUTH_TOKEN_SECRET_KEY);
+        return new AuthTokenServiceImpl(algorithm, AUTH_TOKEN_EXPIRES_MINUTES);
     }
 
     @Bean
@@ -57,7 +58,7 @@ public class SecurityConfig {
                 .anyExchange().authenticated()
                 .and()
                 .addFilterAt(
-                        new AuthWebFilter(
+                        new AuthTokenWebFilter(
                                 authTokenService(),
                                 new DefaultUserDetailsJwtClaimsConverterImpl(),
                                 new AuthServerSecurityContextRepository()

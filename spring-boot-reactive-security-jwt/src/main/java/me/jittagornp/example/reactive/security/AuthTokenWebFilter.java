@@ -10,7 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
-import org.springframework.util.StringUtils;
+import static org.springframework.util.StringUtils.hasText;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class AuthWebFilter implements WebFilter {
+public class AuthTokenWebFilter implements WebFilter {
 
     private final AuthTokenService authTokenService;
 
@@ -35,7 +35,7 @@ public class AuthWebFilter implements WebFilter {
         final ServerHttpRequest request = exchange.getRequest();
         final String authorization = request.getHeaders().getFirst("Authorization");
         final String token = parseToken(authorization);
-        if (StringUtils.hasText(token)) {
+        if (hasText(token)) {
             return authTokenService.verify(token)
                     .flatMap(claims -> securityContextRepository.save(exchange, toSecurityContext(claims)))
                     .then(chain.filter(exchange));
@@ -57,7 +57,7 @@ public class AuthWebFilter implements WebFilter {
     }
 
     private String parseToken(final String authorization) {
-        if (!StringUtils.hasText(authorization)) {
+        if (!hasText(authorization)) {
             return null;
         }
         final String[] arr = authorization.replaceAll("\\s+", " ").trim().split("\\s");

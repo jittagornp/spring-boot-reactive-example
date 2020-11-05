@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class SecretKeyAuthTokenService implements AuthTokenService {
+public class AuthTokenServiceImpl implements AuthTokenService {
 
     private final Algorithm algorithm;
 
