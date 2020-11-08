@@ -131,6 +131,7 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-session](spring-boot-reactive-session) - พื้นฐานการใช้ Session 
 - [spring-boot-reactive-cookie](spring-boot-reactive-cookie) - พื้นฐานการใช้ Cookie 
 - [spring-boot-reactive-configuration-properties](spring-boot-reactive-configuration-properties) - การอ่าน Config จาก application.properties 
+- [spring-boot-reactive-i18n](spring-boot-reactive-i18n)  - การทำระบบให้รองรับหลายภาษา (i18n)
 - [spring-boot-reactive-thymleaf](spring-boot-reactive-thymleaf)  - การใช้ Thymleaf ทำ View (Server Site) Rendering (HTML)  
 - [spring-boot-reactive-web-filter](spring-boot-reactive-web-filter) - การเขียน Web Filter  
 - [spring-boot-reactive-error-handler](spring-boot-reactive-error-handler) - การจัดการ Exception หรือ Error
