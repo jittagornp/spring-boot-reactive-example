@@ -186,7 +186,7 @@ public class i18nConfig {
 
 # 7. เขียน Message Service
 
-เพื่อให้ใช้ MessageSource และ ง่ายขึ้น
+เพื่อให้ใช้ MessageSource ง่ายขึ้น
   
 ประกาศ interface
 
