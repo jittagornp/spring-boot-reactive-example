@@ -119,6 +119,7 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-jenkinsfile](spring-boot-reactive-jenkinsfile) - การเขียน Jenkinsfile 
 - [spring-boot-reactive-logging](spring-boot-reactive-logging) - การ Config และใช้งาน Logging  
 - [spring-boot-reactive-default-timezone](spring-boot-reactive-default-timezone) - การตั้งค่า Default Time Zone 
+- [spring-boot-reactive-default-locale](spring-boot-reactive-default-locale) - การตั้งค่า Default Locale 
 - [spring-boot-reactive-static-resources](spring-boot-reactive-static-resources) - การดึง Static Resources 
 - [spring-boot-reactive-static-resources-custom-path](spring-boot-reactive-static-resources-custom-path) - การ Custom Path เพื่อดึง Static Resources 
 - [spring-boot-reactive-static-resources-http-caching](spring-boot-reactive-static-resources-http-caching) - การกำหนด Http Caching ให้ Static Resources 
