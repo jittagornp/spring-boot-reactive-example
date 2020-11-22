@@ -22,8 +22,8 @@ public class ChatWebSocketHandler implements WebSocketHandler {
     private final Map<String, WebSocketSession> sessionRepository = new ConcurrentHashMap<>();
 
     @Override
-    public Mono<Void> handle(final WebSocketSession wsSession) {
-        return storeSession(wsSession)
+    public Mono<Void> handle(final WebSocketSession newSession) {
+        return storeSession(newSession)
                 .flatMap(session -> {
                     return session.receive()
                             .flatMap(wsMessage -> {
@@ -32,7 +32,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
                                 final String message = wsMessage.getPayloadAsText();
                                 log.debug("Received : id => \"{}\", type => \"{}\", message => \"{}\"", session.getId(), type, message);
 
-                                return broadcastMessage(message);
+                                return broadcastMessage(session, message);
                             }).then();
                 });
     }
@@ -54,12 +54,17 @@ public class ChatWebSocketHandler implements WebSocketHandler {
         });
     }
 
-    private Mono<Void> broadcastMessage(final String message) {
-        log.debug("Broadcast message to {} clients", sessionRepository.size());
+    private Flux<WebSocketSession> findAllSessions() {
         return Flux.fromIterable(sessionRepository.entrySet())
-                .map(entry -> entry.getValue())
+                .map(entry -> entry.getValue());
+    }
+
+    private Mono<Void> broadcastMessage(final WebSocketSession sourceSession, final String originMessage) {
+        log.debug("Broadcast message to {} clients", sessionRepository.size());
+        return findAllSessions()
                 .flatMap(session -> {
                     log.debug("Send message to client \"{}\"", session.getId());
+                    final String message = sourceSession.getId() + " : " + originMessage;
                     return session.send(Mono.just(session.textMessage(message)))
                             .onErrorResume(AbortedException.class, e -> {
                                 log.debug("Error => \"{}\"", e.getMessage());
