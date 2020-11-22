@@ -118,7 +118,7 @@ hello=你好 {0}
 
 # 5. เขียน LocaleContextResolver 
 
-เพื่อทำการเปลี่ยนภาษาส (Switch Locale) ตามเงื่อนไขที่ต้องการ
+เพื่อทำการเปลี่ยนภาษา (Switch Locale) ตามเงื่อนไขที่ต้องการ
 
 ```java
 public static class CustomLocaleContextResolver implements LocaleContextResolver {
@@ -186,6 +186,8 @@ public class i18nConfig {
 
 # 7. เขียน Message Service
 
+เพื่อให้ใช้ MessageSource ง่ายขึ้น
+  
 ประกาศ interface
 
 ```java
