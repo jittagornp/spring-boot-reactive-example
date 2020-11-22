@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Spring-boot Reactive WebSocket</title>
+        <style type="text/css">
+            .status-section {
+                margin-bottom : 1rem;
+            }
+
+            .status-connected {
+                color : green;
+            }
+
+            .status-closed {
+                color : orange;
+            }
+
+            .status-error {
+                color : red;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Spring-boot Reactive WebSocket Demo</h1>
+        <div class="status-section">
+            Status : <span id="status"></span>
+        </div>
+        <input id="input" type="input" /><button id="send-button">send</button><button id="close-button">close</button>
+        <br/>
+        <div id="output"></div>
+
+        <script type="text/javascript">
+
+            const status = document.getElementById("status");
+            const input = document.getElementById("input");
+            const output = document.getElementById("output");
+            const sendButton = document.getElementById("send-button");
+            const closeButton = document.getElementById("close-button");
+
+            const socket = new WebSocket("ws://localhost:8080/chat");
+
+            socket.addEventListener("open", function (event) {
+                console.log("On open => ", event);
+                status.innerText = "Connected";
+                status.className = "status status-connected";
+            });
+
+            socket.addEventListener("close", function (event) {
+                console.log("On close => ", event);
+                status.innerText = "Closed";
+                status.className = "status status-closed";
+            });
+
+            socket.addEventListener("error", function (event) {
+                console.log("On error => ", event);
+                status.innerText = "Error";
+                status.className = "status status-error";
+            });
+
+            socket.addEventListener("message", function (event) {
+                console.log("Received data from server => ", event);
+                output.innerHTML = output.innerHTML + "<br/>" + event.data;
+            });
+
+            sendButton.addEventListener("click", function(){
+                console.log("Send data to server => ", input.value);
+                socket.send(input.value);
+                input.value = "";
+            });
+
+            closeButton.addEventListener("click", function(){
+                console.log("Close connection");
+                socket.close();
+            });
+
+        </script>
+    </body>
+</html>
