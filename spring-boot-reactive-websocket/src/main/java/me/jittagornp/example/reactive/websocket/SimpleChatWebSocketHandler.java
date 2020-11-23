@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author jitta
  */
 @Slf4j
-public class ChatWebSocketHandler implements WebSocketHandler {
+public class SimpleChatWebSocketHandler implements WebSocketHandler {
 
     private final Map<String, WebSocketSession> sessionRepository = new ConcurrentHashMap<>();
 

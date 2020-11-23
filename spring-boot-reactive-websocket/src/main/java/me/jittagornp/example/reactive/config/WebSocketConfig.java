@@ -3,7 +3,7 @@
  */
 package me.jittagornp.example.reactive.config;
 
-import me.jittagornp.example.reactive.websocket.ChatWebSocketHandler;
+import me.jittagornp.example.reactive.websocket.SimpleChatWebSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.HandlerMapping;
@@ -21,11 +21,10 @@ public class WebSocketConfig {
 
     @Bean
     public HandlerMapping handlerMapping() {
-        Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("/chat", new ChatWebSocketHandler());
-        int order = -1; // before annotated controllers
-
-        return new SimpleUrlHandlerMapping(map, order);
+        final Map<String, WebSocketHandler> urlMap = new HashMap<>();
+        urlMap.put("/chat", new SimpleChatWebSocketHandler());
+        final int order = -1; // before annotated controllers
+        return new SimpleUrlHandlerMapping(urlMap, order);
     }
 
     @Bean
