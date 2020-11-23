@@ -4,33 +4,78 @@
         <title>Spring-boot Reactive WebSocket</title>
         <style type="text/css">
             .status-section {
-                margin-bottom : 1rem;
+                margin-bottom: 1rem;
             }
 
             .status-connected {
-                color : green;
+                color: green;
             }
 
             .status-closed {
-                color : orange;
+                color: orange;
             }
 
             .status-error {
-                color : red;
+                color: red;
             }
         </style>
     </head>
     <body>
         <h1>Spring-boot Reactive WebSocket Demo</h1>
-        <div class="status-section">
-            Status : <span id="status"></span>
-        </div>
+        <h3>Browser : <span id="browser-name"></span></h3>
+        <div class="status-section">Status : <span id="status"></span></div>
         <input id="input" type="input" /><button id="send-button">send</button><button id="close-button">close</button>
-        <br/>
+        <br />
         <div id="output"></div>
 
         <script type="text/javascript">
+            // Opera 8.0+
+            var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
+            // Firefox 1.0+
+            var isFirefox = typeof InstallTrigger !== 'undefined';
+
+            // Safari 3.0+ "[object HTMLElementConstructor]"
+            var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
+            // Internet Explorer 6-11
+            var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+            // Edge 20+
+            var isEdge = !isIE && !!window.StyleMedia;
+
+            // Chrome 1 - 79
+            var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+            // Edge (based on chromium) detection
+            var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
+
+            // Blink engine detection
+            var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+            const browserName = document.getElementById("browser-name");
+
+            if (isOpera) {
+                browserName.innerText = "Opera";
+            } else if (isFirefox) {
+                browserName.innerText = "Firefox";
+            } else if (isSafari) {
+                browserName.innerText = "Safari";
+            } else if (isIE) {
+                browserName.innerText = "IE";
+            } else if (isEdge) {
+                browserName.innerText = "Edge";
+            } else if (isChrome) {
+                browserName.innerText = "Chrome";
+            } else if (isEdgeChromium) {
+                browserName.innerText = "Edge Chromium";
+            } else if (isBlink) {
+                browserName.innerText = "Blink";
+            } else {
+                browserName.innerText = "Unknown";
+            }
+        </script>
+        <script type="text/javascript">
             const status = document.getElementById("status");
             const input = document.getElementById("input");
             const output = document.getElementById("output");
@@ -62,17 +107,16 @@
                 output.innerHTML = output.innerHTML + "<br/>" + event.data;
             });
 
-            sendButton.addEventListener("click", function(){
+            sendButton.addEventListener("click", function () {
                 console.log("Send data to server => ", input.value);
                 socket.send(input.value);
                 input.value = "";
             });
 
-            closeButton.addEventListener("click", function(){
+            closeButton.addEventListener("click", function () {
                 console.log("Close connection");
                 socket.close();
             });
-
         </script>
     </body>
 </html>

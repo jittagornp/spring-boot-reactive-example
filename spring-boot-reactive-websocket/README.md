@@ -4,4 +4,10 @@
 
 TODO
 
+Console
+
+![](./console.png)
+
+Output
+
 ![](./result.png)
