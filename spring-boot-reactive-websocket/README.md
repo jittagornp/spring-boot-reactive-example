@@ -212,7 +212,8 @@ closeButton.addEventListener("click", function () {
 ```js
 const socket = new WebSocket("ws://localhost:8080/chat")
 ``` 
-เป็นการเชื่อมต่อไปยัง Endpoint ที่กำหนดไว้ ในที่นี้จะใช้ scheme เป็น `ws` (Not Secure) ถ้ามีการปรับเป็นแบบ Secure จะใช้ `wss` อารมณ์คล้าย ๆ `http` กับ `https`
+เป็นการเชื่อมต่อไปยัง Endpoint ที่กำหนดไว้ ในที่นี้จะใช้ scheme เป็น `ws` (Not Secure)   
+ถ้ามีการปรับเป็นแบบ Secure จะใช้ `wss` อารมณ์คล้าย ๆ `http` กับ `https`
 
 - เมื่อเชื่อมต่อสำเร็จ
 
