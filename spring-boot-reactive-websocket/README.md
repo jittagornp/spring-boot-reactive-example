@@ -127,7 +127,7 @@ public class WebSocketConfig {
 }
 ```
 
-# 5. เขียน Client 
+# 5. เขียน WebSocket Client 
 
 เป็น HTML ไฟล์ ที่ประกอบไปด้วย JavaScript ที่ทำงานเป็น WebSocket Client 
   
