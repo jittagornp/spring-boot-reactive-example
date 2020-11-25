@@ -241,7 +241,8 @@ $ mvn spring-boot:run
 
 > http://localhost:8080/index.html 
 
-ลองเปิดจากหลาย ๆ Browser แล้วลองส่งข้อความ (Chat) หากันดู
+ลองเปิดจากหลาย ๆ Browser แล้วลองส่งข้อความ (Chat) หากันดู  
+ข้อความแต่ละ Browser จะขึ้นเป็น Realtime ตามการทำงานของ WebSocket  
 
 Output
 
