@@ -116,7 +116,7 @@ public Mono<Void> handle(final WebSocketSession newSession)
 return storeSession(newSession)
 ```
 
-- เมื่อมีการส่ง Message เข้ามาจะมีการ Call method 
+- เมื่อมีการส่ง Message เข้ามา จะมีการ Call method 
 
 ```java
 return session.receive()
