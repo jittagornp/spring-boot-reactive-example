@@ -103,6 +103,40 @@ public class SimpleChatWebSocketHandler implements WebSocketHandler {
 }
 ```
 
+**คำอธิบาย**
+
+- ถ้ามี Session ใหม่ Join เข้ามา จะมีการ Call method 
+
+```java
+public Mono<Void> handle(final WebSocketSession newSession)
+```
+- จากนั้นทำการจัดเก็บ `session` ไว้ ที่ method 
+
+```java
+return storeSession(newSession)
+```
+
+- เมื่อมีการส่ง Message เข้ามาจะมีการ Call method 
+
+```java
+return session.receive()
+        .flatMap(wsMessage -> {
+
+            ...
+            
+        })
+```
+
+- จากนั้นทำการ Broadcast Message ไปยังทุก ๆ session ที่ join เข้ามา
+
+```java
+final WebSocketMessage.Type type = wsMessage.getType();
+final String message = wsMessage.getPayloadAsText();
+log.debug("Received : id => \"{}\", type => \"{}\", message => \"{}\"", session.getId(), type, message);
+
+return broadcastMessage(session, message);
+```
+
 # 4. เขียน WebSocket Config
 
 เพื่อทำการ Map URL (Endpoint) และเรียกใช้งาน WebSocketHandler ที่เขียนไว้ 
