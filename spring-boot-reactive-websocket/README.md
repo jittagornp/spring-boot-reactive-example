@@ -168,7 +168,10 @@ public class WebSocketConfig {
 index.html
 ```js
 ...
-const socket = new WebSocket("ws://localhost:8080/chat");
+const scheme = /^(https).*/ig.test(location.protocol) ? "wss" : "ws";
+const host = location.host;
+const url = scheme + "://" + host + "/chat";
+const socket = new WebSocket(url);
 
 socket.addEventListener("open", function (event) {
     console.log("On open => ", event);
@@ -210,7 +213,10 @@ closeButton.addEventListener("click", function () {
   
 - การเชื่อมต่อ 
 ```js
-const socket = new WebSocket("ws://localhost:8080/chat")
+const scheme = /^(https).*/ig.test(location.protocol) ? "wss" : "ws";
+const host = location.host;
+const url = scheme + "://" + host + "/chat";
+const socket = new WebSocket(url);
 ``` 
 เป็นการเชื่อมต่อไปยัง Endpoint ที่กำหนดไว้ ในที่นี้จะใช้ scheme เป็น `ws` (Not Secure)   
 ถ้ามีการปรับเป็นแบบ Secure จะใช้ `wss` อารมณ์คล้าย ๆ `http` กับ `https`
