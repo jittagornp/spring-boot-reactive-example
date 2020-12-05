@@ -12,4 +12,4 @@ docker rmi websocket-cors || true
 docker build -t websocket-cors .
 
 # run container
-docker run -d --net=pamarin --name=websocket-cors -p 80:8080 --restart=always websocket-cors
+docker run -d --name=websocket-cors -p 80:8080 --restart=always websocket-cors
