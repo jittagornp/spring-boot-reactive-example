@@ -82,7 +82,7 @@
             const sendButton = document.getElementById("send-button");
             const closeButton = document.getElementById("close-button");
 
-            const scheme = location.protocol === "https" ? "wss" : "ws";
+            const scheme = /^(https).*/ig.test(location.protocol) ? "wss" : "ws";
             const host = location.host;
             const url = scheme + "://" + host + "/chat";
             const socket = new WebSocket(url);
