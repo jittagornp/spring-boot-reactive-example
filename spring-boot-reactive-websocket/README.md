@@ -7,7 +7,7 @@
 # Prerequisites
 
 - มีความรู้เรื่อง WebSocket เข้าใจการทำงานของ WebSocket ว่าทำงานยังไง ตั้งแต่การ Handshake เพื่อทำการ Upgrade Protocol ไปจนถึงการส่งข้อมูลระหว่าง Client และ Server 
-- สามารถทำความเข้าใจการทำงานของ WebSocket ได้ที่ [How Do Websockets Work?](https://sookocheff.com/post/networking/how-do-websockets-work/)
+- สามารถทำความเข้าใจการทำงานของ WebSocket ได้ที่ [WebSocket คืออะไร ทำงานยังไง (อธิบายแบบละเอียด)](https://www.jittagornp.me/blog/what-is-websocket/)
 
 # 1. เพิ่ม Dependencies และ Plugins
 
