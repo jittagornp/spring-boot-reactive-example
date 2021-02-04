@@ -18,10 +18,11 @@
 # การสนันสนุน หรือ Donate 
 
 สำหรับคนที่นำ Repository นี้ไปใช้ในการเรียนรู้ หรือสร้างสรรค์ผลงานให้เกิดมูลค่า  
-ถ้าอยากที่จะสนับสนุนหรือ Support Repository นี้ สามารถทำได้ 2 ทางครับ คือ 
+ถ้าอยากที่จะสนับสนุนหรือ Support Repository นี้ สามารถทำได้ 3 ทางครับ คือ 
 
 1. ผ่านทาง Prompt Pay QR Code 
 2. ผ่านบัญชีธนาคาร 
+3. ผ่านทาง Buy Me a Coffee 
 
 ทั้งนี้เพื่อเป็นค่ากาแฟ และค่าแพมเพิส (ผ้าอนามัย) ลูกสาวครับ :heart_eyes:      
 
@@ -34,6 +35,12 @@
 ธนาคารไทยพาณิชย์   
 เลขที่บัญชี 274-214985-3  
 ชื่อบัญชี นายจิตกร พิทักษ์เมธากุล 
+
+### By Me a Coffee
+
+สามารถคลิกที่ปุ่มนี้ได้ เพื่อขอซื้ำกาแฟเลี้ยงได้
+
+![](https://img.buymeacoffee.com/button-api/?text=By%20me%20a%20coffee&emoji=&slug=jittagornp&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff)
 
 ถ้ามีข้อสงสัยอะไร สามารถ Inbox ไปสอบถามใน Facebook ส่วนตัวได้ครับ   
 https://www.facebook.com/jittagornp 
