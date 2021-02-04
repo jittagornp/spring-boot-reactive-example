@@ -40,7 +40,9 @@
 
 สามารถคลิกที่ปุ่มนี้ได้ เพื่อขอซื้ำกาแฟเลี้ยงได้
 
-![](https://img.buymeacoffee.com/button-api/?text=By%20me%20a%20coffee&emoji=&slug=jittagornp&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff)
+<a href="https://www.buymeacoffee.com/jittagornp">
+<img src="https://img.buymeacoffee.com/button-api/?text=By%20me%20a%20coffee&emoji=&slug=jittagornp&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
+</a>
 
 ถ้ามีข้อสงสัยอะไร สามารถ Inbox ไปสอบถามใน Facebook ส่วนตัวได้ครับ   
 https://www.facebook.com/jittagornp 
