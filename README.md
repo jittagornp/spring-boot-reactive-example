@@ -17,10 +17,35 @@
 
 # การสนันสนุน หรือ Donate 
 
-ตอนนี้ผมยังไม่ได้เปิด Donate เพื่อรับเงินสนับสนุน Repository นี้   
-แต่ถ้าอนาคตมีจริง ๆ สำหรับคนที่เอา Repository นี้ไปใช้สร้างสรรค์ผลงาน เพื่อให้เกิดมูลค่า   
-ผมคงขอแค่ค่ากาแฟคนละ 1 แก้วก็พอครับ (ไม่เอาเยอะ)   
-เพราะ Repository นี้สร้างขึ้นมาด้วยความตั้งใจว่า อยากที่จะทำอะไรดี ๆ ให้สังคมจริง ๆ 
+สำหรับคนที่นำ Repository นี้ไปใช้ในการเรียนรู้ หรือสร้างสรรค์ผลงานให้เกิดมูลค่า  
+ถ้าอยากที่จะสนับสนุนหรือ Support Repository นี้ สามารถทำได้ 3 ทางครับ คือ 
+
+1. ผ่านทาง Prompt Pay QR Code 
+2. ผ่านบัญชีธนาคาร 
+3. ผ่านทาง Buy Me a Coffee 
+
+ทั้งนี้เพื่อเป็นค่ากาแฟ และค่าแพมเพิส (ผ้าอนามัย) ลูกสาวครับ :heart_eyes:      
+
+### Prompt Pay QR 
+
+<img src="./My-PromptPay-QR-60THB.png" width="400"/>
+
+### บัญชีธนาคาร
+
+ธนาคารไทยพาณิชย์   
+เลขที่บัญชี 274-214985-3  
+ชื่อบัญชี นายจิตกร พิทักษ์เมธากุล 
+
+### By Me a Coffee
+
+คลิกที่ปุ่มนี้
+
+<a href="https://www.buymeacoffee.com/jittagornp">
+<img src="https://img.buymeacoffee.com/button-api/?text=By%20me%20a%20coffee&emoji=&slug=jittagornp&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
+</a>
+
+ถ้ามีข้อสงสัยอะไร สามารถ Inbox ไปสอบถามใน Facebook ส่วนตัวได้ครับ   
+https://www.facebook.com/jittagornp 
 
 # Spring
 
