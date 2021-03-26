@@ -46,6 +46,14 @@ public class SwaggerConfig {
 
     private static final String SECURITY_KEY_NAME = "Bearer";
 
+    private final Class[] ignoredParameterTypes = {
+            ServerWebExchange.class,
+            Resource.class,
+            ResponseEntity.class,
+            Mono.class,
+            Flux.class
+    };
+
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -57,7 +65,7 @@ public class SwaggerConfig {
                 .produces(Arrays.asList("application/json;charset=UTF-8").stream().collect(toSet()))
                 .securitySchemes(singletonList(securityScheme()))
                 .securityContexts(singletonList(securityContext()))
-                .ignoredParameterTypes(ServerWebExchange.class, Resource.class, ResponseEntity.class, Mono.class, Flux.class)
+                .ignoredParameterTypes(ignoredParameterTypes)
                 .directModelSubstitute(PaginationRequest.class, PaginationRequest.SwaggerModel.class)
                 .apiInfo(apiInfo());
     }
