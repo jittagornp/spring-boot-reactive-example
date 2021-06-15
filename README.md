@@ -186,7 +186,7 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-redis-pubsub](https://github.com/jittagornp/spring-boot-reactive-redis-pubsub-example) - การเขียน Code เชื่อมต่อ Redis แบบ Pub/Sub 
 - [spring-boot-reactive-websocket](spring-boot-reactive-websocket) - การเขียน WebSocket 
 - [spring-boot-reactive-full-example](spring-boot-reactive-full-example) - การนำตัวอย่างต่าง ๆ มาประกอบเข้าด้วยกัน 
-- [spring-boot-reactive-kafka-example](https://github.com/jittagornp/spring-boot-reactive-kafka-example)
+- [spring-boot-reactive-kafka-example](https://github.com/jittagornp/spring-boot-reactive-kafka-example) - การเขียน Code เชื่อมต่อ Kafka 
 
 ### รอการปรับ Code เป็น Java 11
   
