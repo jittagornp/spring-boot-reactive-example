@@ -137,7 +137,6 @@ Spring-boot มี 2 แบบ คือ
 
 ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
-### ปรับ Code เป็น Java 21 แล้ว
 - [spring-boot-reactive-helloworld](spring-boot-reactive-helloworld) - Hello World!
 - [spring-boot-reactive-change-server-port](spring-boot-reactive-change-server-port) - การเปลี่ยน Server Port 
 - [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
@@ -189,7 +188,7 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-full-example](spring-boot-reactive-full-example) - การนำตัวอย่างต่าง ๆ มาประกอบเข้าด้วยกัน 
 - [spring-boot-reactive-kafka-example](https://github.com/jittagornp/spring-boot-reactive-kafka-example) - การเขียน Code เชื่อมต่อ Kafka 
 
-### รอการปรับ Code เป็น Java 21
+### Lagacy
   
 - [spring-boot-webflux-unit-test-mockito](spring-boot-webflux-unit-test-mockito) - การเขียน Unit Test + Mockito  
 - [spring-boot-webflux-test-coverage](spring-boot-webflux-test-coverage) - Test Coverage ด้วย JaCoCo 
