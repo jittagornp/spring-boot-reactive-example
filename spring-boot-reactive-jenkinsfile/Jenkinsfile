@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo "Mvn Install"
                 echo "******************************"
-                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.6.2-jdk-11 mvn -DskipTests=true clean package -f /app/pom.xml'
+                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.9.6-amazoncorretto-21 mvn -DskipTests=true clean package -f /app/pom.xml'
             }
         }
 
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 echo "Mvn Test"
                 echo "******************************"
-                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.6.2-jdk-11 mvn test -f /app/pom.xml'
+                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.9.6-amazoncorretto-21 mvn test -f /app/pom.xml'
             }
         }
 

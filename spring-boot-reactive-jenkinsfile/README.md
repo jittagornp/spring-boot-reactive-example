@@ -53,7 +53,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -79,7 +78,7 @@ public class HomeController {
 
 ไว้ที่ root ของ project /Dockerfile 
 ```dockerfile
-FROM openjdk:11-jre-slim
+FROM openjdk:21-slim
 EXPOSE 8080
 ADD target/*.jar /app.jar
 ENTRYPOINT java $JAVA_OPTS -jar /app.jar
@@ -116,7 +115,7 @@ pipeline {
             steps {
                 echo "Mvn Install"
                 echo "******************************"
-                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.6.2-jdk-11 mvn -DskipTests=true clean package -f /app/pom.xml'
+                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.9.6-amazoncorretto-21 mvn -DskipTests=true clean package -f /app/pom.xml'
             }
         }
 
@@ -124,7 +123,7 @@ pipeline {
             steps {
                 echo "Mvn Test"
                 echo "******************************"
-                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.6.2-jdk-11 mvn test -f /app/pom.xml'
+                sh 'docker run --rm -v $(pwd):/app -v ~/.m2:/root/.m2 maven:3.9.6-amazoncorretto-21 mvn test -f /app/pom.xml'
             }
         }
 
