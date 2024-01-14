@@ -117,7 +117,7 @@ Spring-boot มี 2 แบบ คือ
 
 # Prerequisites
 สิ่งที่ต้องรู้ก่อนเขียน Spring-boot Reactive 
-- java 11+ ตอนนี้ผมใช้ (openjdk 21.0.1 2023-10-17)
+- java 11+ ตอนนี้ผมใช้ **OpenJdk 21.0.1 2023-10-17**
 - Apache Maven
   - [รู้จักกับ Apache Maven](https://www.jittagornp.me/blog/what-is-apache-maven/)    
   - [พื้นฐานการใช้ Maven Command Line](https://www.jittagornp.me/blog/basic-maven-command-line/)
