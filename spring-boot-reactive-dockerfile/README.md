@@ -78,7 +78,7 @@ public class HomeController {
 # 4. เขียน Dockerfile 
 ไว้ที่ root ของ project /Dockerfile 
 ```dockerfile 
-FROM openjdk:11-jre-slim
+FROM openjdk:21-slim
 EXPOSE 8080
 ADD target/*.jar /app.jar
 ENTRYPOINT java $JAVA_OPTS -jar /app.jar
