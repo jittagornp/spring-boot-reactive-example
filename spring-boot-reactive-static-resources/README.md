@@ -91,8 +91,12 @@ $ mvn spring-boot:run
 
 # 7. เข้าใช้งาน
 
-เปิด browser แล้วเข้า [http://localhost:8080/images/spring-reactive.png](http://localhost:8080/images/spring-reactive.png)
+เปิด browser แล้วเข้า  
+
+[http://localhost:8080/index.html](http://localhost:8080/index.html)
 
 ![](./index.png)
-  
+
+[http://localhost:8080/images/spring-reactive.png](http://localhost:8080/images/spring-reactive.png)
+
 ![](./result.png) 
