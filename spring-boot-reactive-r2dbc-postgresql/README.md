@@ -37,7 +37,7 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.2.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
