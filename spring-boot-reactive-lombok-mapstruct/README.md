@@ -66,23 +66,7 @@ pom.xml
             </configuration>
         </plugin>
 
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <executions>        
-                <execution>            
-                    <id>build-info</id>            
-                    <goals>                
-                        <goal>build-info</goal>            
-                    </goals>        
-                    <configuration>                
-                        <additionalProperties>                    
-                            <java.version>${java.version}</java.version>                                   
-                        </additionalProperties>            
-                    </configuration>        
-                </execution>    
-            </executions>
-        </plugin>
+        ...
     </plugins>
 </build>
 ...
