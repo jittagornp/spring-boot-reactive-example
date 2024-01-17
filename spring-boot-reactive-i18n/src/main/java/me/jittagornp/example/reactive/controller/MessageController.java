@@ -1,4 +1,4 @@
-package me.jittagornp.example.reactive;
+package me.jittagornp.example.reactive.controller;
 
 import lombok.Builder;
 import lombok.Data;
