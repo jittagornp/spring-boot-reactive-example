@@ -102,7 +102,7 @@ public class ErrorResponse {
     private String errorDescription;
 
     @JsonProperty("error_at")
-    private LocalDateTime errorAt;
+    private OffsetDateTime errorAt;
 
     @JsonProperty("error_trace_id")
     private String errorTraceId;
@@ -143,7 +143,7 @@ public class ServerWebExceptionHandler implements WebExceptionHandler {
     public Mono<Void> handle(final ServerWebExchange exchange, final Throwable e) {
         log.warn("error => ", e);
         final ErrorResponse err = ErrorResponse.serverError(e.getMessage());
-        err.setErrorAt(LocalDateTime.now());
+        err.setErrorAt(OffsetDateTime.now());
         err.setErrorTraceId(UUID.randomUUID().toString());
         err.setErrorUri("https://developer.pamarin.com/document/error/");
         return produceJson(err, exchange);

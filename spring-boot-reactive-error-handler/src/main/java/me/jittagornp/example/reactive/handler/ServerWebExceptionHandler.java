@@ -6,7 +6,7 @@ package me.jittagornp.example.reactive.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.jittagornp.example.reactive.model.ErrorResponse;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.UUID;
 import org.springframework.core.annotation.Order;
@@ -38,7 +38,7 @@ public class ServerWebExceptionHandler implements WebExceptionHandler {
     public Mono<Void> handle(final ServerWebExchange exchange, final Throwable e) {
         log.warn("error => ", e);
         final ErrorResponse err = ErrorResponse.serverError(e.getMessage());
-        err.setErrorAt(LocalDateTime.now());
+        err.setErrorAt(OffsetDateTime.now());
         err.setErrorTraceId(UUID.randomUUID().toString());
         err.setErrorUri("https://developer.pamarin.com/document/error/");
         return produceJson(err, exchange);
