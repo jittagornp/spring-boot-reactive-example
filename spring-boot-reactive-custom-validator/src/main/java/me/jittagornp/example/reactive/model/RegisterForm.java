@@ -8,7 +8,7 @@ import me.jittagornp.example.reactive.validator.AtLeastPassword;
 import me.jittagornp.example.reactive.validator.Email;
 import me.jittagornp.example.reactive.validator.PasswordEqualsConfirmPassword;
 import me.jittagornp.example.reactive.validator.PasswordNotEqualsEmail;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 /**
