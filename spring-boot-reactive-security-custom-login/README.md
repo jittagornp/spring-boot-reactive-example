@@ -65,7 +65,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -79,24 +78,25 @@ public class AppStarter {
 
 ```java
 @Slf4j
+@Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
         return http
-                .csrf().disable()
-                .authorizeExchange()
-                .pathMatchers("/login").permitAll()
-                .anyExchange().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/logout"))
-                .and()
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
+                        .pathMatchers("/login").permitAll()
+                        .anyExchange().authenticated()
+                )
+                .formLogin(formLoginSpec -> formLoginSpec
+                        .loginPage("/login")
+                )
+                .logout(logoutSpec -> logoutSpec
+                        .logoutUrl("/logout")
+                        .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/logout"))
+                )
                 .build();
     }
 
@@ -124,7 +124,7 @@ public class SecurityConfig {
 - จะเหมือนหัวข้อ [spring-boot-reactive-security](../spring-boot-reactive-security) เพียงแต่มีการเพิ่ม configuration `securityWebFilterChain()` เข้ามา 
 - สังเกตว่ามีการกำหนด login entry point หรือ login page เอง 
 - ทุก ๆ entry point `.anyExchange().authenticated()` จะ require login ยกเว้น `.pathMatchers("/login").permitAll()` ที่อนุญาตให้ทุกคนเข้าถึงได้  
-- `.csrf().disable()` มีการ disabled csrf token 
+- `.csrf(ServerHttpSecurity.CsrfSpec::disable)` มีการ disabled csrf token 
 
 # 4. เขียน Controller
 ``` java

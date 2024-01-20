@@ -3,9 +3,9 @@
  */
 package me.jittagornp.example.reactive.config;
 
-import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -17,28 +17,31 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
+
 /**
  * @author jitta
  */
 @Slf4j
+@Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
         return http
-                .csrf().disable()
-                .authorizeExchange()
-                .pathMatchers("/login").permitAll()
-                .anyExchange().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/logout"))
-                .and()
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
+                        .pathMatchers("/login").permitAll()
+                        .anyExchange().authenticated()
+                )
+                .formLogin(formLoginSpec -> formLoginSpec
+                        .loginPage("/login")
+                )
+                .logout(logoutSpec -> logoutSpec
+                        .logoutUrl("/logout")
+                        .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/logout"))
+                )
                 .build();
     }
 
