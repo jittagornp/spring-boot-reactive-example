@@ -3,7 +3,7 @@
  */
 package me.jittagornp.example.reactive.model;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
