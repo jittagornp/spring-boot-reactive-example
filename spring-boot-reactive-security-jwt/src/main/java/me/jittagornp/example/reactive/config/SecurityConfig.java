@@ -7,6 +7,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import lombok.extern.slf4j.Slf4j;
 import me.jittagornp.example.reactive.security.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
  * @author jitta
  */
 @Slf4j
+@Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
@@ -49,14 +51,15 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
         return http
                 .securityContextRepository(new AuthServerSecurityContextRepository())
-                .exceptionHandling().accessDeniedHandler(new AuthServerAccessDeniedHandler())
-                .and()
-                .logout().disable()
-                .csrf().disable()
-                .authorizeExchange()
-                .pathMatchers(PUBLIC_ACCESS_PATHS).permitAll()
-                .anyExchange().authenticated()
-                .and()
+                .exceptionHandling(exceptionHandlingSpec -> exceptionHandlingSpec
+                        .accessDeniedHandler(new AuthServerAccessDeniedHandler())
+                )
+                .logout(ServerHttpSecurity.LogoutSpec::disable)
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
+                        .pathMatchers(PUBLIC_ACCESS_PATHS).permitAll()
+                        .anyExchange().authenticated()
+                )
                 .addFilterAt(
                         new AuthTokenWebFilter(
                                 authTokenService(),
