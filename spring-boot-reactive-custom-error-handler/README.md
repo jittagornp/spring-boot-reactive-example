@@ -81,7 +81,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -279,6 +278,24 @@ public class ErrorResponseInvalidUsernamePasswordExceptionHandler extends ErrorR
                     .errorDescription("invalid username or password")
                     .errorStatus(HttpStatus.BAD_REQUEST.value())
                     .build();
+        });
+    }
+}
+```
+ตัวจัดการ NoResourceFoundException
+```java
+@Component
+public class ErrorResponseNoResourceFoundExceptionHandler extends ErrorResponseExceptionHandlerAdapter<NoResourceFoundException> {
+
+    @Override
+    public Class<NoResourceFoundException> getTypeClass() {
+        return NoResourceFoundException.class;
+    }
+
+    @Override
+    protected Mono<ErrorResponse> buildError(final ServerWebExchange exchange, final NoResourceFoundException e) {
+        return Mono.fromCallable(() -> {
+            return ErrorResponse.notFound();
         });
     }
 }
