@@ -3,7 +3,7 @@
  */
 package me.jittagornp.example.reactive.validation;
 
-import javax.validation.groups.Default;
+import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
