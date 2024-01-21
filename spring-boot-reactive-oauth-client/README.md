@@ -44,7 +44,7 @@ pom.xml
     <dependency>
         <groupId>com.auth0</groupId>
         <artifactId>java-jwt</artifactId>
-        <version>3.10.0</version>
+        <version>4.4.0</version>
     </dependency>
 </dependencies>
 
@@ -80,7 +80,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
