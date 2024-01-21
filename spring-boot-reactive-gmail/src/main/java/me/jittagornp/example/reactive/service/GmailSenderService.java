@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 import org.springframework.mail.javamail.JavaMailSender;
 import reactor.core.scheduler.Schedulers;
 
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMessage;
 
 /**
  * @author jitta
