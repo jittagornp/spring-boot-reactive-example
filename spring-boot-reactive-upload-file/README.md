@@ -10,7 +10,7 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.2.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
@@ -56,7 +56,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -72,7 +71,7 @@ public class AppStarter {
 @RestController
 public class UploadController {
 
-    private static final String UPLOAD_DIRECTORY = "/temp";
+    private static final String UPLOAD_DIRECTORY = "/tmp";
 
     @GetMapping({"", "/"})
     public Mono<String> hello() {
@@ -98,6 +97,7 @@ public class UploadController {
                 .then(Mono.fromCallable(() -> {
                     final Map<String, Object> map = new HashMap<>();
                     map.put("name", file.getName());
+                    map.put("description", formData.getDescription());
                     map.put("lastModified", file.lastModified());
                     map.put("size", file.length());
                     return map;

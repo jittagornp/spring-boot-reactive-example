@@ -101,7 +101,7 @@ Spring-boot มี 2 แบบ คือ
 
 # เอกสาร Spring-boot Reactive  
 
-- [Web on Reactive Stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
+- [Web on Reactive Stack](https://docs.spring.io/spring-framework/reference/web-reactive.html)
 
 สำหรับคนที่เขียน Spring-boot ใหม่ ๆ แล้วสงสัยว่า เราจะรู้ได้ยังไงว่าเราสามารถ Config Application Properties อะไรได้บ้าง ให้ดูจากหน้านี้
 - [Common Application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html)
@@ -117,7 +117,7 @@ Spring-boot มี 2 แบบ คือ
 
 # Prerequisites
 สิ่งที่ต้องรู้ก่อนเขียน Spring-boot Reactive 
-- java 11+ ตอนนี้ผมใช้ OpenJdk 11
+- java 11+ ตอนนี้ผมใช้ **OpenJdk 21.0.1 2023-10-17**
 - Apache Maven
   - [รู้จักกับ Apache Maven](https://www.jittagornp.me/blog/what-is-apache-maven/)    
   - [พื้นฐานการใช้ Maven Command Line](https://www.jittagornp.me/blog/basic-maven-command-line/)
@@ -137,7 +137,6 @@ Spring-boot มี 2 แบบ คือ
 
 ให้เรียนรู้/ดูตัวอย่างตามลำดับต่อไปนี้    
 
-### ปรับ Code เป็น Java 11 แล้ว
 - [spring-boot-reactive-helloworld](spring-boot-reactive-helloworld) - Hello World!
 - [spring-boot-reactive-change-server-port](spring-boot-reactive-change-server-port) - การเปลี่ยน Server Port 
 - [spring-boot-reactive-dockerfile](spring-boot-reactive-dockerfile) - การเขียน Dockerfile, การ Build Docker Image และการ Run Container
@@ -189,7 +188,7 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-full-example](spring-boot-reactive-full-example) - การนำตัวอย่างต่าง ๆ มาประกอบเข้าด้วยกัน 
 - [spring-boot-reactive-kafka-example](https://github.com/jittagornp/spring-boot-reactive-kafka-example) - การเขียน Code เชื่อมต่อ Kafka 
 
-### รอการปรับ Code เป็น Java 11
+### Lagacy
   
 - [spring-boot-webflux-unit-test-mockito](spring-boot-webflux-unit-test-mockito) - การเขียน Unit Test + Mockito  
 - [spring-boot-webflux-test-coverage](spring-boot-webflux-test-coverage) - Test Coverage ด้วย JaCoCo 

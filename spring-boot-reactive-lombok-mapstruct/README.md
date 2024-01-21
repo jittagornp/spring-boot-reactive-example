@@ -9,14 +9,14 @@ pom.xml
 ...
 <properties>
     ...
-    <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-    <org.projectlombok.version>1.18.20</org.projectlombok.version>
+    <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+    <org.projectlombok.version>1.18.30</org.projectlombok.version>
 </properties>
     
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.2.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
@@ -45,7 +45,7 @@ pom.xml
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-                <release>11</release>
+                <release>${java.version}</release>
                 <annotationProcessorPaths>
                     <path>
                         <groupId>org.projectlombok</groupId>
@@ -90,7 +90,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {

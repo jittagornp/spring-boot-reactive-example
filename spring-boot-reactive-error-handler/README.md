@@ -10,7 +10,7 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.2.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
@@ -54,7 +54,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -103,7 +102,7 @@ public class ErrorResponse {
     private String errorDescription;
 
     @JsonProperty("error_at")
-    private LocalDateTime errorAt;
+    private OffsetDateTime errorAt;
 
     @JsonProperty("error_trace_id")
     private String errorTraceId;
@@ -144,7 +143,7 @@ public class ServerWebExceptionHandler implements WebExceptionHandler {
     public Mono<Void> handle(final ServerWebExchange exchange, final Throwable e) {
         log.warn("error => ", e);
         final ErrorResponse err = ErrorResponse.serverError(e.getMessage());
-        err.setErrorAt(LocalDateTime.now());
+        err.setErrorAt(OffsetDateTime.now());
         err.setErrorTraceId(UUID.randomUUID().toString());
         err.setErrorUri("https://developer.pamarin.com/document/error/");
         return produceJson(err, exchange);

@@ -4,7 +4,7 @@
 package me.jittagornp.example.reactive.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ErrorResponse {
     private String errorDescription;
 
     @JsonProperty("error_at")
-    private LocalDateTime errorAt;
+    private OffsetDateTime errorAt;
 
     @JsonProperty("error_trace_id")
     private String errorTraceId;

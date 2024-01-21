@@ -3,10 +3,6 @@
  */
 package me.jittagornp.example.reactive.controller;
 
-import java.io.File;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -17,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author jitta
  */
@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono;
 @RestController
 public class UploadController {
 
-    private static final String UPLOAD_DIRECTORY = "/temp";
+    private static final String UPLOAD_DIRECTORY = "/tmp";
 
     @GetMapping({"", "/"})
     public Mono<String> hello() {
@@ -37,9 +37,9 @@ public class UploadController {
             final FormData formData
     ) {
         log.debug("formData => {}", formData);
-        
+
         final File directory = new File(UPLOAD_DIRECTORY);
-        if(!directory.exists()){
+        if (!directory.exists()) {
             directory.mkdirs();
         }
 
@@ -50,6 +50,7 @@ public class UploadController {
                 .then(Mono.fromCallable(() -> {
                     final Map<String, Object> map = new HashMap<>();
                     map.put("name", file.getName());
+                    map.put("description", formData.getDescription());
                     map.put("lastModified", file.lastModified());
                     map.put("size", file.length());
                     return map;

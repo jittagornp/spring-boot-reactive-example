@@ -6,6 +6,7 @@ package me.jittagornp.example.reactive.config;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
  * @author jitta
  */
 @Slf4j
+@Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
 

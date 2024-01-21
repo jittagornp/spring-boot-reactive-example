@@ -12,7 +12,7 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.2.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
@@ -65,7 +65,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -79,6 +78,7 @@ public class AppStarter {
 
 ```java
 @Slf4j
+@Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
@@ -103,6 +103,7 @@ public class SecurityConfig {
 }
 ```
 
+- `@Configuration` เป็นการบอก spring boot ว่า class นี้เป็น Java Configuration
 - `@EnableWebFluxSecurity` เป็นการ enable Spring Security 
 - Method `passwordEncoder()` เป็นการประกาศใช้ password encoder เป็น `BCryptPasswordEncoder`  
 - Method `reactiveUserDetailsService()` เป็นการประกาศ login service ว่าถ้ามีการ login เข้ามาให้ find user จาก username ที่ส่งมาใน service นี้ ซึ่งปกติจะ find จาก database ถ้าไม่เจอ อาจจะ throw error `org.springframework.security.authentication.BadCredentialsException` ออกไป  

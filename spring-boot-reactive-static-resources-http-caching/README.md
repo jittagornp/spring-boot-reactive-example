@@ -10,7 +10,7 @@ pom.xml
 <parent> 
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.2.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
@@ -48,7 +48,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -84,12 +83,12 @@ classpath:application.properties
 
 ```properties
 spring.webflux.static-path-pattern: /assets/**
-spring.resources.static-locations: classpath:/static/
+spring.web.resources.static-locations: classpath:/static/
 
 # caching
-spring.resources.cache.cachecontrol.cache-public=true
+spring.web.resources.cache.cachecontrol.cache-public=true
 # 1 day = 86400 seconds = 60 seconds x 60 x 24
-spring.resources.cache.cachecontrol.max-age=86400
+spring.web.resources.cache.cachecontrol.max-age=86400
 ```
 
 # 6. Build Code

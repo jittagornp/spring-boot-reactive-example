@@ -10,7 +10,7 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.2.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
@@ -48,7 +48,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -75,6 +74,7 @@ public class HomeController {
 เอา Static Resources ที่ต้องการไปวางไว้ใน Folder `/src/main/resources/static` (ถ้าไม่มีให้สร้างขึ้นมาเอง) เช่น 
 
 ```
+/src/main/resources/static/index.html
 /src/main/resources/static/images/spring-reactive.png
 ```
 
@@ -91,6 +91,12 @@ $ mvn spring-boot:run
 
 # 7. เข้าใช้งาน
 
-เปิด browser แล้วเข้า [http://localhost:8080/images/spring-reactive.png](http://localhost:8080/images/spring-reactive.png)
+เปิด browser แล้วเข้า  
+
+[http://localhost:8080/index.html](http://localhost:8080/index.html)
+
+![](./index.png)
+
+[http://localhost:8080/images/spring-reactive.png](http://localhost:8080/images/spring-reactive.png)
 
 ![](./result.png) 

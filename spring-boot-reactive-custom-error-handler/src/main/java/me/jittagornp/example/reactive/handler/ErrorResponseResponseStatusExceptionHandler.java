@@ -27,7 +27,7 @@ public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseEx
     protected Mono<ErrorResponse> buildError(final ServerWebExchange exchange, final ResponseStatusException e) {
         return Mono.fromCallable(() -> {
             //400
-            if (e.getStatus() == HttpStatus.BAD_REQUEST) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
 
                 final String message = e.getMessage();
                 if(message.contains("Request body is missing")){
@@ -37,15 +37,15 @@ public class ErrorResponseResponseStatusExceptionHandler extends ErrorResponseEx
                 return ErrorResponse.invalidRequest(message);
             }
             //401
-            if (e.getStatus() == HttpStatus.UNAUTHORIZED) {
+            if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
                 return ErrorResponse.unauthorized(e.getMessage());
             }
             //403
-            if (e.getStatus() == HttpStatus.FORBIDDEN) {
+            if (e.getStatusCode() == HttpStatus.FORBIDDEN) {
                 return ErrorResponse.accessDenied(e.getMessage());
             }
             //404
-            if (e.getStatus() == HttpStatus.NOT_FOUND) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
                 log.debug("Not found => {}", exchange.getRequest().getPath());
                 return ErrorResponse.notFound("not found");
             }

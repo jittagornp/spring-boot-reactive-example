@@ -11,6 +11,7 @@ import me.jittagornp.example.reactive.model.OAuthCodeRequest;
 import me.jittagornp.example.reactive.model.OAuthClient;
 import me.jittagornp.example.reactive.model.OAuthUserInfo;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,7 +90,7 @@ public abstract class OAuthControllerAdapter {
                                 .with("redirect_uri", request.getRedirectUri())
                 )
                 .retrieve()
-                .onStatus(HttpStatus::isError, (resp) -> convertError(uri, resp))
+                .onStatus(HttpStatusCode::isError, (resp) -> convertError(uri, resp))
                 .bodyToMono(OAuthAccessToken.class);
     }
 

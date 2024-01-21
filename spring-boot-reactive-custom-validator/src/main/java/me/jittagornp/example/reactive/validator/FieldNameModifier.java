@@ -3,7 +3,7 @@
  */
 package me.jittagornp.example.reactive.validator;
 
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * @author jitta
