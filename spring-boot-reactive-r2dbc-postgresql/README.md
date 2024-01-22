@@ -14,6 +14,11 @@
 # Prerequisites
 
 - เตรียมฐานข้อมูล PostgreSQL ให้พร้อม
+
+```shell
+docker run -d -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=password postgres
+```
+
 - สร้าง schema `app`
 - สร้าง table `user` ที่ schema `app` โดยใช้ SQL นี้
 
