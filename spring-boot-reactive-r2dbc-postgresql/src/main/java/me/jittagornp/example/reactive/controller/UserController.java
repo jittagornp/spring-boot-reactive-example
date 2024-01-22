@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import me.jittagornp.example.reactive.entity.UserEntity;
 import me.jittagornp.example.reactive.exception.NotFoundException;
 import me.jittagornp.example.reactive.repository.UserRepository;
-import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.data.r2dbc.core.R2dbcEntityOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import java.util.UUID;
 
 @RestController
@@ -16,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final DatabaseClient databaseClient;
+    private final R2dbcEntityOperations operations;
 
     private final UserRepository userRepository;
 
@@ -35,8 +36,7 @@ public class UserController {
     @PostMapping
     public Mono<UserEntity> create(@RequestBody final UserEntity entity) {
         entity.setId(UUID.randomUUID());
-        return databaseClient.insert()
-                .into(UserEntity.class)
+        return operations.insert(UserEntity.class)
                 .using(entity)
                 .then()
                 .thenReturn(entity);
