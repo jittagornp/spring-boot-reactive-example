@@ -14,10 +14,12 @@
 # Prerequisites
 
 - เตรียมฐานข้อมูล PostgreSQL ให้พร้อม
-- สร้าง table `user` ที่ schema `public` โดยใช้ SQL นี้
+- สร้าง schema `app`
+- สร้าง table `user` ที่ schema `app` โดยใช้ SQL นี้
 
 ```sql
-CREATE TABLE "public"."user" (
+CREATE SCHEMA "app";
+CREATE TABLE "app"."user" (
     "id" UUID NOT NULL,
     "username" varchar(50) NOT NULL,
     "first_name" varchar(50) NOT NULL,
@@ -116,19 +118,19 @@ logging.level.me.jittagornp=DEBUG
 logging.level.org.springframework.data.r2dbc=DEBUG
 
 #---------------------------------- R2dbc --------------------------------------
-spring.r2dbc.url=r2dbc:postgresql://localhost/postgres?schema=public
+spring.r2dbc.url=r2dbc:postgresql://localhost/postgres?schema=app
 spring.r2dbc.username=postgres
 spring.r2dbc.password=password
 ```
 
 # 4. เขียน Entity
 
-> Entity จะเป็นตัว Map ไปยัง Table `public.user`
+> Entity จะเป็นตัว Map ไปยัง Table `app.user`
 
 ```java
 @Data
 @Builder
-@Table("public.user")
+@Table("app.user")
 public class UserEntity {
     
     //Primary Key

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-@Table("public.user")
+@Table("app.user")
 public class UserEntity {
 
     //Primary Key
