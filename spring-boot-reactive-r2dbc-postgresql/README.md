@@ -14,11 +14,10 @@
 # Prerequisites
 
 - เตรียมฐานข้อมูล PostgreSQL ให้พร้อม
-- สร้าง schema `app`
-- สร้าง table `user` ที่ schema `app` โดยใช้ SQL นี้
+- สร้าง table `user` ที่ schema `public` โดยใช้ SQL นี้
 
 ```sql
-CREATE TABLE "app"."user" (
+CREATE TABLE "public"."user" (
     "id" UUID NOT NULL,
     "username" varchar(50) NOT NULL,
     "first_name" varchar(50) NOT NULL,
@@ -59,9 +58,9 @@ pom.xml
     </dependency>
 
     <dependency>
-        <groupId>io.r2dbc</groupId>
+        <groupId>org.postgresql</groupId>
         <artifactId>r2dbc-postgresql</artifactId>
-        <scope>runtime</scope>
+        <version>1.0.4.RELEASE</version>
     </dependency>
     <!-- Database ****************************************************** -->
 </dependencies>
@@ -99,7 +98,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -118,23 +116,19 @@ logging.level.me.jittagornp=DEBUG
 logging.level.org.springframework.data.r2dbc=DEBUG
 
 #---------------------------------- R2dbc --------------------------------------
-spring.r2dbc.url=r2dbc:postgresql://<DATABASE_HOST_IP>/<DATA_BASE_NAME>?schema=app
-spring.r2dbc.username=<DATABASE_USERNAME>
-spring.r2dbc.password=<DATABASE_PASSWORD>
+spring.r2dbc.url=r2dbc:postgresql://localhost/postgres?schema=public
+spring.r2dbc.username=postgres
+spring.r2dbc.password=password
 ```
-
-**หมายเหตุ**
-
-- อย่าลืมแก้ `<DATABASE_HOST_IP>`, `<DATABASE_NAME>`, `<DATABASE_USERNAME>` และ `<DATABASE_PASSWORD>`
 
 # 4. เขียน Entity
 
-> Entity จะเป็นตัว Map ไปยัง Table `app.user`
+> Entity จะเป็นตัว Map ไปยัง Table `public.user`
 
 ```java
 @Data
 @Builder
-@Table("app.user")
+@Table("public.user")
 public class UserEntity {
     
     //Primary Key
@@ -181,7 +175,7 @@ public interface UserRepository extends ReactiveCrudRepository<UserEntity, UUID>
 @RequiredArgsConstructor
 public class UserController {
 
-    private final DatabaseClient databaseClient;
+    private final R2dbcEntityOperations operations;
 
     private final UserRepository userRepository;
 
@@ -200,8 +194,7 @@ public class UserController {
     @PostMapping
     public Mono<UserEntity> create(@RequestBody final UserEntity entity) {
         entity.setId(UUID.randomUUID());
-        return databaseClient.insert()
-                .into(UserEntity.class)
+        return operations.insert(UserEntity.class)
                 .using(entity)
                 .then()
                 .thenReturn(entity);
@@ -230,7 +223,7 @@ public class UserController {
 
 **หมายเหตุ**
 
-- ตอน insert ใช้ `databaseClient` แทน repository เนื่องจาก repository จะไม่สามารถ insert entity ที่มีการ set id ตั้งต้นได้ 
+- ตอน insert ใช้ `R2dbcEntityOperations` แทน repository เนื่องจาก repository จะไม่สามารถ insert entity ที่มีการ set id ตั้งต้นได้ 
 
 # 7. Build Code
 cd ไปที่ root ของ project จากนั้น  

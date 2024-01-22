@@ -1,4 +1,4 @@
-CREATE TABLE "app"."user" (
+CREATE TABLE "public"."user" (
     "id" UUID NOT NULL,
     "username" varchar(50) NOT NULL,
     "first_name" varchar(50) NOT NULL,
