@@ -8,7 +8,7 @@ import io.r2dbc.spi.RowMetadata;
 import lombok.RequiredArgsConstructor;
 import me.jittagornp.example.reactive.entity.UserEntity;
 import me.jittagornp.example.reactive.exception.NotFoundException;
-import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,14 +26,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Flux<UserEntity> findAll() {
-        return databaseClient.execute("SELECT * FROM app.user")
+        return databaseClient.sql("SELECT * FROM app.user")
                 .map(this::convert)
                 .all();
     }
 
     @Override
     public Mono<UserEntity> findById(final UUID id) {
-        return databaseClient.execute("SELECT * FROM app.user WHERE id = :id")
+        return databaseClient.sql("SELECT * FROM app.user WHERE id = :id")
                 .bind("id", id)
                 .map(this::convert)
                 .one()
@@ -43,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Mono<UserEntity> create(final UserEntity entity) {
         entity.setId(UUID.randomUUID());
-        return databaseClient.execute(
+        return databaseClient.sql(
                 "INSERT INTO app.user (id, username, first_name, last_name) " +
                         "VALUES (:id, :username, :first_name, :last_name)"
         )
@@ -59,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
     public Mono<UserEntity> update(final UserEntity entity) {
         return findById(entity.getId())
                 .flatMap(dbEntity -> {
-                    return databaseClient.execute(
+                    return databaseClient.sql(
                             "UPDATE app.user " +
                                     "SET username = :username, first_name = :first_name, last_name = :last_name " +
                                     "WHERE id = :id"
@@ -75,7 +75,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Mono<Void> deleteAll() {
-        return databaseClient.execute("DELETE FROM app.user")
+        return databaseClient.sql("DELETE FROM app.user")
                 .then();
     }
 
@@ -83,7 +83,7 @@ public class UserRepositoryImpl implements UserRepository {
     public Mono<Void> deleteById(final UUID id) {
         return findById(id)
                 .flatMap(dbEntity -> {
-                    return databaseClient.execute("DELETE FROM app.user WHERE id = :id")
+                    return databaseClient.sql("DELETE FROM app.user WHERE id = :id")
                             .bind("id", id)
                             .then();
                 });

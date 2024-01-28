@@ -1,3 +1,4 @@
+CREATE SCHEMA "app";
 CREATE TABLE "app"."user" (
     "id" UUID NOT NULL,
     "username" varchar(50) NOT NULL,

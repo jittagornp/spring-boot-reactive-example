@@ -15,10 +15,16 @@
 # Prerequisites
 
 - เตรียมฐานข้อมูล PostgreSQL ให้พร้อม
+
+```sh
+docker run -d -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=password postgres
+```
+
 - สร้าง schema `app`
 - สร้าง table `user` ที่ schema `app` โดยใช้ SQL นี้
 
 ```sql
+CREATE SCHEMA "app";
 CREATE TABLE "app"."user" (
     "id" UUID NOT NULL,
     "username" varchar(50) NOT NULL,
@@ -60,9 +66,9 @@ pom.xml
     </dependency>
 
     <dependency>
-        <groupId>io.r2dbc</groupId>
+        <groupId>org.postgresql</groupId>
         <artifactId>r2dbc-postgresql</artifactId>
-        <scope>runtime</scope>
+        <version>1.0.4.RELEASE</version>
     </dependency>
     <!-- Database ****************************************************** -->
 </dependencies>
@@ -100,7 +106,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -119,14 +124,10 @@ logging.level.me.jittagornp=DEBUG
 logging.level.org.springframework.data.r2dbc=DEBUG
 
 #---------------------------------- R2dbc --------------------------------------
-spring.r2dbc.url=r2dbc:postgresql://<DATABASE_HOST_IP>/<DATA_BASE_NAME>?schema=app
-spring.r2dbc.username=<DATABASE_USERNAME>
-spring.r2dbc.password=<DATABASE_PASSWORD>
+spring.r2dbc.url=r2dbc:postgresql://localhost/postgres?schema=public
+spring.r2dbc.username=postgres
+spring.r2dbc.password=password
 ```
-
-**หมายเหตุ**
-
-- อย่าลืมแก้ `<DATABASE_HOST_IP>`, `<DATABASE_NAME>`, `<DATABASE_USERNAME>` และ `<DATABASE_PASSWORD>`
 
 # 4. เขียน Entity / Model 
 
@@ -179,14 +180,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Flux<UserEntity> findAll() {
-        return databaseClient.execute("SELECT * FROM app.user")
+        return databaseClient.sql("SELECT * FROM app.user")
                 .map(this::convert)
                 .all();
     }
 
     @Override
     public Mono<UserEntity> findById(final UUID id) {
-        return databaseClient.execute("SELECT * FROM app.user WHERE id = :id")
+        return databaseClient.sql("SELECT * FROM app.user WHERE id = :id")
                 .bind("id", id)
                 .map(this::convert)
                 .one()
@@ -196,7 +197,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Mono<UserEntity> create(final UserEntity entity) {
         entity.setId(UUID.randomUUID());
-        return databaseClient.execute(
+        return databaseClient.sql(
                 "INSERT INTO app.user (id, username, first_name, last_name) " +
                 "VALUES (:id, :username, :first_name, :last_name)"
         )
