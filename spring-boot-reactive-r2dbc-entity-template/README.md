@@ -61,9 +61,9 @@ pom.xml
     </dependency>
 
     <dependency>
-        <groupId>io.r2dbc</groupId>
+        <groupId>org.postgresql</groupId>
         <artifactId>r2dbc-postgresql</artifactId>
-        <scope>runtime</scope>
+        <version>1.0.4.RELEASE</version>
     </dependency>
     <!-- Database ****************************************************** -->
 </dependencies>
@@ -101,7 +101,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
