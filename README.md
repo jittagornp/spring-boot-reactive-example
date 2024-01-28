@@ -173,7 +173,6 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-swagger](spring-boot-reactive-swagger) - การทำ API Document ด้วย Swagger  
 - [spring-boot-reactive-pagination](spring-boot-reactive-pagination) - การทำ Pagination 
 - [spring-boot-reactive-r2dbc-postgresql](spring-boot-reactive-r2dbc-postgresql) - การเขียน Code เชื่อมต่อ Database PosgreSQL ด้วย R2DBC 
-- [spring-boot-reactive-r2dbc-database-client](spring-boot-reactive-r2dbc-database-client) - Manual Query ด้วย R2DBC Database Client 
 - [spring-boot-reactive-r2dbc-native-sql](spring-boot-reactive-r2dbc-native-sql) - Native SQL ด้วย R2DBC Database Client 
 - [spring-boot-reactive-r2dbc-entity-template](spring-boot-reactive-r2dbc-entity-template) - Manual Query ด้วย R2DBC Entity Template 
 - [spring-boot-reactive-r2dbc-pagination](spring-boot-reactive-r2dbc-pagination) - การทำ Pagination สำหรับ R2DBC  
