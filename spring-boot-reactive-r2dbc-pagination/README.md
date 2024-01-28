@@ -16,10 +16,16 @@
 # Prerequisites
 
 - เตรียมฐานข้อมูล PostgreSQL ให้พร้อม
+
+```shell
+docker run -d -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=password postgres
+```
+
 - สร้าง schema `app`
 - สร้าง table `province` ที่ schema `app` โดยใช้ SQL นี้
 
 ```sql
+CREATE SCHEMA "app";
 CREATE TABLE "app"."province" (
     "id" UUID NOT NULL,
     "name" varchar(100) NOT NULL,
@@ -83,9 +89,9 @@ pom.xml
     </dependency>
 
     <dependency>
-        <groupId>io.r2dbc</groupId>
+        <groupId>org.postgresql</groupId>
         <artifactId>r2dbc-postgresql</artifactId>
-        <scope>runtime</scope>
+        <version>1.0.4.RELEASE</version>
     </dependency>
     <!-- Database ****************************************************** -->
 </dependencies>
@@ -123,7 +129,6 @@ pom.xml
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -142,14 +147,10 @@ logging.level.me.jittagornp=DEBUG
 logging.level.org.springframework.data.r2dbc=DEBUG
 
 #---------------------------------- R2dbc --------------------------------------
-spring.r2dbc.url=r2dbc:postgresql://<DATABASE_HOST_IP>/<DATA_BASE_NAME>?schema=app
-spring.r2dbc.username=<DATABASE_USERNAME>
-spring.r2dbc.password=<DATABASE_PASSWORD>
+spring.r2dbc.url=r2dbc:postgresql://localhost/postgres?schema=app
+spring.r2dbc.username=postgres
+spring.r2dbc.password=password
 ```
-
-**หมายเหตุ**
-
-- อย่าลืมแก้ `<DATABASE_HOST_IP>`, `<DATABASE_NAME>`, `<DATABASE_USERNAME>` และ `<DATABASE_PASSWORD>`
 
 # 4. เขียน Config
 

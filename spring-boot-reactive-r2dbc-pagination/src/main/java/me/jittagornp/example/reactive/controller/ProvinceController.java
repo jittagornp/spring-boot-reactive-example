@@ -68,6 +68,11 @@ public class ProvinceController {
         }
 
         @Override
+        public Pageable withPage(int pageNumber) {
+            return this;
+        }
+
+        @Override
         public int getPageNumber() {
             return -1;
         }

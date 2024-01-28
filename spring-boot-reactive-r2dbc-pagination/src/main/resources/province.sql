@@ -1,3 +1,4 @@
+CREATE SCHEMA "app";
 CREATE TABLE "app"."province" (
     "id" UUID NOT NULL,
     "name" varchar(100) NOT NULL,
