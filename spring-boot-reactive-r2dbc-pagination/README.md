@@ -161,7 +161,7 @@ public class R2dbcConfig {
 
     @Bean
     public R2dbcEntityTemplate r2dbcEntityTemplate(final DatabaseClient databaseClient){
-        return new R2dbcEntityTemplate(databaseClient);
+        return new R2dbcEntityTemplate(databaseClient.getConnectionFactory());
     }
 
 }

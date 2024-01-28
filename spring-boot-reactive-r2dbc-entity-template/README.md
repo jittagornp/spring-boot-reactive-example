@@ -16,6 +16,11 @@
 # Prerequisites
 
 - เตรียมฐานข้อมูล PostgreSQL ให้พร้อม
+
+```shell
+docker run -d -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=password postgres
+```
+
 - สร้าง schema `app`
 - สร้าง table `user` ที่ schema `app` โดยใช้ SQL นี้
 
@@ -119,14 +124,10 @@ logging.level.me.jittagornp=DEBUG
 logging.level.org.springframework.data.r2dbc=DEBUG
 
 #---------------------------------- R2dbc --------------------------------------
-spring.r2dbc.url=r2dbc:postgresql://<DATABASE_HOST_IP>/<DATA_BASE_NAME>?schema=app
-spring.r2dbc.username=<DATABASE_USERNAME>
-spring.r2dbc.password=<DATABASE_PASSWORD>
+spring.r2dbc.url=r2dbc:postgresql://localhost/postgres?schema=app
+spring.r2dbc.username=postgres
+spring.r2dbc.password=password
 ```
-
-**หมายเหตุ**
-
-- อย่าลืมแก้ `<DATABASE_HOST_IP>`, `<DATABASE_NAME>`, `<DATABASE_USERNAME>` และ `<DATABASE_PASSWORD>`
 
 # 4. เขียน Config
 
@@ -138,7 +139,7 @@ public class R2dbcConfig {
 
     @Bean
     public R2dbcEntityTemplate r2dbcEntityTemplate(final DatabaseClient databaseClient){
-        return new R2dbcEntityTemplate(databaseClient);
+        return new R2dbcEntityTemplate(databaseClient.getConnectionFactory());
     }
 
 }
