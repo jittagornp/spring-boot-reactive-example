@@ -169,8 +169,7 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-security](spring-boot-reactive-security) - พื้นฐานการ Config Spring Security สำหรับทำการ Login
 - [spring-boot-reactive-security-custom-login](spring-boot-reactive-security-custom-login) - การ Custom หน้า Login
 - [spring-boot-reactive-security-authority](spring-boot-reactive-security-authority) - การกำหนดสิทธิ์การเข้าถึง  
-- [spring-boot-reactive-security-jwt](spring-boot-reactive-security-jwt) - การใช้ Spring-security ทำงานร่วมกับ JWT  
-- [spring-boot-reactive-swagger](spring-boot-reactive-swagger) - การทำ API Document ด้วย Swagger  
+- [spring-boot-reactive-security-jwt](spring-boot-reactive-security-jwt) - การใช้ Spring-security ทำงานร่วมกับ JWT   
 - [spring-boot-reactive-pagination](spring-boot-reactive-pagination) - การทำ Pagination 
 - [spring-boot-reactive-r2dbc-postgresql](spring-boot-reactive-r2dbc-postgresql) - การเขียน Code เชื่อมต่อ Database PosgreSQL ด้วย R2DBC 
 - [spring-boot-reactive-r2dbc-native-sql](spring-boot-reactive-r2dbc-native-sql) - Native SQL ด้วย R2DBC Database Client 
@@ -186,17 +185,3 @@ Spring-boot มี 2 แบบ คือ
 - [spring-boot-reactive-websocket](spring-boot-reactive-websocket) - การเขียน WebSocket 
 - [spring-boot-reactive-full-example](spring-boot-reactive-full-example) - การนำตัวอย่างต่าง ๆ มาประกอบเข้าด้วยกัน 
 - [spring-boot-reactive-kafka-example](https://github.com/jittagornp/spring-boot-reactive-kafka-example) - การเขียน Code เชื่อมต่อ Kafka 
-
-### Lagacy
-  
-- [spring-boot-webflux-unit-test-mockito](spring-boot-webflux-unit-test-mockito) - การเขียน Unit Test + Mockito  
-- [spring-boot-webflux-test-coverage](spring-boot-webflux-test-coverage) - Test Coverage ด้วย JaCoCo 
-- [spring-boot-webflux-postgresql](spring-boot-webflux-postgresql) - การเชื่อมต่อ Postgresql (Relational Database) 
-- [spring-boot-webflux-jdbc-template](spring-boot-webflux-jdbc-template) - การเขียน Native Query จาก JDBC Template  
-- [spring-boot-webflux-entity](spring-boot-webflux-entity) - การเขียน Entity Class  
-- [spring-boot-webflux-simple-service](spring-boot-webflux-simple-service) - พื้นฐานการเขียน Service 
-- [spring-boot-webflux-mongodb](spring-boot-webflux-mongodb) - การเชื่อมต่อ Mongodb (NoSQL Document Database)  
-- [spring-boot-webflux-mongo-operations](spring-boot-webflux-mongo-operations) - การเขียน Query ผ่าน Mogo Operations 
-- [spring-boot-webflux-redis](spring-boot-webflux-redis) - การเชื่อมต่อ Redis (Key/Value NoSQL) 
-- [spring-boot-webflux-nuxtjs](https://github.com/jittagornp/spring-boot-webflux-nuxtjs) - การเขียน Spring-boot Reactive + Nuxt.js 
-- [spring-boot-webflux-javadoc](spring-boot-webflux-javadoc) - การ Generate Java Document API 
