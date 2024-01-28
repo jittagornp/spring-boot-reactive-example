@@ -20,10 +20,16 @@
 # Prerequisites
 
 - เตรียมฐานข้อมูล PostgreSQL ให้พร้อม
+
+```shell
+docker run -d -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=password postgres
+```
+
 - สร้าง schema `app`
 - สร้าง table `user` ที่ schema `app` โดยใช้ SQL นี้
 
 ```sql
+CREATE SCHEMA "app";
 CREATE TABLE "app"."user" (
     "id" UUID NOT NULL,
     "username" varchar(50) NOT NULL,
@@ -43,7 +49,7 @@ pom.xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.3.RELEASE</version>
+    <version>3.2.1</version>
 </parent>
 
 <dependencies>
@@ -73,7 +79,7 @@ pom.xml
     <dependency>
         <groupId>io.r2dbc</groupId>
         <artifactId>r2dbc-pool</artifactId>
-        <version>0.8.5.RELEASE</version>
+        <version>1.0.1.RELEASE</version>
     </dependency>
     <!-- Database ****************************************************** -->
 </dependencies>
@@ -108,15 +114,10 @@ pom.xml
 - `r2dbc-pool` เป็น dependency สำหรับทำ connection pool ให้ r2dbc
 - `spring-boot-starter-data-r2dbc` เป็น dependency สำหรับใช้ spring-data ร่วมกับ r2dbc 
 
-**หมายเหตุ**
-
-- spring-boot ที่จะใช้ทำ r2dbc-pool แนะนำให้ใช้ version `2.3.3.RELEASE` เป็นต้นไป เนื่องจากมีการอัพเดทตัว `spring-boot-starter-data-r2dbc` ให้รองรับ configuration ต่าง ๆ ของ r2dbc มากขึ้น
-
 # 2. เขียน Main Class 
 
 ``` java
 @SpringBootApplication
-@ComponentScan(basePackages = {"me.jittagornp"})
 public class AppStarter {
 
     public static void main(String[] args) {
@@ -136,9 +137,9 @@ logging.level.org.springframework.data.r2dbc=DEBUG
 logging.level.io.r2dbc.pool=DEBUG
 
 #---------------------------------- R2dbc --------------------------------------
-spring.r2dbc.url=r2dbc:pool:postgresql://<DATABASE_HOST_IP>/<DATA_BASE_NAME>?schema=app
-spring.r2dbc.username=<DATABASE_USERNAME>
-spring.r2dbc.password=<DATABASE_PASSWORD>
+spring.r2dbc.url=r2dbc:postgresql://localhost/postgres?schema=app
+spring.r2dbc.username=postgres
+spring.r2dbc.password=password
 
 # config from https://github.com/r2dbc/r2dbc-pool
 spring.r2dbc.pool.initialSize=10
@@ -150,7 +151,6 @@ spring.r2dbc.pool.validationQuery=SELECT 1
 
 **หมายเหตุ**
 
-- อย่าลืมแก้ `<DATABASE_HOST_IP>`, `<DATABASE_NAME>`, `<DATABASE_USERNAME>` และ `<DATABASE_PASSWORD>`
 - สังเกตตรง `spring.r2dbc.url` จะเป็น pool คือ `r2dbc:pool:postgresql://`
 - มีการ config pool เพิ่มเติมจาก r2dbc ธรรมดา ๆ
 
@@ -211,7 +211,7 @@ public interface UserRepository extends ReactiveCrudRepository<UserEntity, UUID>
 @RequiredArgsConstructor
 public class UserController {
 
-    private final DatabaseClient databaseClient;
+    private final R2dbcEntityOperations operations;
 
     private final UserRepository userRepository;
 
@@ -230,8 +230,7 @@ public class UserController {
     @PostMapping
     public Mono<UserEntity> create(@RequestBody final UserEntity entity) {
         entity.setId(UUID.randomUUID());
-        return databaseClient.insert()
-                .into(UserEntity.class)
+        return operations.insert(UserEntity.class)
                 .using(entity)
                 .then()
                 .thenReturn(entity);
@@ -260,7 +259,7 @@ public class UserController {
 
 **หมายเหตุ**
 
-- ตอน insert ใช้ `databaseClient` แทน repository เนื่องจาก repository จะไม่สามารถ insert entity ที่มีการ set id ตั้งต้นได้ 
+- ตอน insert ใช้ `R2dbcEntityOperations` แทน repository เนื่องจาก repository จะไม่สามารถ insert entity ที่มีการ set id ตั้งต้นได้ 
 
 # 7. Build Code
 cd ไปที่ root ของ project จากนั้น  
