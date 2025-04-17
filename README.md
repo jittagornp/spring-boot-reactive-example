@@ -129,7 +129,7 @@ Spring-boot มี 2 แบบ คือ
 - พื้นฐาน Spring Framework เช่น
   - ทฤษฏี IoC (Inversion of Control) และ (DI) Dependency Injection 
 # ตัวอย่างการเขียน Reactor 
-- [Reactor Example](./spring-boot-webflux-reactor-example)
+- [Reactor Example](./spring-boot-reactive-reactor-example)
 
 # เริ่ม 
 
